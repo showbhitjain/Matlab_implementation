@@ -44,3 +44,5 @@ J = zeros(6, numJoints); % Initialize Jacobian matrix with zeros
     % Columns of Jacobian corresponding to joints beyond to_ith_link are already initialized to zero
     Jacobimatrix = J;
 end
+
+
