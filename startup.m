@@ -13,4 +13,4 @@ if ~isfolder('work')
 end
 Simulink.fileGenControl('set','CacheFolder','work','CodeGenFolder','work');
 
-frankarobot = loadrobot("frankaEmikaPanda");
+

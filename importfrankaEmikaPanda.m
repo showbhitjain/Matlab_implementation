@@ -21,21 +21,30 @@ dhparams = [
 
 jointMinValues = [-2.8973, -1.7628, -2.8973, -3.0718, -2.8973, 0.6500, -2.8973];
 jointMaxValues = [2.8973, 1.7628, 2.8973, -0.0698, 2.8973, 3.7525, 2.8973];
+
+jointvelMinValues = [-2.1750 -2.1750 -2.1750 -2.1750 -2.6100 -2.6100 -2.6100];
+jointvelMaxValues = [2.1750 2.1750 2.1750 2.1750 2.6100 2.6100 2.6100];
 Homejointpositions = [0 ,0, 0, -pi/2, 0, pi/2, pi/4];
 
 frankarobot  = loadrobot("frankaEmikaPanda");
 show(frankarobot)
+body_Tcp_2 = rigidBody('Gripper_TCP');
+joint_Tcp_2 = rigidBodyJoint('Gripper_TCP_frame', 'fixed');
+tform_tcp_2 = trvec2tform([0 0 0.103399])*eul2tform([-pi/4 0 0]);
+setFixedTransform(joint_Tcp_2,tform_tcp_2);
+body_Tcp_2.Joint = joint_Tcp_2;
+addBody(frankarobot,body_Tcp_2,'panda_link8');
 
 %Set initial joint position
 
-% Initalconfig = frankarobot.homeConfiguration;
+ Initalconfig = frankarobot.homeConfiguration;
 % 
-% for i = 1:7
-%     % Initalconfig(i).JointPosition = Homejointpositions(i);
-% end
+ for i = 1:7
+      Initalconfig(i).JointPosition = Homejointpositions(i);
+ end
 % 
 % % Set the modified home configuration back to the robot
-% show(frankarobot, Initalconfig); % show function does not support code generation
+% show(frankarobot, Initalconfig, ); % show function does not support code generation
 %  interactiveGUI = interactiveRigidBodyTree(frankarobot);
 
 
@@ -72,7 +81,7 @@ end
 
 body_Tcp = rigidBody('Gripper_TCP');
 joint_Tcp = rigidBodyJoint('Gripper_TCP_frame', 'fixed');
-tform_tcp = trvec2tform([0.103399 0 0])*eul2tform([-pi/4 0 0]);
+tform_tcp = trvec2tform([0 0 0.103399])*eul2tform([-pi/4 0 0]);
 setFixedTransform(joint_Tcp,tform_tcp);
 body_Tcp.Joint = joint_Tcp;
 addBody(frankarobot_mdh,body_Tcp,'Franka_link7');
@@ -97,43 +106,113 @@ maxWaypoints = 20;
 % Positions (X Y Z)
 % Define waypoints
 waypoints = [toolPositionHome'; 
-             toolPositionHome' + [-0.1, 0.2, 0.4]; 
-             toolPositionHome' + [-0.2, 0, 0.1]; 
-             toolPositionHome' + [-0.1, -0.2, 0.4]; 
-             toolPositionHome' + [0, 0, 0.2]];
+             toolPositionHome' + [0, 0.1 , 0]; 
+             toolPositionHome' + [0, 0.1, -0.1]; 
+             toolPositionHome' + [0, -0.1, -0.1]; 
+             toolPositionHome'];
 
+% waypoints = [toolPositionHome'; 
+%              toolPositionHome' + [0, 0 , 0]; 
+%              toolPositionHome' + [0, 0, 0]; 
+%              toolPositionHome' + [0, -0, 0]; 
+%              toolPositionHome'];
+% + [0, 0, 0.2]
 % Ensure waypoints are transposed correctly for vertical concatenation
 waypoints = waypoints';
          
 % Euler Angles (Z Y X) relative to the home orientation       
-orientations = [0     0    0;
-                pi/8  0    0; 
-                0    pi/2  0;
-               -pi/8  0    0;
-                0     0    0]';   
-            
+% orientations = [0     0    pi;
+%                 0  0    3*pi/4; 
+%                 0   0  pi/2;
+%                 0   0    3*pi/4;
+%                 0   0    pi]';   
+
+     orientations = [0     0    pi;
+                0  0    pi; 
+                0   0  pi;
+                0   0    pi;
+                0   0    pi]';          
 % Array of waypoint times
 waypointTimes = 0:4:16;
 
 % Trajectory sample time
-ts = 0.01; %10 ms
+ts = 0.001; %10 ms
 trajTimes = 0:ts:waypointTimes(end);
 
 %% Additional parameters
 
 % Boundary conditions (for polynomial trajectories)
 % Velocity (cubic and quintic)
-waypointVels = 0.1 *[ 0  1  0;
-                     -1  0  0;
-                      0 -1  0;
-                      1  0  0;
-                      0  1  0]';
-
+% waypointVels = 0.1 *[ 0  1  0;
+%                      -1  0  0;
+%                       0 -1  0;
+%                       1  0  0;
+%                       0  1  0]';
+waypointVels = 0.1 *[ 0  0  0;
+                     0  0  0;
+                      0 0  0;
+                      0  0  0;
+                      0  0  0]';
 % Acceleration (quintic only)
 waypointAccels = zeros(size(waypointVels));
 
 % Acceleration times (trapezoidal only)
 waypointAccelTimes = diff(waypointTimes)/4;
+
+% Set up plot
+plotMode = 2; % 0 = None, 1 = Trajectory, 2 = Coordinate Frames
+show(frankarobot,Initalconfig,'Frames','off','PreservePlot',false);
+xlim([-1 1]), ylim([-1 1]), zlim([0 1.2])
+hold on
+if plotMode == 1
+    hTraj = plot3(waypoints(1,1),waypoints(2,1),waypoints(3,1),'b.-');
+end
+plot3(waypoints(1,:),waypoints(2,:),waypoints(3,:),'ro','LineWidth',2);
+
+%% Generate and follow trajectory
+% Loop through segments one at a time
+trajType = 'trap';
+numWaypoints = size(waypoints,2);
+for w = 1:numWaypoints-1
+        
+    
+    
+    
+    
+    
+    % Get the initial and final transforms and times for the segment
+    T0 = trvec2tform(waypoints(:,w)') * eul2tform(orientations(:,w)');
+    Tf = trvec2tform(waypoints(:,w+1)') * eul2tform(orientations(:,w+1)');
+    timeInterval = waypointTimes(w:w+1);
+    trajTimes = timeInterval(1):ts:timeInterval(2);
+    
+    % Generate time scaling trajectory for the segment on the range [0 1]
+    switch trajType
+        case 'trap'
+            [s,sd,sdd] = trapveltraj([0 1],numel(trajTimes), ... 
+                                     'EndTime',diff(timeInterval));
+        case 'cubic'
+            [s,sd,sdd] = cubicpolytraj([0 1],timeInterval,trajTimes);
+        case 'quintic'
+            [s,sd,sdd] = quinticpolytraj([0 1],timeInterval,trajTimes);
+        otherwise
+            error('Invalid trajectory type! Use ''trap'', ''cubic'', or ''quintic''');
+    end
+    
+    % Find the transforms from trajectory generation
+    [T,vel,acc] = transformtraj(T0,Tf,timeInterval,trajTimes, ... 
+                                'TimeScaling',[s;sd;sdd]);  
+       
+    % Trajectory visualization for the segment
+    if plotMode == 1
+        eePos = tform2trvec(T);
+        set(hTraj,'xdata',eePos(:,1),'ydata',eePos(:,2),'zdata',eePos(:,3));
+    elseif plotMode == 2
+        plotTransforms(tform2trvec(T),tform2quat(T),'FrameSize',0.05)
+    end
+end
+
+
 
     % eeOffset = 0.12;
     % eeBody = robotics.RigidBody('end_effector');

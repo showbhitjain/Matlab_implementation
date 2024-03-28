@@ -17,16 +17,22 @@ ikInitGuess = gen3.homeConfiguration;
 maxWaypoints = 20;
 
 % Positions (X Y Z)
-waypoints = toolPositionHome' + ... 
-            [0 0 0.2 ; -0.1 0.2 0.4 ; -0.2 0 0.1 ; -0.1 -0.2 0.4 ; 0 0 0.2]';
-         
+% waypoints = toolPositionHome' + ... 
+%             [0 0 0.2 ; -0.1 0.2 0.4 ; -0.2 0 0.1 ; -0.1 -0.2 0.4 ; 0 0 0.2]';
+  waypoints = toolPositionHome' + ... 
+            [0 0 0 ; 0 0 0 ; 0 0 0 ; 0 0 0 ; 0 0 0]';       
 % Euler Angles (Z Y X) relative to the home orientation       
 orientations = [0     0    0;
                 pi/8  0    0; 
                 0    pi/2  0;
                -pi/8  0    0;
-                0     0    0]';   
-            
+                0     0    0]'; 
+
+% orientations = [0     0    0;
+%                 0  0    0; 
+%                 0    0  0;
+%                0  0    0;
+%                 0     0    0]';               
 % Array of waypoint times
 waypointTimes = 0:4:16;
 
@@ -38,11 +44,16 @@ trajTimes = 0:ts:waypointTimes(end);
 
 % Boundary conditions (for polynomial trajectories)
 % Velocity (cubic and quintic)
-waypointVels = 0.1 *[ 0  1  0;
-                     -1  0  0;
-                      0 -1  0;
-                      1  0  0;
-                      0  1  0]';
+% waypointVels = 0.1 *[ 0  1  0;
+%                      -1  0  0;
+%                       0 -1  0;
+%                       1  0  0;
+%                       0  1  0]';
+waypointVels = 0.1 *[ 0  0  0;
+                     0  0  0;
+                      0 0  0;
+                      0  0  0;
+                      0  0  0]';
 
 % Acceleration (quintic only)
 waypointAccels = zeros(size(waypointVels));
