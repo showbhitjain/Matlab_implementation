@@ -11,6 +11,6 @@ function visualizeRobotMatrix(rbtName, eeName, jointAnglesMatrix, waypoints, ori
         visualizeRobot(rbtName, eeName, jointAngles, waypoints, orientations, mode);
 
         % Pause for 1ms (or the provided pause time) to update the visualization
-        pause(pauseTime);
+        %pause(pauseTime);
     end
 end
