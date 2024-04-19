@@ -15,14 +15,14 @@ J = zeros(6, numJoints); % Initialize Jacobian matrix with zeros
         T_end_effector = getTransform(robot,config, 'Gripper_TCP','base');
     else
     % Compute the transformation to the end-effector or to_ith_link
-    T_end_effector = getTransform(robot,config, ['Franka_link',num2str(i)],'base');
+    T_end_effector = getTransform(robot,config, ['robot_link',num2str(i)],'base');
     end
     
     end_effector_position = T_end_effector(1:3, 4);
 
     for i = 1:to_ith_link-1
         % Get the transformation matrix from the base frame to the ith joint
-        T_i = getTransform(robot,config, ['Franka_link',num2str(i)],'base');
+        T_i = getTransform(robot,config, ['robot_link',num2str(i)],'base');
 
         % Extract the z-axis of the ith joint in base frame coordinates
         z_i = T_i(1:3, 1:3) * [0; 0; 1];
