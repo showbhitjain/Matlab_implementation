@@ -56,6 +56,8 @@ function linesegments = createLineSegments(mdhparams,robot,radius,jointangles)
         linesegments(i).radius = radius(i);
     end
 
+    
+
 end
 
 

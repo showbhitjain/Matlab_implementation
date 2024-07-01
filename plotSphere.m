@@ -3,7 +3,7 @@ hold on;
 if nargin < 3
     % If faceColor is not specified, use a default color
     faceColor = [1, 0, 0]; % Default to red
-    faceopacity = 0.1;
+    faceopacity = 0.3;
  end    
 
 % Generate a unit sphere

@@ -38,15 +38,15 @@ function optimizedVisualizeRobot_2(rbtName, jointAnglesMatrix, waypoints, mode,o
      end
    
     if isempty(wayptPlot) && ~isempty(waypoints)
-        wayptPlot = scatter3(ax,waypoints(1,:), waypoints(2,:), waypoints(3,:), 'ro', 'LineWidth', 2);
+        wayptPlot = scatter3(waypoints(1,:), waypoints(2,:), waypoints(3,:), 'o', 'MarkerEdgeColor', [0, 1, 0], 'LineWidth', 2);
     end
     % Plot trajectory only if mode is 2 and it's the first function call or waypoints have changed
     if mode == 2 && (isempty(trajPlot) || ~isequal(waypoints, wayptPlot.XData))
-        trajPlot = plot3(ax, waypoints(1,:), waypoints(2,:), waypoints(3,:), 'b.-');
+        trajPlot = plot3(waypoints(1,:), waypoints(2,:), waypoints(3,:), '.-', 'Color', [0.58, 0, 0.83]);
     end
    if isempty(obstaclePLot) && ~isempty(obstacles)
        for i=1:length(obstacles)
-       plotSphere(obstacles(i).center,obstacles(i).dimensions(1),[1 0 0],0.5)
+       plotSphere(obstacles(i).center,obstacles(i).dimensions(1),[0 0 1],0.5)
        xlim([-1 1]), ylim([-1 1]), zlim([0 1.2]);
        end
    end   

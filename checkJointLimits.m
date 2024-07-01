@@ -10,14 +10,14 @@ function isCrossed = checkJointLimits(currentAngles, minLimits, maxLimits)
     isCrossed = any(lowerCrossed | upperCrossed);
     
     if isCrossed
-        fprintf('Warning: One or more joint limits have been crossed.\n');
+        %fprintf('Warning: One or more joint limits have been crossed.\n');
         % Optionally, find which joints have crossed their limits for detailed debugging:
         for i = 1:length(currentAngles)
             if lowerCrossed(i)
-                fprintf('Joint %d is below the minimum limit: %f < %f\n', i, currentAngles(i), minLimits(i));
+                %fprintf('Joint %d is below the minimum limit: %f < %f\n', i, currentAngles(i), minLimits(i));
             end
             if upperCrossed(i)
-                fprintf('Joint %d is above the maximum limit: %f > %f\n', i, currentAngles(i), maxLimits(i));
+                %fprintf('Joint %d is above the maximum limit: %f > %f\n', i, currentAngles(i), maxLimits(i));
             end
         end
     else

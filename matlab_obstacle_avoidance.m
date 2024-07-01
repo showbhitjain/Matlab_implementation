@@ -1,4 +1,8 @@
 %setup of robot and robot modeling using rigid body tree 
+
+
+clear;
+
 import_robot_panda; 
 clear obstacle_avoidance_equation;
 
@@ -11,8 +15,17 @@ waypoints = [toolPositionHome';
              toolPositionHome' + [0, 0.3 , 0.1]; 
              toolPositionHome' + [0, 0.3, -0.2]; 
              toolPositionHome' + [0, -0.3, -0.2]; 
-             toolPositionHome'];
+             toolPositionHome' + [-0.3 -0.3 -0.2]];
 
+% 
+% waypoints = [toolPositionHome'; 
+%              toolPositionHome' + [0, 0.2 , 0]; 
+%              toolPositionHome' + [0, 0.2, -0.2]; 
+%              toolPositionHome' + [0, -0.3, -0.2]; 
+%              toolPositionHome' + [-0.3 -0.3 -0.2]];
+
+
+%  toolPositionHome' + [0, 0.3 , 0.1]; second waypoint
 % waypoints = [toolPositionHome'; 
 %              toolPositionHome' + [0, 0 , 0]; 
 %              toolPositionHome' + [0, 0, 0]; 
@@ -22,12 +35,13 @@ waypoints = [toolPositionHome';
 % Ensure waypoints are transposed correctly for vertical concatenation
 waypoints = waypoints';
          
+final_position_TCP = waypoints(:,end);
 % Euler Angles (Z Y X) relative to the home orientation       
 % orientations = [0     0    pi;
 %                 0  0    3*pi/4; 
 %                 0   0  pi/2;
 %                 0   0    3*pi/4;
-%                 0   0    pi]';   
+%                 0   0    pi];   
 
      orientations = [0     0    pi;
                 0  0    pi; 
@@ -73,50 +87,52 @@ OBSTACLE_BOX = 3;
 
 obstacle_sphere_1 = struct(...
     'type', OBSTACLE_SPHERE, ...               
-    'center', [0.30, 0.20, 0.8], ...
-    'dimensions', [0.1, 0.1, 0.1], ... 
+    'center', [0.5545, 0.30, 0.6211], ...
+    'dimensions', [0.04, 0.04, 0.04], ... 
     'orientation', [1, 0, 0, 0], ... 
     'axis', 0 ...        
 );
-
+%center_1 [0.30, 0.20, 0.8]
 obstacle_sphere_2 = struct(...
     'type', OBSTACLE_SPHERE, ...               
-    'center', [0, -0.15, 0.8], ...
-    'dimensions', [0.1, 0.1, 0.1], ... 
+    'center', [0.3, -0.25, 0.6], ...
+    'dimensions', [0.05, 0.05, 0.05], ... 
     'orientation', NaN, ... 
     'axis', NaN ...        
 );
-%obstacles = [obstacle_sphere_1 obstacle_sphere_2];
+% obstacle_sphere_3 = struct('type', OBSTACLE_SPHERE, 'center', ...
+%     [0.4, 0.15, 0.7], 'dimensions', [0.03, 0.03, 0.03], 'orientation', NaN, 'axis', NaN);
+obstacles = [obstacle_sphere_1 obstacle_sphere_2];
 %obstacle_bus  =Simulink.Bus.createObject(obstacles);
-obstacles = [obstacle_sphere_1];
-
+%obstacles = [];
+%0 -0.25 0.8
 
 %radius for each link
 radius_of_links = [0.1 0.1 0.1 0.1 0.1 0.1 0.1];
-d_influence = 0.06;
-d_stop = 0.0;
+d_influence = 0.04;
+d_stop = 0.01;
 
 
 %Configuration Paramters Setup for obstacle avoidance and Inverse Kinematics
 % Example of a configuration structure for objective functions
 config = struct();
 config.useObjective1 = false;  % Use infinity norm term
-config.weight1 = 20;         % Weight for objective 1
+config.weight1 = 0.05;         % Weight for objective 1
 
 config.useObjective2 = true;  % Use two-norm term
-config.weight2 = 20;         % Weight for objective 2
+config.weight2 = 0.3;         % Weight for objective 2
 
 config.useObjective3 = false; % Use norm of (jacobi*q_vel - xd_eff_vel)
-config.weight3 = 10;         % Weight for objective 3
+config.weight3 = 2;         % Weight for objective 3
 
-config.useObjective4 = true;  % Use sum of (q_vel - starting_joint_vel)^2
-config.weight4 = 20;         % Weight for objective 4
+config.useObjective4 = false;  % Use sum of (q_vel - q_vel_previous)^2
+config.weight4 = 2;         % Weight for objective 4
 
 config.useObjective5 = false;  % Use  1/(1 + smin(jacobi))
 config.weight5 = 0.4;         % Weight for objective 5
 
 config.useObjective6 = true ; %use of manipulability constraint for Jm' * q_velocity
-config.weight6 = 30;         % singularity avoidance and manipulability maximization
+config.weight6 = 1;         % singularity avoidance and manipulability maximization
 
 % Constraint configuration
 config.applyEqualityConstraints = true;    % Flag to apply equality constraints
@@ -124,10 +140,10 @@ config.applyInequalityConstraints = true;  % Flag to apply inequality constraint
 
 %Slack 
 config.applySlack = true;
-config.Slacklowerbound = [-0.15,-0.15,-0.15,-deg2rad(1),-deg2rad(1),-deg2rad(60)];
-config.Slackupperbound = [0.15,0.15,0.15,deg2rad(1),deg2rad(1),deg2rad(60)];
-config.Slack_penalty_weightmatrix = diag([1 1 1 1 1 1]);
-config.Slack_objective_weight = 30;
+config.Slacklowerbound = [-0.25,-0.25,-0.25,-deg2rad(2),-deg2rad(2),-deg2rad(60)];
+config.Slackupperbound = [0.25,0.25,0.25,deg2rad(2),deg2rad(2),deg2rad(60)];
+config.Slack_penalty_weightmatrix = diag([1 1 1 1 1 0.5]);
+config.Slack_objective_weight = 20;
 %Choose either Obstacle avoidance scheme 1 or 2 otherwise it would result in error;
 
 %Obstacle avoidance scheme1
@@ -141,7 +157,7 @@ config.k = 2 ; %The efficiency of the manipulator to change the velocity of
 % decrease of k, but the burden of the manipulator will increase
 % at the same time.
 
-config.gamma = 10; %gamma defines the joint limit avoidance gain Increasing gamma: 
+config.gamma = 2; %gamma defines the joint limit avoidance gain Increasing gamma: 
 %This means the joint can move faster since the velocity limits are less restrictive.
 % However, it also means that the joint is more prone to reach its physical limits faster, 
 % potentially leading to more abrupt stops or higher dynamic stresses.
@@ -154,15 +170,12 @@ However, it may also limit the responsiveness or speed of the system's movements
 %}
 
 
-
-
-
 %From Here onwards the process starts 
 %Trajectory Generation using trajectory points 
 %COmplete Trajectory Generation
 %Complete Trajectory Generation from start till end
 % Cartesian Motion only
-trajType = 'trap';
+trajType = 'cubic';
 switch trajType
     case 'trap'
         [xd,xd_vel,xdd] = trapveltraj(waypoints,numel(trajTimes), ...
@@ -220,13 +233,6 @@ for w = 1:numWaypoints-1
 end
 
 
-
-
-
-
-
-
-
 %Optimal Inverse kinematics 
 
 %Optimal Inverse kinematics 
@@ -237,7 +243,7 @@ end
 %later on 
 
 joint_velocity = zeros(number_of_joints, numel(trajTimes));
-joint_vector= zeros(number_of_joints, numel(trajTimes));
+joint_vector = zeros(number_of_joints, numel(trajTimes));
 
 
 desired_joint_velocity = zeros(number_of_joints, numel(trajTimes));
@@ -246,15 +252,18 @@ desired_joint_vector = zeros(number_of_joints, numel(trajTimes));
 
 joint_vector(:,1) = Homejointpositions';
 desired_joint_vector(:,1)  = Homejointpositions';
-Kp = diag([2 2 2]);
-Ko = diag([0.1 0.1 0.1]);
+Kp = diag([1 1 1]);
+Ko = diag([1 1 1]);
 
 clear integrate_velocity
 %joint_velocity for obsacle avoidance at t = 0
 joint_velocity_obstacle_avoidance = zeros(number_of_joints,1); 
 
 % Open the log file before the loop starts
-logFile = fopen('obstacle_avoidance_log.txt', 'a');
+%logFile = fopen('obstacle_avoidance_log.txt', 'a');
+mindistance = zeros(1,numel(trajTimes)-1);
+translational_error = zeros(3,numel(trajTimes)-1);
+rotational_error = zeros(3,numel(trajTimes)-1);
 
 for i=1:numel(trajTimes)-1
     %Integrator with start condtion
@@ -263,21 +272,31 @@ for i=1:numel(trajTimes)-1
    x_current = T_endeffector2base(1:3,4);
     
    xd_effective = xd_vel(:,i) + Kp*(xd(:,i) -  x_current );
+    translational_error(:,i) = xd(:,i) -  x_current;
     
    Jacobi_matrix = rearrangejacobi(geometricJacobian(robot,joint_vector(:,i)','Gripper_TCP'),number_of_joints);
    %Jacobi_matrix = jacobian_cartesian(robot,joint_vector(:,i)',8);
    
-   angular_velocity_effective = desired_angular_velocity(:,i); %+ Ko* compute_orientation_Error(T_endeffector2base,desired_quaternions(:,i)');
+   angular_velocity_effective = desired_angular_velocity(:,i) + Ko* compute_orientation_Error(T_endeffector2base,desired_quaternions(:,i)');
+   rotational_error(:,i)  =  compute_orientation_Error(T_endeffector2base,desired_quaternions(:,i)');
    %Concatenate 
    pose_velocity_effective = [xd_effective; angular_velocity_effective]; 
    
    
    
    %Obstacle_avoidance 
-   [J_g, b_g]= obstacle_avoidance_equation(robot,obstacles,joint_vector(:,i)',joint_velocity_obstacle_avoidance',mdhparams,radius_of_links,d_influence,d_stop,config,logFile);
+   if config.obstacle_avoidance_scheme1 || config.obstacle_avoidance_scheme2
 
+       [J_g, b_g, mindistance(i)]= obstacle_avoidance_equation(robot,obstacles,joint_vector(:,i)',joint_velocity_obstacle_avoidance',mdhparams,radius_of_links,d_influence,d_stop,config,[]);
    
-   
+   else
+       J_g = [];
+       b_g = [];
+
+
+   end
+   %config.Slack_objective_weight = 1/ norm(final_position_TCP- x_current) ;
+
    [desired_joint_velocity(:,i), Exit_Flag] = inverse_kinematics_constraints(joint_vector(:,i),Jacobi_matrix,pose_velocity_effective,jointMinValues,jointMaxValues,jointvelMinValues,jointvelMaxValues,J_g,b_g,config);
    if Exit_Flag < 0
        break;
@@ -292,11 +311,12 @@ for i=1:numel(trajTimes)-1
     
    iscrossed =  checkJointLimits(desired_joint_vector(:, i+1)', jointMinValues, jointMaxValues);
    if iscrossed 
-    break;
+         %disp('joint_limits_crossed')   
+       break;
     end
    %desired_joint_vector(:,i+1) =integrate_velocity(desired_joint_velocity(:,i),ts,joint_vector(:,1)) ;
    %Add noise to simulate the measurement from robot 
-   joint_vector(:,i+1) = add_noise(desired_joint_vector(:,i+1),-0.0001,0.0001);
+   joint_vector(:,i+1) = add_noise(desired_joint_vector(:,i+1),-0.0005,0.0005);
     
 %Obstacle_avoidance
 %obstacle_avoidance_equation()
@@ -307,15 +327,17 @@ for i=1:numel(trajTimes)-1
     
 end 
 
+
+
 % Close the log file after the loop
-fclose(logFile);
-
-
-
-
+%fclose(logFile);
 
 
 %Visualization of Results 
 joint_vector_visualization = zeros(numel(trajTimes),9);
 joint_vector_visualization(:,1:number_of_joints) = joint_vector';
 optimizedVisualizeRobot_2('frankarobot',joint_vector_visualization,waypoints,2,obstacles);
+
+
+
+

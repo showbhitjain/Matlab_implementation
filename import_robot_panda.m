@@ -1,4 +1,6 @@
-clc; clear;close all;
+%clc; 
+%clear;
+%close all;
 
 % First column defines  a
 % Second column defines alpha (rad)

@@ -1,17 +1,21 @@
-function [optimal_joint_velocity,Exit_Flag]  = inverse_kinematics_constraints(joint_values,jacobi,xd_eff_vel,jointminvalues,jointmaxvalues,joint_min_vel,joint_max_vel,J_g,b_g,config)
+function [optimal_joint_velocity,Exit_Flag]  = inverse_kinematics_constraints(joint_values,jacobi,xd_eff_vel,jointminvalues,jointmaxvalues,joint_min_vel,joint_max_vel,J_g,b_g,config_input)
 persistent starting_joint_vel is_first_step
 
 n_joints = length(joint_values);  % Assuming 'joint_values' is a column vector
 n_slack = 6;                       % Number of slack variables, one for each end-effector velocity component
-total_variables = n_joints + n_slack;  % Total number of variables in the optimization problem
+%total_variables = n_joints + n_slack;  % Total number of variables in the optimization problem
 
-  
+% Ensure sizes are compatible for code generation
+coder.varsize('starting_joint_vel', [n_joints, 1], [true, false]);
+coder.varsize('optimal_joint_velocity', [n_joints, 1], [true, false]);
+
+  config = config_input;
 
 % Initialize 'starting_joint_vel' if it's the first execution or if it's
 % undefined (starting joint velocity)
 if isempty(is_first_step) || isempty(starting_joint_vel)
     is_first_step = true;
-    starting_joint_vel = zeros(7,1); % Default initialization
+    starting_joint_vel = zeros(n_joints,1); % Default initialization
     
 end
 
@@ -51,11 +55,11 @@ Weightmatrix = diag([1 1 1 1 1 1]);
     
     end
 
-    config.gamma = 1;
+    
  if config.applySlack
     % Define the augmented objective function that includes slack penalty
-    objective = @(q_vel) configurableObjective(q_vel(1:n_joints), jacobi, xd_eff_vel, starting_joint_vel, joint_values,config) ...
-             + config.Slack_objective_weight* q_vel(n_joints+1:end)' * config.Slack_penalty_weightmatrix * q_vel(n_joints+1:end) ;
+    % objective = @(q_vel) configurableObjective(q_vel(1:n_joints), jacobi, xd_eff_vel, starting_joint_vel, joint_values,config) ...
+    %          + config.Slack_objective_weight* q_vel(n_joints+1:end)' * config.Slack_penalty_weightmatrix * q_vel(n_joints+1:end) ;
 
     % Augment the bounds for the slack variables
     lb = [max(config.gamma .* (jointminvalues - joint_values), joint_min_vel); config.Slacklowerbound']; % Slack lower bounds
@@ -76,9 +80,26 @@ Weightmatrix = diag([1 1 1 1 1 1]);
     end 
     % Initial guess should include the slack variables
     q_vel_initial_guess = [starting_joint_vel; zeros(n_slack, 1)];  % Initial guess for the decision variable (joint velocities and slack)
-else
+    if isempty(J_g) && isempty(b_g)
+        Aeq = Weightmatrix * jacobi;
+        beq = xd_eff_vel;
+        A = J_g;
+        b = b_g;
+        config.applySlack = false;
+        % Define the objective function without slack variables
+        %objective = @(q_vel) configurableObjective(q_vel, jacobi, xd_eff_vel, starting_joint_vel,joint_values, config);
+
+        % Set bounds without slack variables
+        lb = max(config.gamma .* (jointminvalues - joint_values), joint_min_vel); % Element-wise max
+        ub = min(config.gamma .* (jointmaxvalues - joint_values), joint_max_vel); % Element-wise min
+
+        % Initial guess without slack variables
+        q_vel_initial_guess = starting_joint_vel;
+    end
+
+ else
     % Define the objective function without slack variables
-    objective = @(q_vel) configurableObjective(q_vel, jacobi, xd_eff_vel, starting_joint_vel,joint_values, config);
+    %objective = @(q_vel) configurableObjective(q_vel, jacobi, xd_eff_vel, starting_joint_vel,joint_values, config);
 
     % Set bounds without slack variables
     lb = max(config.gamma .* (jointminvalues - joint_values), joint_min_vel); % Element-wise max
@@ -87,23 +108,24 @@ else
     % Initial guess without slack variables
     q_vel_initial_guess = starting_joint_vel;
 end
-
+   
+%'Display','off', ...     
 %'Display', 'iter', ... % Displays each iteration progress
 % Set up optimization options
 options = optimoptions('fmincon', 'Algorithm', 'sqp', ...
-                                                    ...
-                       'OptimalityTolerance', 1e-5, ...
+                                            ...
+                       'OptimalityTolerance', 1e-6, ...
                        'ConstraintTolerance', 1e-6, ...
-                       'StepTolerance', 1e-5, ...
+                       'StepTolerance', 1e-6, ...
                        'MaxIterations', 1000);
 
 % Run the optimization
-[q_vel_opt, fval, Exit_Flag] = fmincon(objective, q_vel_initial_guess, A, b, Aeq, beq, lb, ub, [], options);
+[q_vel_opt, ~, Exit_Flag] = fmincon(@(q_vel)objFun(q_vel, jacobi, xd_eff_vel, starting_joint_vel, joint_values, config), q_vel_initial_guess, A, b, Aeq, beq, lb, ub, [], options);
 
 % Separate the optimal joint velocities and slack variables if slack was applied
 if config.applySlack
     optimal_joint_velocity = q_vel_opt(1:n_joints);
-    optimal_slack = q_vel_opt(n_joints+1:end);
+    %optimal_slack = q_vel_opt(n_joints+1:end);
 else
     optimal_joint_velocity = q_vel_opt;
 end
@@ -114,19 +136,24 @@ end
 % disp(q_vel_opt);
 % disp('Objective function value at optimal joint velocity:');
 % disp(fval);
-if Exit_Flag <= 0
-    disp('exit Flag: ')
-    disp(Exit_Flag);
-    % Output the results
-    disp('Optimal joint velocity at infeasable solution:');
-    disp(q_vel_opt);
-    disp('Objective function value at optimal joint velocity:');
-    disp(fval);
-    if Exit_Flag < 0
-        %error('solution converged to an infeasible point')
-    end
-end
+
+
+
+% if Exit_Flag <= 0
+%     disp('exit Flag: ')
+%     disp(Exit_Flag);
+%     % Output the results
+%     disp('Optimal joint velocity at infeasable solution:');
+%     disp(q_vel_opt);
+%     disp('Objective function value at optimal joint velocity:');
+%     disp(fval);
+%     if Exit_Flag < 0
+%         %error('solution converged to an infeasible point')
+%     end
+% end
+
 starting_joint_vel = optimal_joint_velocity;
+
 
 end
 

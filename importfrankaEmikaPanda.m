@@ -259,11 +259,11 @@ obstacles = [obstacle_sphere_1];
 
 robot = frankarobot_mdh;
 %radius for each link
-radius_of_links = [0.1 0.1 0.1 0.1 0.1 0.1 0.1];
+radius_of_links = [0.15 0.15 0.15 0.15 0.15 0.15 0.15];
 d_influence = 0.06;
 d_stop = 0.02;
 jointAngles = Homejointpositions;
-lineegments = createLineSegments(mdhparams,robot,radius_of_links,jointAngles);
+linesegments = createLineSegments(mdhparams,robot,radius_of_links,jointAngles);
 
 % obstaclesStruct = struct(...
 %     'Obstacle1', obstacle_sphere_1,...

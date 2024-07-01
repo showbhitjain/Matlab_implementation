@@ -2,7 +2,9 @@ function Jm_transposed = computeManipulabilityJacobian(joint_values)
     % Compute the Jacobian and Hessian first
     %[~, J, H] = computeKinematics(joint_values, mdhparams); because of syms was too slow
     
-    J = Jacobi_final_link(joint_values);
+    %J = Jacobi_final_link1(joint_values); %for code generation
+    %H = Hessian_final_link(joint_values); %for code generation
+    J = Jacobi_final_link1(joint_values);
     H = Hessian_final_link(joint_values);
     % Compute the manipulability measure 'm'
     JJt = J * J';

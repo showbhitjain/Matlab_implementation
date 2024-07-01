@@ -18,7 +18,7 @@ function optimizedVisualizeRobot_withlinesegments(rbtName_robot_visualisation, r
         figure;
         ax = show(robot, robot.homeConfiguration, 'Frames', 'off');
        
-        title('Robot Trajectory Visualization');
+        title('Robot Visualization');
         xlim([-1 1]), ylim([-1 1]), zlim([0 1.2]);
         wayptPlot = [];
         trajPlot = [];
@@ -31,19 +31,21 @@ function optimizedVisualizeRobot_withlinesegments(rbtName_robot_visualisation, r
     % Plot waypoints if available
      if isempty(wayptPlot) && ~isempty(waypoints)
         
-         wayptPlot = scatter3(ax,waypoints(1,:), waypoints(2,:), waypoints(3,:), 'ro', 'LineWidth', 2);
+         wayptPlot = scatter3(waypoints(1,:), waypoints(2,:), waypoints(3,:), 'o', 'MarkerEdgeColor', [0, 1, 0], 'LineWidth', 2);
     end
     % Plot trajectory only if mode is 2 and it's the first function call or waypoints have changed
     if mode == 2 && (isempty(trajPlot) || ~isequal(waypoints, wayptPlot.XData))
         
-        trajPlot = plot3(ax, waypoints(1,:), waypoints(2,:), waypoints(3,:), 'b.-');
+       % trajPlot = plot3(waypoints(1,:), waypoints(2,:), waypoints(3,:), '.-', 'Color', [0.58, 0, 0.83]);
+        trajPlot = plot3(waypoints(1,:), waypoints(2,:), waypoints(3,:), '.-', 'Color', [0, 0, 0]);
     end
 
+
     if isempty(obstaclePLot) && ~isempty(obstacles)
-    obstaclePLot = gobjects(length(obstacles), 1); % Initialize array to hold plot handles
-    for i = 1:length(obstacles)
-        obstaclePLot(i) = plotSphere(obstacles(i).center, obstacles(i).dimensions(1), [1 0 0], 0.5);
-    end
+        obstaclePLot = gobjects(length(obstacles), 1); % Initialize array to hold plot handles
+        for i = 1:length(obstacles)
+            obstaclePLot(i) = plotSphere(obstacles(i).center, obstacles(i).dimensions(1), [0 0 1], 0.5);
+        end
     end
     realTimeStart = tic; % Restart the timer
     idx = 1;
@@ -82,7 +84,7 @@ function optimizedVisualizeRobot_withlinesegments(rbtName_robot_visualisation, r
 
         xlim([-1 1]);
         ylim([-1 1]);
-        zlim([-1 1]);
+       zlim([-0.3 1]);
         if ~isgraphics(elapsedText)
             elapsedText = text(0.05, 0.95, '', 'Units', 'normalized', 'VerticalAlignment', 'top', 'FontSize', 12, 'Parent', ax);
         end

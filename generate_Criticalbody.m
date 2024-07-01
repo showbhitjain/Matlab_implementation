@@ -12,4 +12,5 @@ joint_critical = rigidBodyJoint(critical_joint_name,'fixed');
 relative_distance_to_vo_tform = trvec2tform(relative_distance_to_vo);
 setFixedTransform(joint_critical,relative_distance_to_vo_tform);
 body_critical.Joint = joint_critical;
-end 
+
+end

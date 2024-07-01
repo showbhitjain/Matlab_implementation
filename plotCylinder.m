@@ -5,7 +5,7 @@ function plotCylinder(v0, v1, radius,faceColor,faceopacity)
 if nargin < 4
     % If faceColor is not specified, use a default color
     faceColor = [1, 0, 0]; % Default to red
-    faceopacity = 0.1;
+    faceopacity = 0.3;
  end  
 % Number of points around the circumference of the cylinder
     numPoints = 20;

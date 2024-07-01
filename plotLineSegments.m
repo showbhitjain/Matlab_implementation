@@ -6,6 +6,9 @@ function plotLineSegments(linesegments)
     xlim('auto');
     ylim('auto');
     zlim('auto');
+
+
+
     % Loop through each linesegment
     for i = 1:length(linesegments)
         % Plot 'a' segment if it exists
