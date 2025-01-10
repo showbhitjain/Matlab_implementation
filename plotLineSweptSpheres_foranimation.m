@@ -27,6 +27,5 @@ function h = plotLineSweptSpheres_foranimation(linesegments, ax)
             idx = idx + 1;
         end
     end
-
-   
+  
 end

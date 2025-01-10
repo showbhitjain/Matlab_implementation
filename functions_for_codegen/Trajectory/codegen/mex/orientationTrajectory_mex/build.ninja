@@ -1,0 +1,77 @@
+# CompilerName=gcc
+# Mode=optim
+ninja_required_version = 1.3
+
+# Basic folders
+root = .
+builddir = $root/build/glnxa64
+matlabdir = /usr/local/MATLAB/R2023b
+startdir = /home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory
+
+# Toolchain information
+cc = gcc
+cxx = /usr/bin/g++
+linker = gcc
+linkerxx = /usr/bin/g++
+
+cflags =  -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -std=c99 -I "$root" -I "$startdir" -I "$root/interface" -I "$matlabdir/extern/include" -I "." -DMODEL=orientationTrajectory_mex -DMW_NEEDS_VERSION_H -msse2 -c -fopenmp -DOMPLIBNAME="$matlabdir/sys/os/glnxa64/libiomp5.so" 
+
+cxxflags =  -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I "$root" -I "$startdir" -I "$root/interface" -I "$matlabdir/extern/include" -I "." -DMODEL=orientationTrajectory_mex -DMW_NEEDS_VERSION_H -msse2 -c -fopenmp -DOMPLIBNAME="$matlabdir/sys/os/glnxa64/libiomp5.so" 
+
+ldflags =  -pthread -Wl,--no-undefined  -shared -lstdc++ -Wl,--as-needed -Wl,-rpath-link,$matlabdir/bin/glnxa64 -L"$matlabdir/bin/glnxa64" -Wl,-rpath-link,$matlabdir/extern/bin/glnxa64 -L"$matlabdir/extern/bin/glnxa64" -lMatlabDataArray -lmx -lmex -lm -lmat  -Wl,-Bsymbolic -o orientationTrajectory_mex.mexa64 -Wl,--exclude-libs,ALL -L"$matlabdir/bin/glnxa64" -lmwblas -lemlrt -lcovrt -lut -lmwmathutil -fPIC -L"$matlabdir/sys/os/glnxa64" -liomp5
+
+linkobjs = 
+
+# Build Rules
+rule cc
+    command = $cc $cflags $in -o $out
+
+rule cxx
+    command = $cxx $cxxflags $in -o $out
+
+rule link
+    command = $linker $in $linkobjs $ldflags
+
+rule linkxx
+    command = $linkerxx $in $linkobjs $ldflags
+
+# Build
+build $builddir/orientationTrajectory_mex_data.o : cxx $root/orientationTrajectory_mex_data.cpp
+build $builddir/rt_nonfinite.o : cxx $root/rt_nonfinite.cpp
+build $builddir/orientationTrajectory_mex_initialize.o : cxx $root/orientationTrajectory_mex_initialize.cpp
+build $builddir/orientationTrajectory_mex_terminate.o : cxx $root/orientationTrajectory_mex_terminate.cpp
+build $builddir/orientationTrajectory.o : cxx $root/orientationTrajectory.cpp
+build $builddir/colon.o : cxx $root/colon.cpp
+build $builddir/eul2quat.o : cxx $root/eul2quat.cpp
+build $builddir/trapveltraj.o : cxx $root/trapveltraj.cpp
+build $builddir/linspace.o : cxx $root/linspace.cpp
+build $builddir/mpower.o : cxx $root/mpower.cpp
+build $builddir/ppval.o : cxx $root/ppval.cpp
+build $builddir/cubicpolytraj.o : cxx $root/cubicpolytraj.cpp
+build $builddir/find.o : cxx $root/find.cpp
+build $builddir/quinticpolytraj.o : cxx $root/quinticpolytraj.cpp
+build $builddir/rottraj.o : cxx $root/rottraj.cpp
+build $builddir/validateattributes.o : cxx $root/validateattributes.cpp
+build $builddir/constructLinearTimeScaling.o : cxx $root/constructLinearTimeScaling.cpp
+build $builddir/validateTimeScaling.o : cxx $root/validateTimeScaling.cpp
+build $builddir/isequal.o : cxx $root/isequal.cpp
+build $builddir/positionTrajectory.o : cxx $root/positionTrajectory.cpp
+build $builddir/diff.o : cxx $root/diff.cpp
+build $builddir/repmat.o : cxx $root/repmat.cpp
+build $builddir/addFlatSegmentsToPPFormParts.o : cxx $root/addFlatSegmentsToPPFormParts.cpp
+build $builddir/assertValidSizeArg.o : cxx $root/assertValidSizeArg.cpp
+build $builddir/bsearch.o : cxx $root/bsearch.cpp
+build $builddir/_coder_orientationTrajectory_mex_api.o : cxx $root/interface/_coder_orientationTrajectory_mex_api.cpp
+build $builddir/_coder_orientationTrajectory_mex_mex.o : cxx $root/interface/_coder_orientationTrajectory_mex_mex.cpp
+build $builddir/eml_int_forloop_overflow_check.o : cxx $root/eml_int_forloop_overflow_check.cpp
+build $builddir/sumMatrixIncludeNaN.o : cxx $root/sumMatrixIncludeNaN.cpp
+build $builddir/changeEndSegBreaks.o : cxx $root/changeEndSegBreaks.cpp
+build $builddir/log.o : cxx $root/log.cpp
+build $builddir/div.o : cxx $root/div.cpp
+build $builddir/quaternion.o : cxx $root/quaternion.cpp
+build $builddir/orientationTrajectory_mex_mexutil.o : cxx $root/orientationTrajectory_mex_mexutil.cpp
+build $builddir/_coder_orientationTrajectory_mex_info.o : cxx $root/interface/_coder_orientationTrajectory_mex_info.cpp
+build $builddir/cpp_mexapi_version.o : cxx $matlabdir/extern/version/cpp_mexapi_version.cpp
+
+# Link
+build $root/orientationTrajectory_mex.mexa64 : linkxx $builddir/orientationTrajectory_mex_data.o $builddir/rt_nonfinite.o $builddir/orientationTrajectory_mex_initialize.o $builddir/orientationTrajectory_mex_terminate.o $builddir/orientationTrajectory.o $builddir/colon.o $builddir/eul2quat.o $builddir/trapveltraj.o $builddir/linspace.o $builddir/mpower.o $builddir/ppval.o $builddir/cubicpolytraj.o $builddir/find.o $builddir/quinticpolytraj.o $builddir/rottraj.o $builddir/validateattributes.o $builddir/constructLinearTimeScaling.o $builddir/validateTimeScaling.o $builddir/isequal.o $builddir/positionTrajectory.o $builddir/diff.o $builddir/repmat.o $builddir/addFlatSegmentsToPPFormParts.o $builddir/assertValidSizeArg.o $builddir/bsearch.o $builddir/_coder_orientationTrajectory_mex_api.o $builddir/_coder_orientationTrajectory_mex_mex.o $builddir/eml_int_forloop_overflow_check.o $builddir/sumMatrixIncludeNaN.o $builddir/changeEndSegBreaks.o $builddir/log.o $builddir/div.o $builddir/quaternion.o $builddir/orientationTrajectory_mex_mexutil.o $builddir/_coder_orientationTrajectory_mex_info.o $builddir/cpp_mexapi_version.o 

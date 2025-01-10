@@ -1,7 +1,6 @@
 function [J_g,b_g,minimum_distance_robot_obstacle] = obstacle_avoidance_equation(robot,obstacles,jointAngles,joint_velocity_obstacle_avoidance,mdhparams,radius_of_linesegments,d_influence,d_stop,config,logFile) %Homejointpositions,jointMinValues,jointMaxValues,Gripper_position,Gripper_orientation)
 
 
-
 %d_influence = 0.06;
 %d_stop = 0.02;
 %jointAngles = Homejointpositions;
@@ -84,7 +83,7 @@ for l = 1:length(obstacles)
         if criticalPoints(i,l).has_criticalpoints_D && ~any(isnan(criticalPoints(i,l).roc_D)) %&& norm(linesegments(i).roc_D) <= d_influence
             T_Cd = getTransform(robot,jointAngles,sprintf('Critical_Point_Link_D_%d%d', int32(i), int32(l)),'base');
             position_cd = T_Cd(1:3,4);
-            roc = position_cd-(obstacles(l).center)' ;
+            roc = position_cd-(obstacles(l).center)';
             roc_normalised = roc ./ norm(roc);
             dist_roc = norm(roc) - obstacles(l).dimensions(1) - linesegments(i).radius;
             dist_crit_d = dist_roc .* roc_normalised;
@@ -141,7 +140,9 @@ for l = 1:length(obstacles)
                 criticalPoints(i,l).jointVelocity_critical_A = joint_velocity_obstacle_avoidance;
                 criticalPoints(i,l).roc_A = dist_A;
                 criticalPoints(i,l).distance = norm(dist_A);
+
             end
+            
             if ~any(isnan(linesegments(i).dSegmentV0)) && any(isnan(criticalPoints(i,l).roc_D)) && ~(criticalPoints(i,l).has_criticalpoints_D)
 
                 [s_range_D,dist_D,~,~] =  calculate_distance_lss_pss(linesegments(i).dSegmentV0,linesegments(i).dSegmentV1, ...
@@ -358,7 +359,7 @@ if config.obstacle_avoidance_scheme1
     b_g = b_g_calculate(1:b_counter);
 end
 
-if config.obstacle_avoidance_scheme2
+if  config.obstacle_avoidance_scheme2
     J_g = J_0_calculate(1:J_counter, :);
     b_g = b_0_calculate(1:b_counter);
 end

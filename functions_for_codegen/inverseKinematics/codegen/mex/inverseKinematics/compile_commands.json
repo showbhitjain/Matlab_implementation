@@ -1,0 +1,602 @@
+[
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  inverseKinematics_data.cpp -o build/glnxa64/inverseKinematics_data.o",
+    "file": "inverseKinematics_data.cpp",
+    "output": "build/glnxa64/inverseKinematics_data.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  rt_nonfinite.cpp -o build/glnxa64/rt_nonfinite.o",
+    "file": "rt_nonfinite.cpp",
+    "output": "build/glnxa64/rt_nonfinite.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  inverseKinematics_initialize.cpp -o build/glnxa64/inverseKinematics_initialize.o",
+    "file": "inverseKinematics_initialize.cpp",
+    "output": "build/glnxa64/inverseKinematics_initialize.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  inverseKinematics_terminate.cpp -o build/glnxa64/inverseKinematics_terminate.o",
+    "file": "inverseKinematics_terminate.cpp",
+    "output": "build/glnxa64/inverseKinematics_terminate.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  inverseKinematics.cpp -o build/glnxa64/inverseKinematics.o",
+    "file": "inverseKinematics.cpp",
+    "output": "build/glnxa64/inverseKinematics.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  checkX0.cpp -o build/glnxa64/checkX0.o",
+    "file": "checkX0.cpp",
+    "output": "build/glnxa64/checkX0.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  checkLinearInputs.cpp -o build/glnxa64/checkLinearInputs.o",
+    "file": "checkLinearInputs.cpp",
+    "output": "build/glnxa64/checkLinearInputs.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  all.cpp -o build/glnxa64/all.o",
+    "file": "all.cpp",
+    "output": "build/glnxa64/all.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  any1.cpp -o build/glnxa64/any1.o",
+    "file": "any1.cpp",
+    "output": "build/glnxa64/any1.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  eye.cpp -o build/glnxa64/eye.o",
+    "file": "eye.cpp",
+    "output": "build/glnxa64/eye.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  factoryConstruct.cpp -o build/glnxa64/factoryConstruct.o",
+    "file": "factoryConstruct.cpp",
+    "output": "build/glnxa64/factoryConstruct.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  factoryConstruct1.cpp -o build/glnxa64/factoryConstruct1.o",
+    "file": "factoryConstruct1.cpp",
+    "output": "build/glnxa64/factoryConstruct1.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  factoryConstruct2.cpp -o build/glnxa64/factoryConstruct2.o",
+    "file": "factoryConstruct2.cpp",
+    "output": "build/glnxa64/factoryConstruct2.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  indexShapeCheck.cpp -o build/glnxa64/indexShapeCheck.o",
+    "file": "indexShapeCheck.cpp",
+    "output": "build/glnxa64/indexShapeCheck.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  mtimes.cpp -o build/glnxa64/mtimes.o",
+    "file": "mtimes.cpp",
+    "output": "build/glnxa64/mtimes.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  sum.cpp -o build/glnxa64/sum.o",
+    "file": "sum.cpp",
+    "output": "build/glnxa64/sum.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  sumMatrixIncludeNaN.cpp -o build/glnxa64/sumMatrixIncludeNaN.o",
+    "file": "sumMatrixIncludeNaN.cpp",
+    "output": "build/glnxa64/sumMatrixIncludeNaN.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  svd.cpp -o build/glnxa64/svd.o",
+    "file": "svd.cpp",
+    "output": "build/glnxa64/svd.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  Jacobi_final_link.cpp -o build/glnxa64/Jacobi_final_link.o",
+    "file": "Jacobi_final_link.cpp",
+    "output": "build/glnxa64/Jacobi_final_link.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  Hessian_final_link.cpp -o build/glnxa64/Hessian_final_link.o",
+    "file": "Hessian_final_link.cpp",
+    "output": "build/glnxa64/Hessian_final_link.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  inv.cpp -o build/glnxa64/inv.o",
+    "file": "inv.cpp",
+    "output": "build/glnxa64/inv.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  warning.cpp -o build/glnxa64/warning.o",
+    "file": "warning.cpp",
+    "output": "build/glnxa64/warning.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  computeDualFeasError.cpp -o build/glnxa64/computeDualFeasError.o",
+    "file": "computeDualFeasError.cpp",
+    "output": "build/glnxa64/computeDualFeasError.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  isDeltaXTooSmall.cpp -o build/glnxa64/isDeltaXTooSmall.o",
+    "file": "isDeltaXTooSmall.cpp",
+    "output": "build/glnxa64/isDeltaXTooSmall.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  interface/_coder_inverseKinematics_api.cpp -o build/glnxa64/_coder_inverseKinematics_api.o",
+    "file": "interface/_coder_inverseKinematics_api.cpp",
+    "output": "build/glnxa64/_coder_inverseKinematics_api.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  interface/_coder_inverseKinematics_mex.cpp -o build/glnxa64/_coder_inverseKinematics_mex.o",
+    "file": "interface/_coder_inverseKinematics_mex.cpp",
+    "output": "build/glnxa64/_coder_inverseKinematics_mex.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  eml_int_forloop_overflow_check.cpp -o build/glnxa64/eml_int_forloop_overflow_check.o",
+    "file": "eml_int_forloop_overflow_check.cpp",
+    "output": "build/glnxa64/eml_int_forloop_overflow_check.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  computeMeritFcn.cpp -o build/glnxa64/computeMeritFcn.o",
+    "file": "computeMeritFcn.cpp",
+    "output": "build/glnxa64/computeMeritFcn.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  computePrimalFeasError.cpp -o build/glnxa64/computePrimalFeasError.o",
+    "file": "computePrimalFeasError.cpp",
+    "output": "build/glnxa64/computePrimalFeasError.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  computeComplError.cpp -o build/glnxa64/computeComplError.o",
+    "file": "computeComplError.cpp",
+    "output": "build/glnxa64/computeComplError.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  fmincon.cpp -o build/glnxa64/fmincon.o",
+    "file": "fmincon.cpp",
+    "output": "build/glnxa64/fmincon.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  compressBounds.cpp -o build/glnxa64/compressBounds.o",
+    "file": "compressBounds.cpp",
+    "output": "build/glnxa64/compressBounds.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  loadProblem.cpp -o build/glnxa64/loadProblem.o",
+    "file": "loadProblem.cpp",
+    "output": "build/glnxa64/loadProblem.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  removeDependentLinearEq.cpp -o build/glnxa64/removeDependentLinearEq.o",
+    "file": "removeDependentLinearEq.cpp",
+    "output": "build/glnxa64/removeDependentLinearEq.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  ComputeNumDependentEq_.cpp -o build/glnxa64/ComputeNumDependentEq_.o",
+    "file": "ComputeNumDependentEq_.cpp",
+    "output": "build/glnxa64/ComputeNumDependentEq_.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  xgeqp3.cpp -o build/glnxa64/xgeqp3.o",
+    "file": "xgeqp3.cpp",
+    "output": "build/glnxa64/xgeqp3.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  computeQ_.cpp -o build/glnxa64/computeQ_.o",
+    "file": "computeQ_.cpp",
+    "output": "build/glnxa64/computeQ_.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  IndexOfDependentEq_.cpp -o build/glnxa64/IndexOfDependentEq_.o",
+    "file": "IndexOfDependentEq_.cpp",
+    "output": "build/glnxa64/IndexOfDependentEq_.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  countsort.cpp -o build/glnxa64/countsort.o",
+    "file": "countsort.cpp",
+    "output": "build/glnxa64/countsort.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  evalObjAndConstrAndDerivatives.cpp -o build/glnxa64/evalObjAndConstrAndDerivatives.o",
+    "file": "evalObjAndConstrAndDerivatives.cpp",
+    "output": "build/glnxa64/evalObjAndConstrAndDerivatives.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  computeObjective_.cpp -o build/glnxa64/computeObjective_.o",
+    "file": "computeObjective_.cpp",
+    "output": "build/glnxa64/computeObjective_.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  xgetrf.cpp -o build/glnxa64/xgetrf.o",
+    "file": "xgetrf.cpp",
+    "output": "build/glnxa64/xgetrf.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  computeFiniteDifferences.cpp -o build/glnxa64/computeFiniteDifferences.o",
+    "file": "computeFiniteDifferences.cpp",
+    "output": "build/glnxa64/computeFiniteDifferences.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  xgemv.cpp -o build/glnxa64/xgemv.o",
+    "file": "xgemv.cpp",
+    "output": "build/glnxa64/xgemv.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  setProblemType.cpp -o build/glnxa64/setProblemType.o",
+    "file": "setProblemType.cpp",
+    "output": "build/glnxa64/setProblemType.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  modifyOverheadPhaseOne_.cpp -o build/glnxa64/modifyOverheadPhaseOne_.o",
+    "file": "modifyOverheadPhaseOne_.cpp",
+    "output": "build/glnxa64/modifyOverheadPhaseOne_.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  modifyOverheadRegularized_.cpp -o build/glnxa64/modifyOverheadRegularized_.o",
+    "file": "modifyOverheadRegularized_.cpp",
+    "output": "build/glnxa64/modifyOverheadRegularized_.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  driver.cpp -o build/glnxa64/driver.o",
+    "file": "driver.cpp",
+    "output": "build/glnxa64/driver.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  test_exit.cpp -o build/glnxa64/test_exit.o",
+    "file": "test_exit.cpp",
+    "output": "build/glnxa64/test_exit.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  xcopy.cpp -o build/glnxa64/xcopy.o",
+    "file": "xcopy.cpp",
+    "output": "build/glnxa64/xcopy.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  xtrsv.cpp -o build/glnxa64/xtrsv.o",
+    "file": "xtrsv.cpp",
+    "output": "build/glnxa64/xtrsv.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  sortLambdaQP.cpp -o build/glnxa64/sortLambdaQP.o",
+    "file": "sortLambdaQP.cpp",
+    "output": "build/glnxa64/sortLambdaQP.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  saveState.cpp -o build/glnxa64/saveState.o",
+    "file": "saveState.cpp",
+    "output": "build/glnxa64/saveState.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  step.cpp -o build/glnxa64/step.o",
+    "file": "step.cpp",
+    "output": "build/glnxa64/step.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  driver1.cpp -o build/glnxa64/driver1.o",
+    "file": "driver1.cpp",
+    "output": "build/glnxa64/driver1.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  PresolveWorkingSet.cpp -o build/glnxa64/PresolveWorkingSet.o",
+    "file": "PresolveWorkingSet.cpp",
+    "output": "build/glnxa64/PresolveWorkingSet.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  moveConstraint_.cpp -o build/glnxa64/moveConstraint_.o",
+    "file": "moveConstraint_.cpp",
+    "output": "build/glnxa64/moveConstraint_.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  feasibleX0ForWorkingSet.cpp -o build/glnxa64/feasibleX0ForWorkingSet.o",
+    "file": "feasibleX0ForWorkingSet.cpp",
+    "output": "build/glnxa64/feasibleX0ForWorkingSet.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  xgeqrf.cpp -o build/glnxa64/xgeqrf.o",
+    "file": "xgeqrf.cpp",
+    "output": "build/glnxa64/xgeqrf.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  factorQR.cpp -o build/glnxa64/factorQR.o",
+    "file": "factorQR.cpp",
+    "output": "build/glnxa64/factorQR.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  maxConstraintViolation.cpp -o build/glnxa64/maxConstraintViolation.o",
+    "file": "maxConstraintViolation.cpp",
+    "output": "build/glnxa64/maxConstraintViolation.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  RemoveDependentIneq_.cpp -o build/glnxa64/RemoveDependentIneq_.o",
+    "file": "RemoveDependentIneq_.cpp",
+    "output": "build/glnxa64/RemoveDependentIneq_.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  removeAllIneqConstr.cpp -o build/glnxa64/removeAllIneqConstr.o",
+    "file": "removeAllIneqConstr.cpp",
+    "output": "build/glnxa64/removeAllIneqConstr.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  computeFval.cpp -o build/glnxa64/computeFval.o",
+    "file": "computeFval.cpp",
+    "output": "build/glnxa64/computeFval.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  linearForm_.cpp -o build/glnxa64/linearForm_.o",
+    "file": "linearForm_.cpp",
+    "output": "build/glnxa64/linearForm_.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  iterate.cpp -o build/glnxa64/iterate.o",
+    "file": "iterate.cpp",
+    "output": "build/glnxa64/iterate.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  computeGrad_StoreHx.cpp -o build/glnxa64/computeGrad_StoreHx.o",
+    "file": "computeGrad_StoreHx.cpp",
+    "output": "build/glnxa64/computeGrad_StoreHx.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  computeFval_ReuseHx.cpp -o build/glnxa64/computeFval_ReuseHx.o",
+    "file": "computeFval_ReuseHx.cpp",
+    "output": "build/glnxa64/computeFval_ReuseHx.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  squareQ_appendCol.cpp -o build/glnxa64/squareQ_appendCol.o",
+    "file": "squareQ_appendCol.cpp",
+    "output": "build/glnxa64/squareQ_appendCol.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  deleteColMoveEnd.cpp -o build/glnxa64/deleteColMoveEnd.o",
+    "file": "deleteColMoveEnd.cpp",
+    "output": "build/glnxa64/deleteColMoveEnd.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  compute_deltax.cpp -o build/glnxa64/compute_deltax.o",
+    "file": "compute_deltax.cpp",
+    "output": "build/glnxa64/compute_deltax.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  factor.cpp -o build/glnxa64/factor.o",
+    "file": "factor.cpp",
+    "output": "build/glnxa64/factor.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  xpotrf.cpp -o build/glnxa64/xpotrf.o",
+    "file": "xpotrf.cpp",
+    "output": "build/glnxa64/xpotrf.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  factor1.cpp -o build/glnxa64/factor1.o",
+    "file": "factor1.cpp",
+    "output": "build/glnxa64/factor1.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  xger.cpp -o build/glnxa64/xger.o",
+    "file": "xger.cpp",
+    "output": "build/glnxa64/xger.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  solve.cpp -o build/glnxa64/solve.o",
+    "file": "solve.cpp",
+    "output": "build/glnxa64/solve.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  solve1.cpp -o build/glnxa64/solve1.o",
+    "file": "solve1.cpp",
+    "output": "build/glnxa64/solve1.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  xgemm.cpp -o build/glnxa64/xgemm.o",
+    "file": "xgemm.cpp",
+    "output": "build/glnxa64/xgemm.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  compute_lambda.cpp -o build/glnxa64/compute_lambda.o",
+    "file": "compute_lambda.cpp",
+    "output": "build/glnxa64/compute_lambda.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  addBoundToActiveSetMatrix_.cpp -o build/glnxa64/addBoundToActiveSetMatrix_.o",
+    "file": "addBoundToActiveSetMatrix_.cpp",
+    "output": "build/glnxa64/addBoundToActiveSetMatrix_.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  checkStoppingAndUpdateFval.cpp -o build/glnxa64/checkStoppingAndUpdateFval.o",
+    "file": "checkStoppingAndUpdateFval.cpp",
+    "output": "build/glnxa64/checkStoppingAndUpdateFval.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  addAeqConstr.cpp -o build/glnxa64/addAeqConstr.o",
+    "file": "addAeqConstr.cpp",
+    "output": "build/glnxa64/addAeqConstr.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  makeBoundFeasible.cpp -o build/glnxa64/makeBoundFeasible.o",
+    "file": "makeBoundFeasible.cpp",
+    "output": "build/glnxa64/makeBoundFeasible.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  relaxed.cpp -o build/glnxa64/relaxed.o",
+    "file": "relaxed.cpp",
+    "output": "build/glnxa64/relaxed.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  assignResidualsToXSlack.cpp -o build/glnxa64/assignResidualsToXSlack.o",
+    "file": "assignResidualsToXSlack.cpp",
+    "output": "build/glnxa64/assignResidualsToXSlack.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  soc.cpp -o build/glnxa64/soc.o",
+    "file": "soc.cpp",
+    "output": "build/glnxa64/soc.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  evalObjAndConstr.cpp -o build/glnxa64/evalObjAndConstr.o",
+    "file": "evalObjAndConstr.cpp",
+    "output": "build/glnxa64/evalObjAndConstr.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  BFGSUpdate.cpp -o build/glnxa64/BFGSUpdate.o",
+    "file": "BFGSUpdate.cpp",
+    "output": "build/glnxa64/BFGSUpdate.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  updateWorkingSetForNewQP.cpp -o build/glnxa64/updateWorkingSetForNewQP.o",
+    "file": "updateWorkingSetForNewQP.cpp",
+    "output": "build/glnxa64/updateWorkingSetForNewQP.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  initActiveSet.cpp -o build/glnxa64/initActiveSet.o",
+    "file": "initActiveSet.cpp",
+    "output": "build/glnxa64/initActiveSet.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  saveJacobian.cpp -o build/glnxa64/saveJacobian.o",
+    "file": "saveJacobian.cpp",
+    "output": "build/glnxa64/saveJacobian.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  computeLinearResiduals.cpp -o build/glnxa64/computeLinearResiduals.o",
+    "file": "computeLinearResiduals.cpp",
+    "output": "build/glnxa64/computeLinearResiduals.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  computeGradLag.cpp -o build/glnxa64/computeGradLag.o",
+    "file": "computeGradLag.cpp",
+    "output": "build/glnxa64/computeGradLag.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  feasibleratiotest.cpp -o build/glnxa64/feasibleratiotest.o",
+    "file": "feasibleratiotest.cpp",
+    "output": "build/glnxa64/feasibleratiotest.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  configurableObjective.cpp -o build/glnxa64/configurableObjective.o",
+    "file": "configurableObjective.cpp",
+    "output": "build/glnxa64/configurableObjective.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  partialColLDL3_.cpp -o build/glnxa64/partialColLDL3_.o",
+    "file": "partialColLDL3_.cpp",
+    "output": "build/glnxa64/partialColLDL3_.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  fullColLDL2_.cpp -o build/glnxa64/fullColLDL2_.o",
+    "file": "fullColLDL2_.cpp",
+    "output": "build/glnxa64/fullColLDL2_.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  inverseKinematics_mexutil.cpp -o build/glnxa64/inverseKinematics_mexutil.o",
+    "file": "inverseKinematics_mexutil.cpp",
+    "output": "build/glnxa64/inverseKinematics_mexutil.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  interface/_coder_inverseKinematics_info.cpp -o build/glnxa64/_coder_inverseKinematics_info.o",
+    "file": "interface/_coder_inverseKinematics_info.cpp",
+    "output": "build/glnxa64/_coder_inverseKinematics_info.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics/codegen/mex/inverseKinematics",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/inverseKinematics\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematics_mex -DMW_NEEDS_VERSION_H -msse2 -c  /usr/local/MATLAB/R2023b/extern/version/cpp_mexapi_version.cpp -o build/glnxa64/cpp_mexapi_version.o",
+    "file": "/usr/local/MATLAB/R2023b/extern/version/cpp_mexapi_version.cpp",
+    "output": "build/glnxa64/cpp_mexapi_version.o"
+  }
+]

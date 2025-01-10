@@ -1,6 +1,6 @@
-function createKinematicsFunctions(mdhparams)
-    % Define symbolic variables for the joint angles
-    syms theta [1 7] real; % Adjust the '7' if the number of joints is different
+function createKinematicsFunctions(mdhparams, number_Joints)
+    % Define symbolic variables for the joint angles dynamically
+    theta = sym('theta', [1 number_Joints], 'real');
 
     % Extract DH parameters
     a = mdhparams(:,1);
@@ -9,18 +9,19 @@ function createKinematicsFunctions(mdhparams)
 
     % Compute the transformation matrices and the overall transformation matrix
     T = sym(eye(4));
-    for i = 1:length(theta)
+    
+    for i = 1:number_Joints
         T_i = transformDH(a(i), alpha(i), d(i), theta(i));
         T = T * T_i;
     end
     
     % Initialize Jacobian matrices
-    Jv = sym(zeros(3,length(theta)));
-    Jw = sym(zeros(3,length(theta)));
+    Jv = sym(zeros(3, number_Joints));
+    Jw = sym(zeros(3, number_Joints));
     p = T(1:3, 4); % Position of the end effector
 
-   % Compute Jacobian using iterative method
-    for i = 1:length(theta)
+    % Compute Jacobian using iterative method
+    for i = 1:number_Joints
         if i == 1
             Jv(:,i) = cross([0; 0; 1], (p - [0; 0; 0]));
             Jw(:,i) = [0; 0; 1];
@@ -39,17 +40,15 @@ function createKinematicsFunctions(mdhparams)
     % Full Jacobian matrix combining both linear and angular parts
     J = [Jv; Jw];
    
- % Simplify the Jacobian matrix
+    % Simplify the Jacobian matrix
     for i = 1:size(J, 1)
         for j = 1:size(J, 2)
             J(i, j) = simplify(J(i, j), 'Steps', 50); % Adjust 'Steps' as necessary
         end
     end
-  
 
-
-   % Compute the symbolic Hessian tensor
-    n = length(theta);
+    % Compute the symbolic Hessian tensor
+    n = number_Joints;
     Hessian = sym(zeros(6, n, n));
     for i = 1:6
         for j = 1:n
@@ -59,19 +58,19 @@ function createKinematicsFunctions(mdhparams)
         end
     end
     
-     % Simplify the Hessian tensor
+    % Simplify the Hessian tensor
     for i = 1:6
         for j = 1:n
-            for k = 1:n
-                Hessian(i, j, k) = simplify(Hessian(i, j, k), 'Steps', 50); % Adjust 'Steps' as necessary
-            end
+        for k = 1:n
+            Hessian(i, j, k) = simplify(Hessian(i, j, k), 'Steps', 50); % Adjust 'Steps' as necessary
         end
     end
 
     % Create MATLAB functions from symbolic expressions
-    T_final_link = matlabFunction(T, 'Vars', {theta}, 'File', 'T_final_link1');
-    Jacibi_final_link = matlabFunction(J, 'Vars', {theta}, 'File', 'Jacobi_final_link1');
-    Hessian_final_link = matlabFunction(Hessian, 'Vars', {theta}, 'File', 'Hessian_final_link1');
+    T_final_link = matlabFunction(T, 'Vars', {theta}, 'File', 'T_final_link');
+    Jacobi_final_link = matlabFunction(J, 'Vars', {theta}, 'File', 'Jacobi_final_link');
+    Hessian_final_link = matlabFunction(Hessian, 'Vars', {theta}, 'File', 'Hessian_final_link');
     
     disp('Functions created successfully!');
+    
 end

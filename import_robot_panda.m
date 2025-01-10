@@ -6,7 +6,7 @@
 % Second column defines alpha (rad)
 % Thrid column defines d 
 % fourths column is theta (rad) 
-%   a      alpha     d   theta
+% %   a      alpha     d   theta
 mdhparams = [
     0       0       0.333   0;
     0       -pi/2   0       0;

@@ -55,7 +55,8 @@ function optimizedVisualizeRobot_withlinesegments(rbtName_robot_visualisation, r
         expectedTime = idx; % Expected time in ms, directly from idx
 
         if realTimeElapsed > expectedTime
-            idxIncrease = floor((realTimeElapsed - expectedTime) / 1000 * 1000); % Example for skipRate of 100 ms
+            idxIncrease = floor((realTimeElapsed - expectedTime) / 1000 * 1000); 
+
             idx = idx + idxIncrease;
         elseif realTimeElapsed < expectedTime
             pause((expectedTime - realTimeElapsed) / 1000); % Convert ms back to seconds

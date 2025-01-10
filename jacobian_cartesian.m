@@ -12,10 +12,12 @@ disp(robot)
 J = zeros(6, numJoints); % Initialize Jacobian matrix with zeros
     
     if to_ith_link == 8 
+    
         T_end_effector = getTransform(robot,config, 'Gripper_TCP','base');
+    
     else
     % Compute the transformation to the end-effector or to_ith_link
-    T_end_effector = getTransform(robot,config, ['robot_link',num2str(i)],'base');
+        T_end_effector = getTransform(robot,config, ['robot_link',num2str(to_ith_link)],'base');
     end
     
     end_effector_position = T_end_effector(1:3, 4);

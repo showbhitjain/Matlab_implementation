@@ -44,10 +44,10 @@ final_position_TCP = waypoints(:,end);
 %                 0   0    pi];   
 
      orientations = [0     0    pi;
-                0  0    pi; 
-                0   0  pi;
-                0   0    pi;
-                0   0    pi];          
+                    0  0    pi; 
+                    0   0  pi;
+                    0   0    pi;
+                    0   0    pi];          
 
      
     orientations = orientations' ;

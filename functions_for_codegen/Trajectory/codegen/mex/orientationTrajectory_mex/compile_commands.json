@@ -1,0 +1,218 @@
+[
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory/codegen/mex/orientationTrajectory_mex",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DMODEL=orientationTrajectory_mex -DMW_NEEDS_VERSION_H -msse2 -c -fopenmp -DOMPLIBNAME=\"/usr/local/MATLAB/R2023b/sys/os/glnxa64/libiomp5.so\"  orientationTrajectory_mex_data.cpp -o build/glnxa64/orientationTrajectory_mex_data.o",
+    "file": "orientationTrajectory_mex_data.cpp",
+    "output": "build/glnxa64/orientationTrajectory_mex_data.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory/codegen/mex/orientationTrajectory_mex",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DMODEL=orientationTrajectory_mex -DMW_NEEDS_VERSION_H -msse2 -c -fopenmp -DOMPLIBNAME=\"/usr/local/MATLAB/R2023b/sys/os/glnxa64/libiomp5.so\"  rt_nonfinite.cpp -o build/glnxa64/rt_nonfinite.o",
+    "file": "rt_nonfinite.cpp",
+    "output": "build/glnxa64/rt_nonfinite.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory/codegen/mex/orientationTrajectory_mex",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DMODEL=orientationTrajectory_mex -DMW_NEEDS_VERSION_H -msse2 -c -fopenmp -DOMPLIBNAME=\"/usr/local/MATLAB/R2023b/sys/os/glnxa64/libiomp5.so\"  orientationTrajectory_mex_initialize.cpp -o build/glnxa64/orientationTrajectory_mex_initialize.o",
+    "file": "orientationTrajectory_mex_initialize.cpp",
+    "output": "build/glnxa64/orientationTrajectory_mex_initialize.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory/codegen/mex/orientationTrajectory_mex",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DMODEL=orientationTrajectory_mex -DMW_NEEDS_VERSION_H -msse2 -c -fopenmp -DOMPLIBNAME=\"/usr/local/MATLAB/R2023b/sys/os/glnxa64/libiomp5.so\"  orientationTrajectory_mex_terminate.cpp -o build/glnxa64/orientationTrajectory_mex_terminate.o",
+    "file": "orientationTrajectory_mex_terminate.cpp",
+    "output": "build/glnxa64/orientationTrajectory_mex_terminate.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory/codegen/mex/orientationTrajectory_mex",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DMODEL=orientationTrajectory_mex -DMW_NEEDS_VERSION_H -msse2 -c -fopenmp -DOMPLIBNAME=\"/usr/local/MATLAB/R2023b/sys/os/glnxa64/libiomp5.so\"  orientationTrajectory.cpp -o build/glnxa64/orientationTrajectory.o",
+    "file": "orientationTrajectory.cpp",
+    "output": "build/glnxa64/orientationTrajectory.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory/codegen/mex/orientationTrajectory_mex",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DMODEL=orientationTrajectory_mex -DMW_NEEDS_VERSION_H -msse2 -c -fopenmp -DOMPLIBNAME=\"/usr/local/MATLAB/R2023b/sys/os/glnxa64/libiomp5.so\"  colon.cpp -o build/glnxa64/colon.o",
+    "file": "colon.cpp",
+    "output": "build/glnxa64/colon.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory/codegen/mex/orientationTrajectory_mex",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DMODEL=orientationTrajectory_mex -DMW_NEEDS_VERSION_H -msse2 -c -fopenmp -DOMPLIBNAME=\"/usr/local/MATLAB/R2023b/sys/os/glnxa64/libiomp5.so\"  eul2quat.cpp -o build/glnxa64/eul2quat.o",
+    "file": "eul2quat.cpp",
+    "output": "build/glnxa64/eul2quat.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory/codegen/mex/orientationTrajectory_mex",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DMODEL=orientationTrajectory_mex -DMW_NEEDS_VERSION_H -msse2 -c -fopenmp -DOMPLIBNAME=\"/usr/local/MATLAB/R2023b/sys/os/glnxa64/libiomp5.so\"  trapveltraj.cpp -o build/glnxa64/trapveltraj.o",
+    "file": "trapveltraj.cpp",
+    "output": "build/glnxa64/trapveltraj.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory/codegen/mex/orientationTrajectory_mex",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DMODEL=orientationTrajectory_mex -DMW_NEEDS_VERSION_H -msse2 -c -fopenmp -DOMPLIBNAME=\"/usr/local/MATLAB/R2023b/sys/os/glnxa64/libiomp5.so\"  linspace.cpp -o build/glnxa64/linspace.o",
+    "file": "linspace.cpp",
+    "output": "build/glnxa64/linspace.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory/codegen/mex/orientationTrajectory_mex",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DMODEL=orientationTrajectory_mex -DMW_NEEDS_VERSION_H -msse2 -c -fopenmp -DOMPLIBNAME=\"/usr/local/MATLAB/R2023b/sys/os/glnxa64/libiomp5.so\"  mpower.cpp -o build/glnxa64/mpower.o",
+    "file": "mpower.cpp",
+    "output": "build/glnxa64/mpower.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory/codegen/mex/orientationTrajectory_mex",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DMODEL=orientationTrajectory_mex -DMW_NEEDS_VERSION_H -msse2 -c -fopenmp -DOMPLIBNAME=\"/usr/local/MATLAB/R2023b/sys/os/glnxa64/libiomp5.so\"  ppval.cpp -o build/glnxa64/ppval.o",
+    "file": "ppval.cpp",
+    "output": "build/glnxa64/ppval.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory/codegen/mex/orientationTrajectory_mex",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DMODEL=orientationTrajectory_mex -DMW_NEEDS_VERSION_H -msse2 -c -fopenmp -DOMPLIBNAME=\"/usr/local/MATLAB/R2023b/sys/os/glnxa64/libiomp5.so\"  cubicpolytraj.cpp -o build/glnxa64/cubicpolytraj.o",
+    "file": "cubicpolytraj.cpp",
+    "output": "build/glnxa64/cubicpolytraj.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory/codegen/mex/orientationTrajectory_mex",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DMODEL=orientationTrajectory_mex -DMW_NEEDS_VERSION_H -msse2 -c -fopenmp -DOMPLIBNAME=\"/usr/local/MATLAB/R2023b/sys/os/glnxa64/libiomp5.so\"  find.cpp -o build/glnxa64/find.o",
+    "file": "find.cpp",
+    "output": "build/glnxa64/find.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory/codegen/mex/orientationTrajectory_mex",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DMODEL=orientationTrajectory_mex -DMW_NEEDS_VERSION_H -msse2 -c -fopenmp -DOMPLIBNAME=\"/usr/local/MATLAB/R2023b/sys/os/glnxa64/libiomp5.so\"  quinticpolytraj.cpp -o build/glnxa64/quinticpolytraj.o",
+    "file": "quinticpolytraj.cpp",
+    "output": "build/glnxa64/quinticpolytraj.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory/codegen/mex/orientationTrajectory_mex",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DMODEL=orientationTrajectory_mex -DMW_NEEDS_VERSION_H -msse2 -c -fopenmp -DOMPLIBNAME=\"/usr/local/MATLAB/R2023b/sys/os/glnxa64/libiomp5.so\"  rottraj.cpp -o build/glnxa64/rottraj.o",
+    "file": "rottraj.cpp",
+    "output": "build/glnxa64/rottraj.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory/codegen/mex/orientationTrajectory_mex",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DMODEL=orientationTrajectory_mex -DMW_NEEDS_VERSION_H -msse2 -c -fopenmp -DOMPLIBNAME=\"/usr/local/MATLAB/R2023b/sys/os/glnxa64/libiomp5.so\"  validateattributes.cpp -o build/glnxa64/validateattributes.o",
+    "file": "validateattributes.cpp",
+    "output": "build/glnxa64/validateattributes.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory/codegen/mex/orientationTrajectory_mex",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DMODEL=orientationTrajectory_mex -DMW_NEEDS_VERSION_H -msse2 -c -fopenmp -DOMPLIBNAME=\"/usr/local/MATLAB/R2023b/sys/os/glnxa64/libiomp5.so\"  constructLinearTimeScaling.cpp -o build/glnxa64/constructLinearTimeScaling.o",
+    "file": "constructLinearTimeScaling.cpp",
+    "output": "build/glnxa64/constructLinearTimeScaling.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory/codegen/mex/orientationTrajectory_mex",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DMODEL=orientationTrajectory_mex -DMW_NEEDS_VERSION_H -msse2 -c -fopenmp -DOMPLIBNAME=\"/usr/local/MATLAB/R2023b/sys/os/glnxa64/libiomp5.so\"  validateTimeScaling.cpp -o build/glnxa64/validateTimeScaling.o",
+    "file": "validateTimeScaling.cpp",
+    "output": "build/glnxa64/validateTimeScaling.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory/codegen/mex/orientationTrajectory_mex",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DMODEL=orientationTrajectory_mex -DMW_NEEDS_VERSION_H -msse2 -c -fopenmp -DOMPLIBNAME=\"/usr/local/MATLAB/R2023b/sys/os/glnxa64/libiomp5.so\"  isequal.cpp -o build/glnxa64/isequal.o",
+    "file": "isequal.cpp",
+    "output": "build/glnxa64/isequal.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory/codegen/mex/orientationTrajectory_mex",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DMODEL=orientationTrajectory_mex -DMW_NEEDS_VERSION_H -msse2 -c -fopenmp -DOMPLIBNAME=\"/usr/local/MATLAB/R2023b/sys/os/glnxa64/libiomp5.so\"  positionTrajectory.cpp -o build/glnxa64/positionTrajectory.o",
+    "file": "positionTrajectory.cpp",
+    "output": "build/glnxa64/positionTrajectory.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory/codegen/mex/orientationTrajectory_mex",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DMODEL=orientationTrajectory_mex -DMW_NEEDS_VERSION_H -msse2 -c -fopenmp -DOMPLIBNAME=\"/usr/local/MATLAB/R2023b/sys/os/glnxa64/libiomp5.so\"  diff.cpp -o build/glnxa64/diff.o",
+    "file": "diff.cpp",
+    "output": "build/glnxa64/diff.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory/codegen/mex/orientationTrajectory_mex",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DMODEL=orientationTrajectory_mex -DMW_NEEDS_VERSION_H -msse2 -c -fopenmp -DOMPLIBNAME=\"/usr/local/MATLAB/R2023b/sys/os/glnxa64/libiomp5.so\"  repmat.cpp -o build/glnxa64/repmat.o",
+    "file": "repmat.cpp",
+    "output": "build/glnxa64/repmat.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory/codegen/mex/orientationTrajectory_mex",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DMODEL=orientationTrajectory_mex -DMW_NEEDS_VERSION_H -msse2 -c -fopenmp -DOMPLIBNAME=\"/usr/local/MATLAB/R2023b/sys/os/glnxa64/libiomp5.so\"  addFlatSegmentsToPPFormParts.cpp -o build/glnxa64/addFlatSegmentsToPPFormParts.o",
+    "file": "addFlatSegmentsToPPFormParts.cpp",
+    "output": "build/glnxa64/addFlatSegmentsToPPFormParts.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory/codegen/mex/orientationTrajectory_mex",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DMODEL=orientationTrajectory_mex -DMW_NEEDS_VERSION_H -msse2 -c -fopenmp -DOMPLIBNAME=\"/usr/local/MATLAB/R2023b/sys/os/glnxa64/libiomp5.so\"  assertValidSizeArg.cpp -o build/glnxa64/assertValidSizeArg.o",
+    "file": "assertValidSizeArg.cpp",
+    "output": "build/glnxa64/assertValidSizeArg.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory/codegen/mex/orientationTrajectory_mex",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DMODEL=orientationTrajectory_mex -DMW_NEEDS_VERSION_H -msse2 -c -fopenmp -DOMPLIBNAME=\"/usr/local/MATLAB/R2023b/sys/os/glnxa64/libiomp5.so\"  bsearch.cpp -o build/glnxa64/bsearch.o",
+    "file": "bsearch.cpp",
+    "output": "build/glnxa64/bsearch.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory/codegen/mex/orientationTrajectory_mex",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DMODEL=orientationTrajectory_mex -DMW_NEEDS_VERSION_H -msse2 -c -fopenmp -DOMPLIBNAME=\"/usr/local/MATLAB/R2023b/sys/os/glnxa64/libiomp5.so\"  interface/_coder_orientationTrajectory_mex_api.cpp -o build/glnxa64/_coder_orientationTrajectory_mex_api.o",
+    "file": "interface/_coder_orientationTrajectory_mex_api.cpp",
+    "output": "build/glnxa64/_coder_orientationTrajectory_mex_api.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory/codegen/mex/orientationTrajectory_mex",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DMODEL=orientationTrajectory_mex -DMW_NEEDS_VERSION_H -msse2 -c -fopenmp -DOMPLIBNAME=\"/usr/local/MATLAB/R2023b/sys/os/glnxa64/libiomp5.so\"  interface/_coder_orientationTrajectory_mex_mex.cpp -o build/glnxa64/_coder_orientationTrajectory_mex_mex.o",
+    "file": "interface/_coder_orientationTrajectory_mex_mex.cpp",
+    "output": "build/glnxa64/_coder_orientationTrajectory_mex_mex.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory/codegen/mex/orientationTrajectory_mex",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DMODEL=orientationTrajectory_mex -DMW_NEEDS_VERSION_H -msse2 -c -fopenmp -DOMPLIBNAME=\"/usr/local/MATLAB/R2023b/sys/os/glnxa64/libiomp5.so\"  eml_int_forloop_overflow_check.cpp -o build/glnxa64/eml_int_forloop_overflow_check.o",
+    "file": "eml_int_forloop_overflow_check.cpp",
+    "output": "build/glnxa64/eml_int_forloop_overflow_check.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory/codegen/mex/orientationTrajectory_mex",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DMODEL=orientationTrajectory_mex -DMW_NEEDS_VERSION_H -msse2 -c -fopenmp -DOMPLIBNAME=\"/usr/local/MATLAB/R2023b/sys/os/glnxa64/libiomp5.so\"  sumMatrixIncludeNaN.cpp -o build/glnxa64/sumMatrixIncludeNaN.o",
+    "file": "sumMatrixIncludeNaN.cpp",
+    "output": "build/glnxa64/sumMatrixIncludeNaN.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory/codegen/mex/orientationTrajectory_mex",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DMODEL=orientationTrajectory_mex -DMW_NEEDS_VERSION_H -msse2 -c -fopenmp -DOMPLIBNAME=\"/usr/local/MATLAB/R2023b/sys/os/glnxa64/libiomp5.so\"  changeEndSegBreaks.cpp -o build/glnxa64/changeEndSegBreaks.o",
+    "file": "changeEndSegBreaks.cpp",
+    "output": "build/glnxa64/changeEndSegBreaks.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory/codegen/mex/orientationTrajectory_mex",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DMODEL=orientationTrajectory_mex -DMW_NEEDS_VERSION_H -msse2 -c -fopenmp -DOMPLIBNAME=\"/usr/local/MATLAB/R2023b/sys/os/glnxa64/libiomp5.so\"  log.cpp -o build/glnxa64/log.o",
+    "file": "log.cpp",
+    "output": "build/glnxa64/log.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory/codegen/mex/orientationTrajectory_mex",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DMODEL=orientationTrajectory_mex -DMW_NEEDS_VERSION_H -msse2 -c -fopenmp -DOMPLIBNAME=\"/usr/local/MATLAB/R2023b/sys/os/glnxa64/libiomp5.so\"  div.cpp -o build/glnxa64/div.o",
+    "file": "div.cpp",
+    "output": "build/glnxa64/div.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory/codegen/mex/orientationTrajectory_mex",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DMODEL=orientationTrajectory_mex -DMW_NEEDS_VERSION_H -msse2 -c -fopenmp -DOMPLIBNAME=\"/usr/local/MATLAB/R2023b/sys/os/glnxa64/libiomp5.so\"  quaternion.cpp -o build/glnxa64/quaternion.o",
+    "file": "quaternion.cpp",
+    "output": "build/glnxa64/quaternion.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory/codegen/mex/orientationTrajectory_mex",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DMODEL=orientationTrajectory_mex -DMW_NEEDS_VERSION_H -msse2 -c -fopenmp -DOMPLIBNAME=\"/usr/local/MATLAB/R2023b/sys/os/glnxa64/libiomp5.so\"  orientationTrajectory_mex_mexutil.cpp -o build/glnxa64/orientationTrajectory_mex_mexutil.o",
+    "file": "orientationTrajectory_mex_mexutil.cpp",
+    "output": "build/glnxa64/orientationTrajectory_mex_mexutil.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory/codegen/mex/orientationTrajectory_mex",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DMODEL=orientationTrajectory_mex -DMW_NEEDS_VERSION_H -msse2 -c -fopenmp -DOMPLIBNAME=\"/usr/local/MATLAB/R2023b/sys/os/glnxa64/libiomp5.so\"  interface/_coder_orientationTrajectory_mex_info.cpp -o build/glnxa64/_coder_orientationTrajectory_mex_info.o",
+    "file": "interface/_coder_orientationTrajectory_mex_info.cpp",
+    "output": "build/glnxa64/_coder_orientationTrajectory_mex_info.o"
+  },
+  {
+    "directory": "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory/codegen/mex/orientationTrajectory_mex",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/Trajectory\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DMODEL=orientationTrajectory_mex -DMW_NEEDS_VERSION_H -msse2 -c -fopenmp -DOMPLIBNAME=\"/usr/local/MATLAB/R2023b/sys/os/glnxa64/libiomp5.so\"  /usr/local/MATLAB/R2023b/extern/version/cpp_mexapi_version.cpp -o build/glnxa64/cpp_mexapi_version.o",
+    "file": "/usr/local/MATLAB/R2023b/extern/version/cpp_mexapi_version.cpp",
+    "output": "build/glnxa64/cpp_mexapi_version.o"
+  }
+]

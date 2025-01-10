@@ -4,8 +4,8 @@ function Jm_transposed = computeManipulabilityJacobian(joint_values)
     
     %J = Jacobi_final_link1(joint_values); %for code generation
     %H = Hessian_final_link(joint_values); %for code generation
-    J = Jacobi_final_link1(joint_values);
-    H = Hessian_final_link(joint_values);
+    J = Jacobi_final_link1_mex(joint_values);
+    H = Hessian_final_link_mex(joint_values);
     % Compute the manipulability measure 'm'
     JJt = J * J';
     m = sqrt(det(JJt));
@@ -16,7 +16,7 @@ function Jm_transposed = computeManipulabilityJacobian(joint_values)
     
     % vec operation implemented as a function for convenience
     vec = @(X) reshape(X, [], 1);
-    
+     
     % Pre-compute the inverse of JJt
     inv_JJt = inv(JJt); %
     % Pre-compute the pseudo-inverse of JJt

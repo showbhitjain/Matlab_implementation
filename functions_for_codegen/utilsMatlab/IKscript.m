@@ -1,0 +1,233 @@
+clear all; close all;
+
+import_robot_panda; 
+clear obstacle_avoidance_equation;
+
+%Setting up of Trajectory Waypoints
+Starting_tcp_tform = getTransform(robot,robot.homeConfiguration,'Gripper_TCP','base');
+toolPositionHome = Starting_tcp_tform(1:3,4);
+
+% Define waypoints
+
+% waypoints = [toolPositionHome + [0; 0; 0], ...
+% toolPositionHome + [0; 0.3; 0.1], ...
+%  toolPositionHome + [0; 0.3; -0.2], ...
+% toolPositionHome + [0; -0.3; -0.2], ...
+% toolPositionHome + [-0.3; -0.3; -0.2]];
+% 
+waypoints = [toolPositionHome'; 
+             toolPositionHome' + [0, 0.2 , 0]; 
+             toolPositionHome' + [0, 0.2, -0.2]; 
+             toolPositionHome' + [0, -0.3, -0.2]; 
+             toolPositionHome' + [-0.3 -0.3 -0.2]]';
+
+
+%  toolPositionHome' + [0, 0.3 , 0.1]; second waypoint
+% waypoints = [toolPositionHome'; 
+%              toolPositionHome' + [0, 0 , 0]; 
+%              toolPositionHome' + [0, 0, 0]; 
+%              toolPositionHome' + [0, -0, 0]; 
+%              toolPositionHome']';
+% + [0, 0, 0.2]
+% Ensure waypoints are transposed correctly for vertical concatenation
+
+         
+final_position_TCP = waypoints(:,end);
+% Euler Angles (Z Y X) relative to the home orientation       
+
+  % [ 0,        0.3827,    0.7071,    0.3827,     0],
+  %   [1.0000,    0.9239,    0.7071,    0.9239,    1.0000],
+  %   [ 0,         0,         0,         0,         0],
+  %   [ 0,         0,         0,         0,         0]
+
+% orientations = [0     0    pi;
+%                 0  0    3*pi/4; 
+%                 0   0  pi/2;
+%                 0   0    3*pi/4;
+%                 0   0    pi]';   
+
+orientations = [0.0000    1.0000         0         0;
+                0.0000    1.0000         0         0;
+                0.0000    1.0000         0         0;
+                0.0000    1.0000         0         0;
+                0.0000    1.0000         0         0]';
+     % % 
+     % orientations = [0     0    pi;
+     %                0  0    pi; 
+     %                0   0  pi;
+     %                0   0    pi;
+     %                0   0    pi]';          
+
+     
+ 
+     % Array of waypoint times
+waypointTimes = 0:4:16;
+%waypointTimes = 0:3:12;
+% Trajectory sample time
+ts = 0.001; %1 ms
+
+
+%% Additional parameters
+
+% Boundary conditions (for polynomial trajectories)
+% Velocity (cubic and quintic)
+% waypointVels = 0.1 *[ 0  1  0;
+%                      -1  0  0;
+%                       0 -1  0;
+%                       1  0  0;
+%                       0  1  0]';
+waypointVels = 0.1 *[ 0  0  0;
+                     0  0  0;
+                      0 0  0;
+                      0  0  0;
+                      0  0  0]';
+% Acceleration (quintic only)
+waypointAccels = zeros(size(waypointVels));
+
+% Acceleration times (trapezoidal only)
+waypointAccelTimes = 0.25 * diff(waypointTimes);
+trajType = 'cubic'; % Trajectory type
+trajTimes = 0:ts:waypointTimes(end);
+
+
+%From Here onwards the process starts 
+%Trajectory Generation using trajectory waypoints 
+% Cartesian Motion only
+% Call the trajectory generation function
+[xd, xd_vel, xdd] = positionTrajectory(waypoints, waypointTimes, ts, trajType, waypointVels, waypointAccels);
+
+[desired_quaternions,desired_angular_velocity,desired_angular_accel] = orientationTrajectory(orientations,waypointTimes,ts,trajType);
+
+config = struct();
+config.useObjective1 = true;  % Use infinity norm term
+config.weight1 = 0.1;         % Weight for objective 1
+
+config.useObjective2 = true;  % Use two-norm term
+config.weight2 = 1;         % Weight for objective 2
+
+config.useObjective3 = false; % Use norm of (jacobi*q_vel - xd_eff_vel)
+config.weight3 = 2;         % Weight for objective 3
+
+config.useObjective4 = false;  % Use sum of (q_vel - q_vel_previous)^2
+config.weight4 = 2;         % Weight for objective 4
+
+config.useObjective5 = false;  % Use  1/(1 + smin(jacobi))
+config.weight5 = 0.4;         % Weight for objective 5
+
+config.useObjective6 = true ; %use of manipulability constraint for Jm' * q_velocity
+config.weight6 = 0.2;         % singularity avoidance and manipulability maximization
+
+
+joint_velocity = zeros(number_of_joints, numel(trajTimes));
+joint_vector = zeros(number_of_joints, numel(trajTimes));
+
+
+desired_joint_velocity = zeros(number_of_joints, numel(trajTimes));
+
+desired_joint_vector = zeros(number_of_joints, numel(trajTimes));
+
+joint_vector(:,1) = Homejointpositions';
+desired_joint_vector(:,1)  = Homejointpositions';
+Kp = diag([1 1 1]);
+Ko = diag([1 1 1]);
+
+% Use an enum or integer to represent the obstacle type for efficiency
+OBSTACLE_SPHERE = 1;
+OBSTACLE_CYLINDER = 2;
+OBSTACLE_BOX = 3;
+
+obstacle_sphere_1 = struct(...
+    'type', OBSTACLE_SPHERE, ...               
+    'center', [0.5545, 0.30, 0.6211], ...
+    'dimensions', [0.04, 0.04, 0.04], ... 
+    'orientation', [1, 0, 0, 0], ... 
+    'axis', 0 ...        
+);
+%center_1 [0.30, 0.20, 0.8]
+obstacle_sphere_2 = struct(...
+    'type', OBSTACLE_SPHERE, ...               
+    'center', [0.3, -0.25, 0.6], ...
+    'dimensions', [0.05, 0.05, 0.05], ... 
+    'orientation', NaN, ... 
+    'axis', NaN ...        
+);
+% obstacle_sphere_3 = struct('type', OBSTACLE_SPHERE, 'center', ...
+%     [0.4, 0.15, 0.7], 'dimensions', [0.03, 0.03, 0.03], 'orientation', NaN, 'axis', NaN);
+obstacles = [obstacle_sphere_1 obstacle_sphere_2];
+%obstacle_bus  =Simulink.Bus.createObject(obstacles);
+
+clear integrate_velocity
+%joint_velocity for obsacle avoidance at t = 0
+joint_velocity_obstacle_avoidance = zeros(number_of_joints,1); 
+
+% Open the log file before the loop starts
+%logFile = fopen('obstacle_avoidance_log.txt', 'a');
+mindistance = zeros(1,numel(trajTimes)-1) ;
+translational_error = zeros(3,numel(trajTimes)-1) ;
+rotational_error = zeros(3,numel(trajTimes)-1) ;
+
+jointMinValues = jointMinValues' ;
+jointMaxValues = jointMaxValues' ;
+jointvelMinValues = jointvelMinValues' ; 
+jointvelMaxValues = jointvelMaxValues' ; 
+
+for i=1:numel(trajTimes)-1
+    %Integrator with start condtion
+   
+   T_endeffector2base = getTransform(robot,joint_vector(:,i)','Gripper_TCP','base') ;
+   x_current = T_endeffector2base(1:3,4) ;
+    
+   xd_effective = xd_vel(:,i) + Kp*(xd(:,i) -  x_current ) ;
+    translational_error(:,i) = xd(:,i) -  x_current ;
+    
+   Jacobi_matrix = rearrangejacobi(geometricJacobian(robot,joint_vector(:,i)','Gripper_TCP'),number_of_joints);
+   %Jacobi_matrix = jacobian_cartesian(robot,joint_vector(:,i)',8);
+   
+   angular_velocity_effective = desired_angular_velocity(:,i) + Ko* compute_orientation_Error(T_endeffector2base,desired_quaternions(:,i)');
+   rotational_error(:,i)  =  compute_orientation_Error(T_endeffector2base,desired_quaternions(:,i)');
+   %Concatenate 
+   pose_velocity_effective = [xd_effective; angular_velocity_effective]; 
+    
+
+   [desired_joint_velocity(:,i), Exit_Flag] = inverseKinematics(joint_vector(:,i),Jacobi_matrix,pose_velocity_effective,jointMinValues,jointMaxValues,jointvelMinValues,jointvelMaxValues,config);
+   if Exit_Flag < 0
+       disp(Exit_Flag);
+       break;
+   end
+
+   
+   tspan = [trajTimes(i) trajTimes(i+1)];
+    
+    desired_joint_velocity_current = desired_joint_velocity(:, i);  % Current desired joint velocities
+   
+   desired_joint_vector(:, i+1) = integrateRungeKutta(desired_joint_velocity_current,tspan,desired_joint_vector(:,i));
+    
+   % iscrossed =  checkJointLimits(desired_joint_vector(:, i+1)', jointMinValues, jointMaxValues);
+   % if iscrossed 
+   %       %disp('joint_limits_crossed')   
+   %     break;
+   %  end
+   %desired_joint_vector(:,i+1) =integrate_velocity(desired_joint_velocity(:,i),ts,joint_vector(:,1)) ;
+   %Add noise to simulate the measurement from robot 
+   joint_vector(:,i+1) = add_noise(desired_joint_vector(:,i+1),-0.0005,0.0005);
+    
+    
+end 
+
+
+
+% Close the log file after the loop
+%fclose(logFile);
+
+
+%Visualization of Results 
+joint_vector_visualization = zeros(numel(trajTimes),9);
+joint_vector_visualization(:,1:number_of_joints) = joint_vector';
+optimizedVisualizeRobot_2('frankarobot',joint_vector_visualization,waypoints,2,obstacles);
+
+
+
+
+
+
+
