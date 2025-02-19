@@ -1,7 +1,7 @@
 %setup of robot and robot modeling using rigid body tree 
 
 
-clear;
+clear all; close all;
 
 import_robot_panda; 
 clear obstacle_avoidance_equation;
@@ -12,8 +12,8 @@ toolPositionHome = Starting_tcp_tform(1:3,4);
 
 % Define waypoints
 waypoints = [toolPositionHome'; 
-             toolPositionHome' + [0, 0.3 , 0.1]; 
-             toolPositionHome' + [0, 0.3, -0.2]; 
+             toolPositionHome' + [0, 0.2 , 0]; 
+             toolPositionHome' + [0, 0.2, -0.2]; 
              toolPositionHome' + [0, -0.3, -0.2]; 
              toolPositionHome' + [-0.3 -0.3 -0.2]];
 
@@ -87,15 +87,17 @@ OBSTACLE_BOX = 3;
 
 obstacle_sphere_1 = struct(...
     'type', OBSTACLE_SPHERE, ...               
-    'center', [0.5545, 0.30, 0.6211], ...
+    'center', toolPositionHome' + [0, 0.2 , 0], ...
     'dimensions', [0.04, 0.04, 0.04], ... 
     'orientation', [1, 0, 0, 0], ... 
     'axis', 0 ...        
 );
 %center_1 [0.30, 0.20, 0.8]
+
+% [0.3, -0.25, 0.6]
 obstacle_sphere_2 = struct(...
     'type', OBSTACLE_SPHERE, ...               
-    'center', [0.3, -0.25, 0.6], ...
+    'center', [0.5545, 0.20, 0.3211], ...
     'dimensions', [0.05, 0.05, 0.05], ... 
     'orientation', NaN, ... 
     'axis', NaN ...        
@@ -120,7 +122,7 @@ config.useObjective1 = false;  % Use infinity norm term
 config.weight1 = 0.05;         % Weight for objective 1
 
 config.useObjective2 = true;  % Use two-norm term
-config.weight2 = 0.3;         % Weight for objective 2
+config.weight2 = 1;         % Weight for objective 2
 
 config.useObjective3 = false; % Use norm of (jacobi*q_vel - xd_eff_vel)
 config.weight3 = 2;         % Weight for objective 3
@@ -132,7 +134,7 @@ config.useObjective5 = false;  % Use  1/(1 + smin(jacobi))
 config.weight5 = 0.4;         % Weight for objective 5
 
 config.useObjective6 = true ; %use of manipulability constraint for Jm' * q_velocity
-config.weight6 = 1;         % singularity avoidance and manipulability maximization
+config.weight6 = 0.1;         % singularity avoidance and manipulability maximization
 
 % Constraint configuration
 config.applyEqualityConstraints = true;    % Flag to apply equality constraints

@@ -99,7 +99,7 @@ trajTimes = 0:ts:waypointTimes(end);
 [desired_quaternions,desired_angular_velocity,desired_angular_accel] = orientationTrajectory(orientations,waypointTimes,ts,trajType);
 
 config = struct();
-config.useObjectiveNormInfinity = true;  % Use infinity norm term
+config.useObjectiveNormInfinity = false;  % Use infinity norm term
 config.weightNormInfinity = 0.1;         % Weight for objective 1
 
 config.useObjectiveNormL2 = true;  % Use two-norm term
@@ -112,7 +112,7 @@ config.useObjectiveJointAcceleration = false;  % Use sum of (q_vel - q_vel_previ
 config.weightJointAcceleration = 2;         % Weight for objective 4
 
 config.useObjectiveManipulability = true ; %use of manipulability constraint for Jm' * q_velocity
-config.weightManipulability = 0.2;         % singularity avoidance and manipulability maximization
+config.weightManipulability = 0.1;         % singularity avoidance and manipulability maximization
 
 % Constraint configuration
 config.applyEqualityConstraints = true;    % Flag to apply equality constraints
@@ -120,8 +120,8 @@ config.applyInequalityConstraints = true;  % Flag to apply inequality constraint
 
 %Slack 
 config.applySlack = true;
-config.Slacklowerbound = [-0.2,-0.2,-0.1,-deg2rad(2),-deg2rad(2),-deg2rad(60)]';
-config.Slackupperbound = [0.2,0.2,0.2,deg2rad(2),deg2rad(2),deg2rad(60)]';
+config.Slacklowerbound = [-0.25,-0.25,-0.25,-deg2rad(2),-deg2rad(2),-deg2rad(60)]';
+config.Slackupperbound = [0.25,0.25,0.25,deg2rad(2),deg2rad(2),deg2rad(60)]';
 config.Slack_penalty_weightmatrix = diag([1 1 1 1 1 0.5]);
 config.Slack_objective_weight = 20;
 %Choose either Obstacle avoidance scheme 1 or 2 otherwise it would result in error;
@@ -148,7 +148,7 @@ However, it may also limit the responsiveness or speed of the system's movements
 %}
 
 
-config.applyVelocityDamper = true;
+config.applyVelocityDamper = false;
 
 config.jointLimitActivationDistance = 10; % in degrees
 config.jointLimitStopDistance = 3;
@@ -172,9 +172,10 @@ OBSTACLE_SPHERE = 1;
 OBSTACLE_CYLINDER = 2;
 OBSTACLE_BOX = 3;
 
+
 obstacle_sphere_1 = struct(...
     'type', OBSTACLE_SPHERE, ...               
-    'center', [0.5545, 0.30, 0.6211], ...
+    'center', toolPositionHome' + [0, 0.2 , 0], ...
     'dimensions', [0.04, 0.04, 0.04], ... 
     'orientation', [1, 0, 0, 0], ... 
     'axis', 0 ...        
@@ -182,7 +183,7 @@ obstacle_sphere_1 = struct(...
 %center_1 [0.30, 0.20, 0.8]
 obstacle_sphere_2 = struct(...
     'type', OBSTACLE_SPHERE, ...               
-    'center', [0.5545, 0.20, 0.3], ...
+    'center', [0.5545, 0.20, 0.3211], ...
     'dimensions', [0.05, 0.05, 0.05], ... 
     'orientation', NaN, ... 
     'axis', NaN ...        
@@ -214,6 +215,19 @@ jointvelMinValues = jointvelMinValues' ;
 jointvelMaxValues = jointvelMaxValues' ; 
 
 
+sphere_Center = [0.5545,0.20,0.5211];
+sphere_Radius = 0.08;
+linesegments = createLineSegments(mdhparams,robot,radius_of_links,Homejointpositions);
+[s,dist,closestPointLink,closesePointObstacle]  = calculate_distance_lss_pss(linesegments(7).aSegmentV0,linesegments(7).aSegmentV1,radius_of_links(1),sphere_Center,sphere_Radius);
+
+ transform = getTransform(robot,Homejointpositions,'base','robot_link6');
+closestPointLinkNew = [(closestPointLink)';1];
+relativeLinkNewHom = transform * closestPointLinkNew ;
+relativeLinkPoint = relativeLinkNewHom(1:3)';
+addCriticalPoint(robot,'relativeBody','relativeJOINT',relativeLinkPoint,7);
+
+transformRelative = getTransform(robot,Homejointpositions,'relativeBody','base');
+ JacobiRelative = rearrangejacobi(geometricJacobian(robot,Homejointpositions,'relativeBody'),7);
 
 for i=1:numel(trajTimes)-1
     %Integrator with start condtion
@@ -222,7 +236,7 @@ for i=1:numel(trajTimes)-1
    x_current = T_endeffector2base(1:3,4) ;
     
    xd_effective = xd_vel(:,i) + Kp*(xd(:,i) -  x_current ) ;
-    translational_error(:,i) = xd(:,i) -  x_current ;
+   translational_error(:,i) = xd(:,i) -  x_current ;
     
    Jacobi_matrix = rearrangejacobi(geometricJacobian(robot,joint_vector(:,i)','Gripper_TCP'),number_of_joints);
    %Jacobi_matrix = jacobian_cartesian(robot,joint_vector(:,i)',8);
@@ -234,20 +248,22 @@ for i=1:numel(trajTimes)-1
     
    %Obstacle_avoidance 
    if  config.obstacle_avoidance_scheme
-
        [J_g, b_g, mindistance(i)]= obstacle_avoidance_equation(robot,obstacles,joint_vector(:,i)',joint_velocity_obstacle_avoidance',mdhparams,radius_of_links,d_influence,d_stop,config,[]);
    
    else
        J_g = [];
        b_g = [];
-
-
-   end
-    
+   end 
    
        jointVelocityWeightMatrix = diag(ones(1,number_of_joints));
  
-
+  
+   %     J_g
+   %  b_g
+   % 
+   % if(i == 4000)
+   %     break;
+   % end
    [desired_joint_velocity(:,i), Exit_Flag] = inverseKinematicsOA(joint_vector(:,i),Jacobi_matrix,pose_velocity_effective,jointMinValues,jointMaxValues,jointvelMinValues,jointvelMaxValues,J_g,b_g,jointVelocityWeightMatrix,config);
    
    
@@ -260,6 +276,7 @@ for i=1:numel(trajTimes)-1
    tspan = [trajTimes(i) trajTimes(i+1)];
     
    desired_joint_velocity_current = desired_joint_velocity(:, i);  % Current desired joint velocities
+   joint_velocity_obstacle_avoidance = desired_joint_velocity_current ;
    [T,Y] = ode45(@(t,X)joint_dynamics_integrate(t,X,desired_joint_velocity_current),tspan,desired_joint_vector(:,i));
       % The new joint positions are the last row of Y
    desired_joint_vector(:, i+1) = Y(end, :)';

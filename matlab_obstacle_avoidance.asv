@@ -93,9 +93,11 @@ obstacle_sphere_1 = struct(...
     'axis', 0 ...        
 );
 %center_1 [0.30, 0.20, 0.8]
+
+% [0.3, -0.25, 0.6]
 obstacle_sphere_2 = struct(...
     'type', OBSTACLE_SPHERE, ...               
-    'center', [0.3, -0.25, 0.6], ...
+    'center', [[0.3, -0.25, 0.6]], ...
     'dimensions', [0.05, 0.05, 0.05], ... 
     'orientation', NaN, ... 
     'axis', NaN ...        
@@ -120,7 +122,7 @@ config.useObjective1 = false;  % Use infinity norm term
 config.weight1 = 0.05;         % Weight for objective 1
 
 config.useObjective2 = true;  % Use two-norm term
-config.weight2 = 0.3;         % Weight for objective 2
+config.weight2 = 1;         % Weight for objective 2
 
 config.useObjective3 = false; % Use norm of (jacobi*q_vel - xd_eff_vel)
 config.weight3 = 2;         % Weight for objective 3
@@ -132,7 +134,7 @@ config.useObjective5 = false;  % Use  1/(1 + smin(jacobi))
 config.weight5 = 0.4;         % Weight for objective 5
 
 config.useObjective6 = true ; %use of manipulability constraint for Jm' * q_velocity
-config.weight6 = 1;         % singularity avoidance and manipulability maximization
+config.weight6 = 0.1;         % singularity avoidance and manipulability maximization
 
 % Constraint configuration
 config.applyEqualityConstraints = true;    % Flag to apply equality constraints
@@ -299,7 +301,6 @@ for i=1:numel(trajTimes)-1
 
    [desired_joint_velocity(:,i), Exit_Flag] = inverse_kinematics_constraints(joint_vector(:,i),Jacobi_matrix,pose_velocity_effective,jointMinValues,jointMaxValues,jointvelMinValues,jointvelMaxValues,J_g,b_g,config);
    if Exit_Flag < 0
-        disp(Exit_Flag) ; 
        break;
    end
    joint_velocity_obstacle_avoidance =  desired_joint_velocity(:,i);
@@ -312,7 +313,7 @@ for i=1:numel(trajTimes)-1
     
    iscrossed =  checkJointLimits(desired_joint_vector(:, i+1)', jointMinValues, jointMaxValues);
    if iscrossed 
-        disp('joint_limits_crossed') ;  
+         %disp('joint_limits_crossed')   
        break;
     end
    %desired_joint_vector(:,i+1) =integrate_velocity(desired_joint_velocity(:,i),ts,joint_vector(:,1)) ;
