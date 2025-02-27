@@ -7,4 +7,5 @@ function objVal = objFun(q_vel, jacobi, xd_eff_vel, starting_joint_vel, joint_va
         slack = q_vel(n_joints+1:end);
         objVal = objVal + config.SlackObjectiveWeight * slack' * diag(config.SlackPenaltyWeight) * slack;
     end
+  
 end

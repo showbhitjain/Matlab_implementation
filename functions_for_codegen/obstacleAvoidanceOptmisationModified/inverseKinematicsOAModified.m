@@ -2,10 +2,10 @@ function [optimal_joint_velocity, Exit_Flag] = inverseKinematicsOAModified( ...
     joint_values,       ... % [n_joints x 1]
     jacobi,             ... % [6 x n_joints]
     xd_eff_vel,         ... % [6 x 1]
-    jointminvalues,     ...
-    jointmaxvalues,     ...
-    joint_min_vel,      ...
-    joint_max_vel,      ...
+    jointminvalues,     ... % [n_joints x 1]
+    jointmaxvalues,     ... % [n_joints x 1]
+    joint_min_vel,      ... % [n_joints x 1]
+    joint_max_vel,      ... % [n_joints x 1]
     J_g,                ... % Inequality constraint matrix
     b_g,                ... % Inequality constraint vector
     jointVelocityWeightMatrix, ...
@@ -42,7 +42,7 @@ function [optimal_joint_velocity, Exit_Flag] = inverseKinematicsOAModified( ...
     %   - Otherwise, we do whatever config.applySlack says.
     %
     slackIsUsed = config.applySlack;
-    if config.dynamicSlack
+    if config.dynamicSlack && config.obstacleAvoidanceScheme
         if isempty(J_g) || isempty(b_g)
             slackIsUsed = false;
         end
@@ -92,7 +92,7 @@ function [optimal_joint_velocity, Exit_Flag] = inverseKinematicsOAModified( ...
     
     % ---- 4.2 Inequality constraints -------------------------------------
     if config.applyInequalityConstraints
-        if ~isempty(J_g) && ~isempty(b_g)
+        if ~isempty(J_g) && ~isempty(b_g)  
             if config.applyVelocityDamper
                 % Combine both standard inequalities and velocity damper
                 A = [J_g; In];
@@ -112,10 +112,15 @@ function [optimal_joint_velocity, Exit_Flag] = inverseKinematicsOAModified( ...
     else
         % If we do not apply inequality constraints at all but velocity
         % damper is on, we can still do that by adding A=In, b=bp.
-        if config.applyVelocityDamper && (isempty(J_g) || isempty(b_g))
+         if config.applyVelocityDamper
             A = In;
             b = bp;
         end
+        
+        % if config.applyVelocityDamper && (isempty(J_g) || isempty(b_g))
+        %     A = In;
+        %     b = bp;
+        % end
     end
 
     % ---- 4.3 Determine final use of Slack and build lb, ub --------------
@@ -137,15 +142,20 @@ function [optimal_joint_velocity, Exit_Flag] = inverseKinematicsOAModified( ...
         if config.applyVelocityDamper
             lb_joints = joint_min_vel;
             ub_joints = joint_max_vel;
+            lb_slack = config.Slacklowerbound;
+            ub_slack = config.Slackupperbound;
+            lb       = [lb_joints; lb_slack];
+            ub       = [ub_joints; ub_slack];
         else
             lb_joints = max(config.gamma .* (jointminvalues - joint_values), joint_min_vel);
             ub_joints = min(config.gamma .* (jointmaxvalues - joint_values), joint_max_vel);
+            lb_slack = config.Slacklowerbound;
+            ub_slack = config.Slackupperbound;
+            lb       = [lb_joints; lb_slack];
+            ub       = [ub_joints; ub_slack];
         end
         
-        lb_slack = config.Slacklowerbound;
-        ub_slack = config.Slackupperbound;
-        lb       = [lb_joints; lb_slack];
-        ub       = [ub_joints; ub_slack];
+
     end
 
     % ---- 4.4 Expand constraints for Slack if needed ----------------------

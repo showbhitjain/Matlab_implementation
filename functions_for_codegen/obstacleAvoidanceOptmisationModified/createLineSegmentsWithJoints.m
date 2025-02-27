@@ -2,7 +2,7 @@
 %robot is rigidbodytree
 %mdhparams is mdhparams matrix defined 
 % radius defines radius of each link and radius vector dimension =  1xnumberofjoints 
-function linesegments = createLineSegments(mdhparams,robot,radius,jointangles)
+function linesegments = createLineSegmentsWithJoints(mdhparams,robot,radius,radiusJoints,jointangles)
     % Initialize the struct array
     defaultVector = [NaN NaN NaN];
     linesegments = repmat(struct('aSegmentV0', defaultVector, 'aSegmentV1', defaultVector, 'dSegmentV0', defaultVector, 'dSegmentV1', defaultVector, 'radius', NaN,'radiusJoint',NaN), size(mdhparams, 1), 1);
@@ -54,6 +54,7 @@ function linesegments = createLineSegments(mdhparams,robot,radius,jointangles)
             linesegments(i).dSegmentV1 = dTransform(1:3, 4)';
         end
         linesegments(i).radius = radius(i);
+        linesegments(i).radiusJoint = radiusJoints(i);
     end
 
 end

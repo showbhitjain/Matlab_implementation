@@ -103,27 +103,27 @@ config.useObjectiveNormInfinity = false;  % Use infinity norm term
 config.weightNormInfinity = 0.1;         % Weight for objective 1
 
 config.useObjectiveNormL2 = true;  % Use two-norm term
-config.weightNormL2 = 1;         % Weight for objective 2
+config.weightNormL2 = 5;         % Weight for objective 2
 
 config.useObjectiveTrajectoryFollowing = false; % Use norm of (jacobi*q_vel - xd_eff_vel)
 config.weightTrajectoryFollowing = 2;         % Weight for objective 3
 
-config.useObjectiveJointAcceleration = false;  % Use sum of (q_vel - q_vel_previous)^2
-config.weightJointAcceleration = 2;         % Weight for objective 4
+config.useObjectiveJointAcceleration = true;  % Use sum of (q_vel - q_vel_previous)^2
+config.weightJointAcceleration = 5;         % Weight for objective 4
 
 config.useObjectiveManipulability = true ; %use of manipulability constraint for Jm' * q_velocity
 config.weightManipulability = 0.1;         % singularity avoidance and manipulability maximization
 
 % Constraint configuration
 config.applyEqualityConstraints = true;    % Flag to apply equality constraints
-config.applyInequalityConstraints = true;  % Flag to apply inequality constraints
+config.applyInequalityConstraints = false;  % Flag to apply inequality constraints
 
 %Slack 
 config.applySlack = true;
 config.Slacklowerbound = [-0.25,-0.25,-0.25,-deg2rad(2),-deg2rad(2),-deg2rad(60)]';
 config.Slackupperbound = [0.25,0.25,0.25,deg2rad(2),deg2rad(2),deg2rad(60)]';
 config.SlackPenaltyWeight = [1 1 1 1 1 0.5];
-config.SlackObjectiveWeight = 20;
+config.SlackObjectiveWeight = 50;
 %Choose either Obstacle avoidance scheme 1 or 2 otherwise it would result in error;
 
 
@@ -147,7 +147,7 @@ This constrains the joint to slower velocities, potentially increasing precision
 However, it may also limit the responsiveness or speed of the system's movements.
 %}
 
-config.dynamicSlack = true;
+config.dynamicSlack = false;
 config.applyVelocityDamper = true;
 
 config.jointLimitActivationDistance = 10; % in degrees
