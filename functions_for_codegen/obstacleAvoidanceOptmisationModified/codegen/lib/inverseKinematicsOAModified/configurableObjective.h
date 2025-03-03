@@ -5,7 +5,7 @@
 // File: configurableObjective.h
 //
 // MATLAB Coder version            : 23.2
-// C/C++ source code generated on  : 04-Feb-2025 04:50:11
+// C/C++ source code generated on  : 03-Mar-2025 15:44:26
 //
 
 #ifndef CONFIGURABLEOBJECTIVE_H
@@ -18,9 +18,20 @@
 #include <cstdlib>
 
 // Function Declarations
-void binary_expand_op_4(coder::array<double, 1U> &in1,
-                        const coder::array<double, 1U> &in2, int in3,
-                        const coder::array<double, 1U> &in4);
+double configurableObjective(
+    const coder::array<double, 1U> &current_joint_velocity,
+    const coder::array<double, 2U> &jacobi, const double xd_eff_vel[6],
+    const coder::array<double, 1U> &starting_joint_vel,
+    const coder::array<double, 1U> &joint_values,
+    const coder::array<double, 2U> &WeightMatrix,
+    boolean_T config_useObjectiveNormInfinity, double config_weightNormInfinity,
+    boolean_T config_useObjectiveNormL2, double config_weightNormL2,
+    boolean_T config_useObjectiveTrajectoryFollowing,
+    double config_weightTrajectoryFollowing,
+    boolean_T config_useObjectiveJointAcceleration,
+    double config_weightJointAcceleration,
+    boolean_T config_useObjectiveManipulability,
+    double config_weightManipulability);
 
 #endif
 //

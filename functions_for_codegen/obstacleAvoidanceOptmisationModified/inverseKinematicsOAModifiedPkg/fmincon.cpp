@@ -5,7 +5,7 @@
 // File: fmincon.cpp
 //
 // MATLAB Coder version            : 23.2
-// C/C++ source code generated on  : 04-Feb-2025 04:50:11
+// C/C++ source code generated on  : 01-Mar-2025 01:36:28
 //
 
 // Include Files
@@ -116,11 +116,11 @@ double fmincon(const anonymous_function &fun, array<double, 1U> &x0,
       "/usr/local/MATLAB/R2023b/toolbox/optim/eml/fmincon.p", // pName
       0                                                       // checkKind
   };
-  static rtRunTimeErrorInfo c_emlrtRTEI{
+  static rtRunTimeErrorInfo e_emlrtRTEI{
       1,        // lineNo
       "checkX0" // fName
   };
-  static rtRunTimeErrorInfo d_emlrtRTEI{
+  static rtRunTimeErrorInfo f_emlrtRTEI{
       1,        // lineNo
       "fmincon" // fName
   };
@@ -153,7 +153,7 @@ double fmincon(const anonymous_function &fun, array<double, 1U> &x0,
   boolean_T exitg1;
   boolean_T y;
   if (x0.size(0) == 0) {
-    l_rtErrorWithMessageID(c_emlrtRTEI.fName, c_emlrtRTEI.lineNo);
+    l_rtErrorWithMessageID(e_emlrtRTEI.fName, e_emlrtRTEI.lineNo);
   }
   b.set_size(x0.size(0));
   nDepEq = x0.size(0);
@@ -176,7 +176,7 @@ double fmincon(const anonymous_function &fun, array<double, 1U> &x0,
     }
   }
   if (!y) {
-    rtErrorWithMessageID("x0", c_emlrtRTEI.fName, c_emlrtRTEI.lineNo);
+    rtErrorWithMessageID("x0", e_emlrtRTEI.fName, e_emlrtRTEI.lineNo);
   }
   nVar = x0.size(0) - 1;
   *exitflag = optim::coder::validate::checkLinearInputs(
@@ -387,7 +387,7 @@ double fmincon(const anonymous_function &fun, array<double, 1U> &x0,
       }
     }
     if (TrialState.xstarsqp.size(0) == 0) {
-      d_rtErrorWithMessageID("input", emlrtRTEI.fName, emlrtRTEI.lineNo);
+      d_rtErrorWithMessageID("input", c_emlrtRTEI.fName, c_emlrtRTEI.lineNo);
     }
     fval = inverseKinematicsOAModified_anonFcn1(
         fun.workspace.jacobi, fun.workspace.xd_eff_vel,
@@ -410,7 +410,7 @@ double fmincon(const anonymous_function &fun, array<double, 1U> &x0,
       nDepEq = 1;
     }
     if (nDepEq != 1) {
-      k_rtErrorWithMessageID(d_emlrtRTEI.fName, d_emlrtRTEI.lineNo);
+      k_rtErrorWithMessageID(f_emlrtRTEI.fName, f_emlrtRTEI.lineNo);
     }
     optim::coder::utils::FiniteDifferences::computeFiniteDifferences(
         FiniteDifferences, fval, TrialState.xstarsqp, TrialState.grad, lb, ub,

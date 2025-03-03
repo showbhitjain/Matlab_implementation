@@ -5,7 +5,7 @@
 // File: OptimizationBasedIKWithOAModified.h
 //
 // MATLAB Coder version            : 23.2
-// C/C++ source code generated on  : 04-Feb-2025 04:50:11
+// C/C++ source code generated on  : 01-Mar-2025 01:36:28
 //
 
 #ifndef OPTIMIZATIONBASEDIKWITHOAMODIFIED_H
@@ -49,6 +49,9 @@ double inverseKinematicsOAModified_anonFcn1(
     const coder::array<double, 2U> &jointVelocityWeightMatrix,
     const struct0_T &config, boolean_T slackIsUsed,
     const coder::array<double, 1U> &q_vel);
+
+void minus(coder::array<double, 1U> &in1, const coder::array<double, 1U> &in2,
+           const coder::array<double, 1U> &in3);
 
 #endif
 //

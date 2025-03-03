@@ -5,7 +5,7 @@
 // File: step.cpp
 //
 // MATLAB Coder version            : 23.2
-// C/C++ source code generated on  : 04-Feb-2025 04:50:11
+// C/C++ source code generated on  : 03-Mar-2025 15:44:26
 //
 
 // Include Files
@@ -25,6 +25,7 @@
 #include "sortLambdaQP.h"
 #include "coder_array.h"
 #include "coder_bounded_array.h"
+#include "omp.h"
 #include <cmath>
 #include <cstring>
 
@@ -104,10 +105,10 @@ boolean_T b_step(int &STEP_TYPE, array<double, 2U> &Hessian,
   k_struct_T b_qpoptions;
   double constrViolationEq;
   double constrViolationIneq;
+  int b_nVar;
   int i;
   int iH0;
   int loop_ub;
-  int n;
   int nVar;
   boolean_T checkBoundViolation;
   boolean_T stepSuccess;
@@ -118,15 +119,33 @@ boolean_T b_step(int &STEP_TYPE, array<double, 2U> &Hessian,
     if (WorkingSet.nVar > 2147483646) {
       check_forloop_overflow_error();
     }
-    for (int k{0}; k < nVar; k++) {
-      b_TrialState.xstar[k] = b_TrialState.xstarsqp[k];
+    if (static_cast<int>(nVar < 400)) {
+      for (int k{0}; k < nVar; k++) {
+        b_TrialState.xstar[k] = b_TrialState.xstarsqp[k];
+      }
+    } else {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4)
+
+      for (int k = 0; k < nVar; k++) {
+        b_TrialState.xstar[k] = b_TrialState.xstarsqp[k];
+      }
     }
   } else {
     if (WorkingSet.nVar > 2147483646) {
       check_forloop_overflow_error();
     }
-    for (int k{0}; k < nVar; k++) {
-      b_TrialState.searchDir[k] = b_TrialState.xstar[k];
+    if (static_cast<int>(nVar < 400)) {
+      for (int k{0}; k < nVar; k++) {
+        b_TrialState.searchDir[k] = b_TrialState.xstar[k];
+      }
+    } else {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4)
+
+      for (int k = 0; k < nVar; k++) {
+        b_TrialState.searchDir[k] = b_TrialState.xstar[k];
+      }
     }
   }
   int exitg1;
@@ -156,8 +175,8 @@ boolean_T b_step(int &STEP_TYPE, array<double, 2U> &Hessian,
             check_forloop_overflow_error();
           }
           i = static_cast<unsigned char>(WorkingSet.sizes[1]);
-          for (int k{0}; k < i; k++) {
-            constrViolationEq += std::abs(b_TrialState.cEq.data[k]);
+          for (int b_k{0}; b_k < i; b_k++) {
+            constrViolationEq += std::abs(b_TrialState.cEq.data[b_k]);
           }
         }
         constrViolationIneq = 0.0;
@@ -255,8 +274,8 @@ boolean_T b_step(int &STEP_TYPE, array<double, 2U> &Hessian,
         if (nVar > 2147483646) {
           check_forloop_overflow_error();
         }
-        for (int k{0}; k < nVar; k++) {
-          b_TrialState.delta_x[k] = b_TrialState.xstar[k];
+        for (int b_k{0}; b_k < nVar; b_k++) {
+          b_TrialState.delta_x[b_k] = b_TrialState.xstar[b_k];
         }
         guard1 = true;
       }
@@ -270,8 +289,8 @@ boolean_T b_step(int &STEP_TYPE, array<double, 2U> &Hessian,
       if (nVar > 2147483646) {
         check_forloop_overflow_error();
       }
-      for (int k{0}; k < nVar; k++) {
-        b_TrialState.delta_x[k] = b_TrialState.xstar[k];
+      for (int b_k{0}; b_k < nVar; b_k++) {
+        b_TrialState.delta_x[b_k] = b_TrialState.xstar[b_k];
       }
       guard1 = true;
       break;
@@ -313,9 +332,9 @@ boolean_T b_step(int &STEP_TYPE, array<double, 2U> &Hessian,
       if (b_TrialState.state != -6) {
         exitg1 = 1;
       } else {
-        int b_nVar;
         if ((Hessian.size(0) == 0) || (Hessian.size(1) == 0)) {
-          d_rtErrorWithMessageID("input", emlrtRTEI.fName, emlrtRTEI.lineNo);
+          d_rtErrorWithMessageID("input", c_emlrtRTEI.fName,
+                                 c_emlrtRTEI.lineNo);
         }
         b_nVar = Hessian.size(0) - 1;
         constrViolationEq = 0.0;
@@ -345,8 +364,8 @@ boolean_T b_step(int &STEP_TYPE, array<double, 2U> &Hessian,
         for (int idx{0}; idx <= b_nVar; idx++) {
           loop_ub = idx + 1;
           iH0 = (b_nVar + 1) * idx;
-          for (int k{0}; k <= loop_ub - 2; k++) {
-            Hessian[iH0 + k] = 0.0;
+          for (int b_k{0}; b_k <= loop_ub - 2; b_k++) {
+            Hessian[iH0 + b_k] = 0.0;
           }
           i = Hessian.size(0);
           if (idx + 1 > i) {
@@ -358,27 +377,36 @@ boolean_T b_step(int &STEP_TYPE, array<double, 2U> &Hessian,
           }
           Hessian[idx + Hessian.size(0) * idx] = constrViolationEq;
           loop_ub = (iH0 + idx) + 1;
-          n = (b_nVar - idx) - 1;
-          for (int k{0}; k <= n; k++) {
-            Hessian[loop_ub + k] = 0.0;
+          iH0 = (b_nVar - idx) - 1;
+          for (int b_k{0}; b_k <= iH0; b_k++) {
+            Hessian[loop_ub + b_k] = 0.0;
           }
         }
       }
     }
   } while (exitg1 == 0);
   if (checkBoundViolation) {
-    n = WorkingSet.sizes[3];
-    iH0 = WorkingSet.sizes[4];
+    iH0 = WorkingSet.sizes[3];
+    b_nVar = WorkingSet.sizes[4];
     r.set_size(b_TrialState.delta_x.size(0));
     loop_ub = b_TrialState.delta_x.size(0);
-    for (i = 0; i < loop_ub; i++) {
-      r[i] = b_TrialState.delta_x[i];
+    if (static_cast<int>(loop_ub < 400)) {
+      for (int k{0}; k < loop_ub; k++) {
+        r[k] = b_TrialState.delta_x[k];
+      }
+    } else {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4)
+
+      for (int k = 0; k < loop_ub; k++) {
+        r[k] = b_TrialState.delta_x[k];
+      }
     }
     if (lb.size(0) != 0) {
       if (WorkingSet.sizes[3] > 2147483646) {
         check_forloop_overflow_error();
       }
-      for (int idx{0}; idx < n; idx++) {
+      for (int idx{0}; idx < iH0; idx++) {
         i = WorkingSet.indexLB.size(0);
         if ((idx + 1 < 1) || (idx + 1 > i)) {
           rtDynamicBoundsError(idx + 1, 1, i, x_emlrtBCI);
@@ -433,7 +461,7 @@ boolean_T b_step(int &STEP_TYPE, array<double, 2U> &Hessian,
       if (WorkingSet.sizes[4] > 2147483646) {
         check_forloop_overflow_error();
       }
-      for (int idx{0}; idx < iH0; idx++) {
+      for (int idx{0}; idx < b_nVar; idx++) {
         i = WorkingSet.indexUB.size(0);
         if ((idx + 1 < 1) || (idx + 1 > i)) {
           rtDynamicBoundsError(idx + 1, 1, i, x_emlrtBCI);
@@ -486,8 +514,17 @@ boolean_T b_step(int &STEP_TYPE, array<double, 2U> &Hessian,
     }
     b_TrialState.delta_x.set_size(r.size(0));
     loop_ub = r.size(0);
-    for (i = 0; i < loop_ub; i++) {
-      b_TrialState.delta_x[i] = r[i];
+    if (static_cast<int>(r.size(0) < 400)) {
+      for (int k{0}; k < loop_ub; k++) {
+        b_TrialState.delta_x[k] = r[k];
+      }
+    } else {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4)
+
+      for (int k = 0; k < loop_ub; k++) {
+        b_TrialState.delta_x[k] = r[k];
+      }
     }
   }
   return stepSuccess;

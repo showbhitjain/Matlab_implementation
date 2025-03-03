@@ -5,64 +5,38 @@
 // File: OptimizationBasedIKWithOAModified.cpp
 //
 // MATLAB Coder version            : 23.2
-// C/C++ source code generated on  : 04-Feb-2025 04:50:11
+// C/C++ source code generated on  : 01-Mar-2025 01:36:28
 //
 
 // Include Files
 #include "OptimizationBasedIKWithOAModified.h"
-#include "Hessian_final_link.h"
-#include "Jacobi_final_link.h"
 #include "anonymous_function.h"
 #include "configurableObjective.h"
 #include "eml_int_forloop_overflow_check.h"
 #include "fmincon.h"
 #include "indexShapeCheck.h"
+#include "inverseKinematicsOAModified_data.h"
 #include "inverseKinematicsOAModified_internal_types1.h"
 #include "inverseKinematicsOAModified_rtwutil.h"
 #include "inverseKinematicsOAModified_types.h"
 #include "ixfun.h"
 #include "mtimes.h"
 #include "rt_nonfinite.h"
-#include "xgetrf.h"
 #include "coder_array.h"
-#include <algorithm>
 #include <cmath>
 #include <cstring>
 #include <sstream>
 #include <stdexcept>
 #include <string>
 
-// Type Definitions
-struct rtEqualityCheckInfo {
-  int nDims;
-  int lineNo;
-  int colNo;
-  const char *fName;
-  const char *pName;
-};
-
 // Function Declarations
-static void b_rtErrorWithMessageID(const char *r, const char *aFcnName,
-                                   int aLineNum);
-
 static void binary_expand_op(coder::array<double, 1U> &in1,
                              const struct0_T *in2,
                              const coder::array<double, 1U> &in3,
                              const coder::array<double, 1U> &in4);
 
-static void emlrtDimSizeImpxCheckR2021b(const int aDim1, const int aDim2,
-                                        const rtEqualityCheckInfo &aInfo);
-
-static void g_rtErrorWithMessageID(const char *aFcnName, int aLineNum);
-
-static void h_rtErrorWithMessageID(const char *aFcnName, int aLineNum);
-
 static void inverseKinematicsOAModified_init(
     OptimizationBasedIKWithOAModified *aInstancePtr);
-
-static void minus(coder::array<double, 1U> &in1,
-                  const coder::array<double, 1U> &in2,
-                  const coder::array<double, 1U> &in3);
 
 static void rtErrorWithMessageID(const char *aFcnName, int aLineNum);
 
@@ -75,24 +49,6 @@ inverseKinematicsOAModifiedStackData *
 OptimizationBasedIKWithOAModified::getStackData()
 {
   return &SD_;
-}
-
-//
-// Arguments    : const char *r
-//                const char *aFcnName
-//                int aLineNum
-// Return Type  : void
-//
-static void b_rtErrorWithMessageID(const char *r, const char *aFcnName,
-                                   int aLineNum)
-{
-  std::stringstream outStream;
-  ((outStream << "Domain error. To compute complex results from real x, use \'")
-   << r)
-      << "(complex(x))\'.";
-  outStream << "\n";
-  ((((outStream << "Error in ") << aFcnName) << " (line ") << aLineNum) << ")";
-  throw std::runtime_error(outStream.str());
 }
 
 //
@@ -124,73 +80,15 @@ static void binary_expand_op(coder::array<double, 1U> &in1,
 }
 
 //
-// Arguments    : const int aDim1
-//                const int aDim2
-//                const rtEqualityCheckInfo &aInfo
-// Return Type  : void
-//
-static void emlrtDimSizeImpxCheckR2021b(const int aDim1, const int aDim2,
-                                        const rtEqualityCheckInfo &aInfo)
-{
-  std::stringstream outStream;
-  ((((((outStream << "Size mismatch error on dimension ") << aInfo.nDims)
-      << ": expected ")
-     << aDim1)
-    << " or a singleton, but actual size is ")
-   << aDim2)
-      << ".";
-  outStream << "\n";
-  ((((outStream << "Error in ") << aInfo.fName) << " (line ") << aInfo.lineNo)
-      << ")";
-  throw std::runtime_error(outStream.str());
-}
-
-//
-// Arguments    : const char *aFcnName
-//                int aLineNum
-// Return Type  : void
-//
-static void g_rtErrorWithMessageID(const char *aFcnName, int aLineNum)
-{
-  std::stringstream outStream;
-  outStream
-      << "Incorrect dimensions for matrix multiplication. Check that the "
-         "number of columns in the first matrix matches the number of rows "
-         "in the second matrix. To operate on each element of the matrix "
-         "individually, use TIMES (.*) for elementwise multiplication.";
-  outStream << "\n";
-  ((((outStream << "Error in ") << aFcnName) << " (line ") << aLineNum) << ")";
-  throw std::runtime_error(outStream.str());
-}
-
-//
-// Arguments    : const char *aFcnName
-//                int aLineNum
-// Return Type  : void
-//
-static void h_rtErrorWithMessageID(const char *aFcnName, int aLineNum)
-{
-  std::stringstream outStream;
-  outStream
-      << "Inner dimensions must agree. Generated code for a general matrix "
-         "multiplication at this call site. If this should have been a sc"
-         "alar times a variable-size matrix, the scalar input must be "
-         "fixed-size.";
-  outStream << "\n";
-  ((((outStream << "Error in ") << aFcnName) << " (line ") << aLineNum) << ")";
-  throw std::runtime_error(outStream.str());
-}
-
-//
 // function [optimal_joint_velocity, Exit_Flag] = inverseKinematicsOAModified(
 // ...
 //     joint_values,       ... % [n_joints x 1]
 //     jacobi,             ... % [6 x n_joints]
 //     xd_eff_vel,         ... % [6 x 1]
-//     jointminvalues,     ...
-//     jointmaxvalues,     ...
-//     joint_min_vel,      ...
-//     joint_max_vel,      ...
+//     jointminvalues,     ... % [n_joints x 1]
+//     jointmaxvalues,     ... % [n_joints x 1]
+//     joint_min_vel,      ... % [n_joints x 1]
+//     joint_max_vel,      ... % [n_joints x 1]
 //     J_g,                ... % Inequality constraint matrix
 //     b_g,                ... % Inequality constraint vector
 //     jointVelocityWeightMatrix, ...
@@ -199,6 +97,12 @@ static void h_rtErrorWithMessageID(const char *aFcnName, int aLineNum)
 // % [n_joints x 1]
 //  % [6 x n_joints]
 //  % [6 x 1]
+//  % [n_joints x 1]
+//  % [n_joints x 1]
+//  % [n_joints x 1]
+//  % [n_joints x 1]
+//  % Inequality constraint matrix
+//  % Inequality constraint vector
 //
 // Arguments    : OptimizationBasedIKWithOAModified *aInstancePtr
 // Return Type  : void
@@ -210,32 +114,6 @@ static void inverseKinematicsOAModified_init(
   localSD = aInstancePtr->getStackData();
   localSD->pd->is_first_step_not_empty = false;
   localSD->pd->starting_joint_vel_not_empty = false;
-}
-
-//
-// Arguments    : coder::array<double, 1U> &in1
-//                const coder::array<double, 1U> &in2
-//                const coder::array<double, 1U> &in3
-// Return Type  : void
-//
-static void minus(coder::array<double, 1U> &in1,
-                  const coder::array<double, 1U> &in2,
-                  const coder::array<double, 1U> &in3)
-{
-  int loop_ub;
-  int stride_0_0;
-  int stride_1_0;
-  if (in3.size(0) == 1) {
-    loop_ub = in2.size(0);
-  } else {
-    loop_ub = in3.size(0);
-  }
-  in1.set_size(loop_ub);
-  stride_0_0 = (in2.size(0) != 1);
-  stride_1_0 = (in3.size(0) != 1);
-  for (int i{0}; i < loop_ub; i++) {
-    in1[i] = in2[i * stride_0_0] - in3[i * stride_1_0];
-  }
 }
 
 //
@@ -275,10 +153,10 @@ OptimizationBasedIKWithOAModified::~OptimizationBasedIKWithOAModified() =
 //     joint_values,       ... % [n_joints x 1]
 //     jacobi,             ... % [6 x n_joints]
 //     xd_eff_vel,         ... % [6 x 1]
-//     jointminvalues,     ...
-//     jointmaxvalues,     ...
-//     joint_min_vel,      ...
-//     joint_max_vel,      ...
+//     jointminvalues,     ... % [n_joints x 1]
+//     jointmaxvalues,     ... % [n_joints x 1]
+//     joint_min_vel,      ... % [n_joints x 1]
+//     joint_max_vel,      ... % [n_joints x 1]
 //     J_g,                ... % Inequality constraint matrix
 //     b_g,                ... % Inequality constraint vector
 //     jointVelocityWeightMatrix, ...
@@ -287,6 +165,12 @@ OptimizationBasedIKWithOAModified::~OptimizationBasedIKWithOAModified() =
 // % [n_joints x 1]
 //  % [6 x n_joints]
 //  % [6 x 1]
+//  % [n_joints x 1]
+//  % [n_joints x 1]
+//  % [n_joints x 1]
+//  % [n_joints x 1]
+//  % Inequality constraint matrix
+//  % Inequality constraint vector
 //
 // Arguments    : const coder::array<double, 1U> &joint_values
 //                const coder::array<double, 2U> &jacobi
@@ -322,10 +206,11 @@ void OptimizationBasedIKWithOAModified::inverseKinematicsOAModified(
       51,                            // colNo
       "min_dist",                    // aName
       "inverseKinematicsOAModified", // fName
-      "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/"
-      "robotmodelling/Matlab_implementation/functions_for_codegen/obstacle"
-      "AvoidanceOptmisationModified/inverseKinematicsOAModified.m", // pName
-      0                                                             // checkKind
+      "/home/shobhit/ShobhitRobotModelling/robotmodelling/"
+      "Matlab_implementation/functions_for_codegen/"
+      "obstacleAvoidanceOptmisationModif"
+      "ied/inverseKinematicsOAModified.m", // pName
+      0                                    // checkKind
   };
   static rtBoundsCheckInfo bb_emlrtBCI{
       -1,                            // iFirst
@@ -334,34 +219,37 @@ void OptimizationBasedIKWithOAModified::inverseKinematicsOAModified(
       20,                            // colNo
       "bp",                          // aName
       "inverseKinematicsOAModified", // fName
-      "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/"
-      "robotmodelling/Matlab_implementation/functions_for_codegen/obstacle"
-      "AvoidanceOptmisationModified/inverseKinematicsOAModified.m", // pName
-      0                                                             // checkKind
+      "/home/shobhit/ShobhitRobotModelling/robotmodelling/"
+      "Matlab_implementation/functions_for_codegen/"
+      "obstacleAvoidanceOptmisationModif"
+      "ied/inverseKinematicsOAModified.m", // pName
+      0                                    // checkKind
   };
   static rtBoundsCheckInfo cb_emlrtBCI{
       -1,                            // iFirst
       -1,                            // iLast
-      204,                           // lineNo
+      214,                           // lineNo
       44,                            // colNo
       "q_vel_opt",                   // aName
       "inverseKinematicsOAModified", // fName
-      "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/"
-      "robotmodelling/Matlab_implementation/functions_for_codegen/obstacle"
-      "AvoidanceOptmisationModified/inverseKinematicsOAModified.m", // pName
-      0                                                             // checkKind
+      "/home/shobhit/ShobhitRobotModelling/robotmodelling/"
+      "Matlab_implementation/functions_for_codegen/"
+      "obstacleAvoidanceOptmisationModif"
+      "ied/inverseKinematicsOAModified.m", // pName
+      0                                    // checkKind
   };
   static rtBoundsCheckInfo db_emlrtBCI{
       -1,                            // iFirst
       -1,                            // iLast
-      204,                           // lineNo
+      214,                           // lineNo
       46,                            // colNo
       "q_vel_opt",                   // aName
       "inverseKinematicsOAModified", // fName
-      "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/"
-      "robotmodelling/Matlab_implementation/functions_for_codegen/obstacle"
-      "AvoidanceOptmisationModified/inverseKinematicsOAModified.m", // pName
-      0                                                             // checkKind
+      "/home/shobhit/ShobhitRobotModelling/robotmodelling/"
+      "Matlab_implementation/functions_for_codegen/"
+      "obstacleAvoidanceOptmisationModif"
+      "ied/inverseKinematicsOAModified.m", // pName
+      0                                    // checkKind
   };
   static rtBoundsCheckInfo w_emlrtBCI{
       -1,                            // iFirst
@@ -370,10 +258,11 @@ void OptimizationBasedIKWithOAModified::inverseKinematicsOAModified(
       25,                            // colNo
       "min_dist",                    // aName
       "inverseKinematicsOAModified", // fName
-      "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/"
-      "robotmodelling/Matlab_implementation/functions_for_codegen/obstacle"
-      "AvoidanceOptmisationModified/inverseKinematicsOAModified.m", // pName
-      0                                                             // checkKind
+      "/home/shobhit/ShobhitRobotModelling/robotmodelling/"
+      "Matlab_implementation/functions_for_codegen/"
+      "obstacleAvoidanceOptmisationModif"
+      "ied/inverseKinematicsOAModified.m", // pName
+      0                                    // checkKind
   };
   static rtBoundsCheckInfo x_emlrtBCI{
       -1,                            // iFirst
@@ -382,10 +271,11 @@ void OptimizationBasedIKWithOAModified::inverseKinematicsOAModified(
       20,                            // colNo
       "In",                          // aName
       "inverseKinematicsOAModified", // fName
-      "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/"
-      "robotmodelling/Matlab_implementation/functions_for_codegen/obstacle"
-      "AvoidanceOptmisationModified/inverseKinematicsOAModified.m", // pName
-      0                                                             // checkKind
+      "/home/shobhit/ShobhitRobotModelling/robotmodelling/"
+      "Matlab_implementation/functions_for_codegen/"
+      "obstacleAvoidanceOptmisationModif"
+      "ied/inverseKinematicsOAModified.m", // pName
+      0                                    // checkKind
   };
   static rtBoundsCheckInfo y_emlrtBCI{
       -1,                            // iFirst
@@ -394,66 +284,73 @@ void OptimizationBasedIKWithOAModified::inverseKinematicsOAModified(
       22,                            // colNo
       "In",                          // aName
       "inverseKinematicsOAModified", // fName
-      "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/"
-      "robotmodelling/Matlab_implementation/functions_for_codegen/obstacle"
-      "AvoidanceOptmisationModified/inverseKinematicsOAModified.m", // pName
-      0                                                             // checkKind
+      "/home/shobhit/ShobhitRobotModelling/robotmodelling/"
+      "Matlab_implementation/functions_for_codegen/"
+      "obstacleAvoidanceOptmisationModif"
+      "ied/inverseKinematicsOAModified.m", // pName
+      0                                    // checkKind
   };
   static rtEqualityCheckInfo b_emlrtECI{
       1,                             // nDims
       64,                            // lineNo
       28,                            // colNo
       "inverseKinematicsOAModified", // fName
-      "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/"
-      "robotmodelling/Matlab_implementation/functions_for_codegen/obstacle"
-      "AvoidanceOptmisationModified/inverseKinematicsOAModified.m" // pName
+      "/home/shobhit/ShobhitRobotModelling/robotmodelling/"
+      "Matlab_implementation/functions_for_codegen/"
+      "obstacleAvoidanceOptmisationModif"
+      "ied/inverseKinematicsOAModified.m" // pName
   };
   static rtEqualityCheckInfo c_emlrtECI{
       1,                             // nDims
-      130,                           // lineNo
+      135,                           // lineNo
       39,                            // colNo
       "inverseKinematicsOAModified", // fName
-      "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/"
-      "robotmodelling/Matlab_implementation/functions_for_codegen/obstacle"
-      "AvoidanceOptmisationModified/inverseKinematicsOAModified.m" // pName
+      "/home/shobhit/ShobhitRobotModelling/robotmodelling/"
+      "Matlab_implementation/functions_for_codegen/"
+      "obstacleAvoidanceOptmisationModif"
+      "ied/inverseKinematicsOAModified.m" // pName
   };
   static rtEqualityCheckInfo d_emlrtECI{
       1,                             // nDims
-      131,                           // lineNo
+      136,                           // lineNo
       39,                            // colNo
       "inverseKinematicsOAModified", // fName
-      "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/"
-      "robotmodelling/Matlab_implementation/functions_for_codegen/obstacle"
-      "AvoidanceOptmisationModified/inverseKinematicsOAModified.m" // pName
+      "/home/shobhit/ShobhitRobotModelling/robotmodelling/"
+      "Matlab_implementation/functions_for_codegen/"
+      "obstacleAvoidanceOptmisationModif"
+      "ied/inverseKinematicsOAModified.m" // pName
   };
   static rtEqualityCheckInfo e_emlrtECI{
       1,                             // nDims
-      141,                           // lineNo
+      150,                           // lineNo
       46,                            // colNo
       "inverseKinematicsOAModified", // fName
-      "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/"
-      "robotmodelling/Matlab_implementation/functions_for_codegen/obstacle"
-      "AvoidanceOptmisationModified/inverseKinematicsOAModified.m" // pName
+      "/home/shobhit/ShobhitRobotModelling/robotmodelling/"
+      "Matlab_implementation/functions_for_codegen/"
+      "obstacleAvoidanceOptmisationModif"
+      "ied/inverseKinematicsOAModified.m" // pName
   };
   static rtEqualityCheckInfo emlrtECI{
       1,                             // nDims
       63,                            // lineNo
       28,                            // colNo
       "inverseKinematicsOAModified", // fName
-      "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/"
-      "robotmodelling/Matlab_implementation/functions_for_codegen/obstacle"
-      "AvoidanceOptmisationModified/inverseKinematicsOAModified.m" // pName
+      "/home/shobhit/ShobhitRobotModelling/robotmodelling/"
+      "Matlab_implementation/functions_for_codegen/"
+      "obstacleAvoidanceOptmisationModif"
+      "ied/inverseKinematicsOAModified.m" // pName
   };
   static rtEqualityCheckInfo f_emlrtECI{
       1,                             // nDims
-      142,                           // lineNo
+      151,                           // lineNo
       46,                            // colNo
       "inverseKinematicsOAModified", // fName
-      "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/"
-      "robotmodelling/Matlab_implementation/functions_for_codegen/obstacle"
-      "AvoidanceOptmisationModified/inverseKinematicsOAModified.m" // pName
+      "/home/shobhit/ShobhitRobotModelling/robotmodelling/"
+      "Matlab_implementation/functions_for_codegen/"
+      "obstacleAvoidanceOptmisationModif"
+      "ied/inverseKinematicsOAModified.m" // pName
   };
-  static rtRunTimeErrorInfo c_emlrtRTEI{
+  static rtRunTimeErrorInfo e_emlrtRTEI{
       288,                  // lineNo
       "check_non_axis_size" // fName
   };
@@ -480,8 +377,6 @@ void OptimizationBasedIKWithOAModified::inverseKinematicsOAModified(
   int loop_ub_tmp;
   int nx;
   boolean_T slackIsUsed;
-  //  % Inequality constraint matrix
-  //  % Inequality constraint vector
   // ----------------------------------------------------------------------
   //  1. PERSISTENT VARIABLES
   // ----------------------------------------------------------------------
@@ -522,8 +417,9 @@ void OptimizationBasedIKWithOAModified::inverseKinematicsOAModified(
   //
   // 'inverseKinematicsOAModified:44' slackIsUsed = config.applySlack;
   slackIsUsed = configInput->applySlack;
-  // 'inverseKinematicsOAModified:45' if config.dynamicSlack
-  if (configInput->dynamicSlack &&
+  // 'inverseKinematicsOAModified:45' if config.dynamicSlack &&
+  // config.obstacleAvoidanceScheme
+  if (configInput->dynamicSlack && configInput->obstacleAvoidanceScheme &&
       ((J_g.size(0) == 0) || (J_g.size(1) == 0) || (b_g.size(0) == 0))) {
     // 'inverseKinematicsOAModified:46' if isempty(J_g) || isempty(b_g)
     // 'inverseKinematicsOAModified:47' slackIsUsed = false;
@@ -685,7 +581,7 @@ void OptimizationBasedIKWithOAModified::inverseKinematicsOAModified(
         // 'inverseKinematicsOAModified:98' A = [J_g; In];
         if ((In.size(1) != J_g.size(1)) &&
             ((In.size(0) != 0) && (In.size(1) != 0))) {
-          rtErrorWithMessageID(c_emlrtRTEI.fName, c_emlrtRTEI.lineNo);
+          rtErrorWithMessageID(e_emlrtRTEI.fName, e_emlrtRTEI.lineNo);
         }
         nx = J_g.size(0);
         if ((In.size(0) != 0) && (In.size(1) != 0)) {
@@ -755,10 +651,8 @@ void OptimizationBasedIKWithOAModified::inverseKinematicsOAModified(
     // 'inverseKinematicsOAModified:112' else
     //  If we do not apply inequality constraints at all but velocity
     //  damper is on, we can still do that by adding A=In, b=bp.
-    // 'inverseKinematicsOAModified:115' if config.applyVelocityDamper &&
-    // (isempty(J_g) || isempty(b_g))
-  } else if (configInput->applyVelocityDamper &&
-             ((J_g.size(0) == 0) || (J_g.size(1) == 0) || (b_g.size(0) == 0))) {
+    // 'inverseKinematicsOAModified:115' if config.applyVelocityDamper
+  } else if (configInput->applyVelocityDamper) {
     // 'inverseKinematicsOAModified:116' A = In;
     A.set_size(In.size(0), In.size(1));
     for (i = 0; i < loop_ub_tmp; i++) {
@@ -770,30 +664,35 @@ void OptimizationBasedIKWithOAModified::inverseKinematicsOAModified(
     for (i = 0; i < loop_ub; i++) {
       b[i] = bp[i];
     }
+
+    //  if config.applyVelocityDamper && (isempty(J_g) || isempty(b_g))
+    //      A = In;
+    //      b = bp;
+    //  end
   }
   //  ---- 4.3 Determine final use of Slack and build lb, ub --------------
-  // 'inverseKinematicsOAModified:122' if ~slackIsUsed
+  // 'inverseKinematicsOAModified:127' if ~slackIsUsed
   if (!slackIsUsed) {
     //  BOUNDS without slack
-    // 'inverseKinematicsOAModified:124' if config.applyVelocityDamper
+    // 'inverseKinematicsOAModified:129' if config.applyVelocityDamper
     if (configInput->applyVelocityDamper) {
       //  We do not scale velocities by gamma if velocity damper is active
-      // 'inverseKinematicsOAModified:126' lb = joint_min_vel;
+      // 'inverseKinematicsOAModified:131' lb = joint_min_vel;
       lb.set_size(joint_min_vel.size(0), 1);
       loop_ub = joint_min_vel.size(0);
       for (i = 0; i < loop_ub; i++) {
         lb[i] = joint_min_vel[i];
       }
-      // 'inverseKinematicsOAModified:127' ub = joint_max_vel;
+      // 'inverseKinematicsOAModified:132' ub = joint_max_vel;
       ub.set_size(joint_max_vel.size(0), 1);
       loop_ub = joint_max_vel.size(0);
       for (i = 0; i < loop_ub; i++) {
         ub[i] = joint_max_vel[i];
       }
     } else {
-      // 'inverseKinematicsOAModified:128' else
+      // 'inverseKinematicsOAModified:133' else
       //  Normal bounds: scale the move by config.gamma
-      // 'inverseKinematicsOAModified:130' lb = max(config.gamma .*
+      // 'inverseKinematicsOAModified:135' lb = max(config.gamma .*
       // (jointminvalues - joint_values), joint_min_vel);
       if ((jointminvalues.size(0) != joint_values.size(0)) &&
           ((jointminvalues.size(0) != 1) && (joint_values.size(0) != 1))) {
@@ -826,7 +725,7 @@ void OptimizationBasedIKWithOAModified::inverseKinematicsOAModified(
       for (i = 0; i < loop_ub; i++) {
         lb[i] = varargin_2[i];
       }
-      // 'inverseKinematicsOAModified:131' ub = min(config.gamma .*
+      // 'inverseKinematicsOAModified:136' ub = min(config.gamma .*
       // (jointmaxvalues - joint_values), joint_max_vel);
       if ((jointmaxvalues.size(0) != joint_values.size(0)) &&
           ((jointmaxvalues.size(0) != 1) && (joint_values.size(0) != 1))) {
@@ -860,87 +759,106 @@ void OptimizationBasedIKWithOAModified::inverseKinematicsOAModified(
         ub[i] = min_dist[i];
       }
     }
-  } else {
-    // 'inverseKinematicsOAModified:133' else
+
+    // 'inverseKinematicsOAModified:138' else
     //  BOUNDS with slack
     //     first n_joints are for joint velocities
     //     next   n_slack are for slack
-    // 'inverseKinematicsOAModified:137' if config.applyVelocityDamper
-    if (configInput->applyVelocityDamper) {
-      // 'inverseKinematicsOAModified:138' lb_joints = joint_min_vel;
-      min_dist.set_size(joint_min_vel.size(0));
-      loop_ub = joint_min_vel.size(0);
-      for (i = 0; i < loop_ub; i++) {
-        min_dist[i] = joint_min_vel[i];
-      }
-      // 'inverseKinematicsOAModified:139' ub_joints = joint_max_vel;
-      bp.set_size(joint_max_vel.size(0));
-      loop_ub = joint_max_vel.size(0);
-      for (i = 0; i < loop_ub; i++) {
-        bp[i] = joint_max_vel[i];
-      }
-    } else {
-      // 'inverseKinematicsOAModified:140' else
-      // 'inverseKinematicsOAModified:141' lb_joints = max(config.gamma .*
-      // (jointminvalues - joint_values), joint_min_vel);
-      if ((jointminvalues.size(0) != joint_values.size(0)) &&
-          ((jointminvalues.size(0) != 1) && (joint_values.size(0) != 1))) {
-        emlrtDimSizeImpxCheckR2021b(jointminvalues.size(0),
-                                    joint_values.size(0), e_emlrtECI);
-      }
-      if (jointminvalues.size(0) == joint_values.size(0)) {
-        varargin_1.set_size(jointminvalues.size(0));
-        loop_ub = jointminvalues.size(0);
-        for (i = 0; i < loop_ub; i++) {
-          varargin_1[i] =
-              configInput->gamma * (jointminvalues[i] - joint_values[i]);
-        }
-      } else {
-        binary_expand_op(varargin_1, configInput, jointminvalues, joint_values);
-      }
-      if (varargin_1.size(0) == joint_min_vel.size(0)) {
-        min_dist.set_size(varargin_1.size(0));
-        loop_ub = varargin_1.size(0);
-        for (i = 0; i < loop_ub; i++) {
-          b_varargin_1 = varargin_1[i];
-          b_varargin_2 = joint_min_vel[i];
-          min_dist[i] = std::fmax(b_varargin_1, b_varargin_2);
-        }
-      } else {
-        coder::internal::expand_max(varargin_1, joint_min_vel, min_dist);
-      }
-      // 'inverseKinematicsOAModified:142' ub_joints = min(config.gamma .*
-      // (jointmaxvalues - joint_values), joint_max_vel);
-      if ((jointmaxvalues.size(0) != joint_values.size(0)) &&
-          ((jointmaxvalues.size(0) != 1) && (joint_values.size(0) != 1))) {
-        emlrtDimSizeImpxCheckR2021b(jointmaxvalues.size(0),
-                                    joint_values.size(0), f_emlrtECI);
-      }
-      if (jointmaxvalues.size(0) == joint_values.size(0)) {
-        varargin_1.set_size(jointmaxvalues.size(0));
-        loop_ub = jointmaxvalues.size(0);
-        for (i = 0; i < loop_ub; i++) {
-          varargin_1[i] =
-              configInput->gamma * (jointmaxvalues[i] - joint_values[i]);
-        }
-      } else {
-        binary_expand_op(varargin_1, configInput, jointmaxvalues, joint_values);
-      }
-      if (varargin_1.size(0) == joint_max_vel.size(0)) {
-        bp.set_size(varargin_1.size(0));
-        loop_ub = varargin_1.size(0);
-        for (i = 0; i < loop_ub; i++) {
-          b_varargin_1 = varargin_1[i];
-          b_varargin_2 = joint_max_vel[i];
-          bp[i] = std::fmin(b_varargin_1, b_varargin_2);
-        }
-      } else {
-        coder::internal::expand_min(varargin_1, joint_max_vel, bp);
-      }
-    }
+    // 'inverseKinematicsOAModified:142' if config.applyVelocityDamper
+  } else if (configInput->applyVelocityDamper) {
+    // 'inverseKinematicsOAModified:143' lb_joints = joint_min_vel;
+    // 'inverseKinematicsOAModified:144' ub_joints = joint_max_vel;
     // 'inverseKinematicsOAModified:145' lb_slack = config.Slacklowerbound;
     // 'inverseKinematicsOAModified:146' ub_slack = config.Slackupperbound;
     // 'inverseKinematicsOAModified:147' lb       = [lb_joints; lb_slack];
+    varargin_2.set_size(joint_min_vel.size(0) + 6);
+    loop_ub = joint_min_vel.size(0);
+    for (i = 0; i < loop_ub; i++) {
+      varargin_2[i] = joint_min_vel[i];
+    }
+    for (i = 0; i < 6; i++) {
+      varargin_2[i + joint_min_vel.size(0)] = configInput->Slacklowerbound[i];
+    }
+    lb.set_size(varargin_2.size(0), 1);
+    loop_ub = varargin_2.size(0);
+    for (i = 0; i < loop_ub; i++) {
+      lb[i] = varargin_2[i];
+    }
+    // 'inverseKinematicsOAModified:148' ub       = [ub_joints; ub_slack];
+    min_dist.set_size(joint_max_vel.size(0) + 6);
+    loop_ub = joint_max_vel.size(0);
+    for (i = 0; i < loop_ub; i++) {
+      min_dist[i] = joint_max_vel[i];
+    }
+    for (i = 0; i < 6; i++) {
+      min_dist[i + joint_max_vel.size(0)] = configInput->Slackupperbound[i];
+    }
+    ub.set_size(min_dist.size(0), 1);
+    loop_ub = min_dist.size(0);
+    for (i = 0; i < loop_ub; i++) {
+      ub[i] = min_dist[i];
+    }
+  } else {
+    // 'inverseKinematicsOAModified:149' else
+    // 'inverseKinematicsOAModified:150' lb_joints = max(config.gamma .*
+    // (jointminvalues - joint_values), joint_min_vel);
+    if ((jointminvalues.size(0) != joint_values.size(0)) &&
+        ((jointminvalues.size(0) != 1) && (joint_values.size(0) != 1))) {
+      emlrtDimSizeImpxCheckR2021b(jointminvalues.size(0), joint_values.size(0),
+                                  e_emlrtECI);
+    }
+    if (jointminvalues.size(0) == joint_values.size(0)) {
+      varargin_1.set_size(jointminvalues.size(0));
+      loop_ub = jointminvalues.size(0);
+      for (i = 0; i < loop_ub; i++) {
+        varargin_1[i] =
+            configInput->gamma * (jointminvalues[i] - joint_values[i]);
+      }
+    } else {
+      binary_expand_op(varargin_1, configInput, jointminvalues, joint_values);
+    }
+    if (varargin_1.size(0) == joint_min_vel.size(0)) {
+      min_dist.set_size(varargin_1.size(0));
+      loop_ub = varargin_1.size(0);
+      for (i = 0; i < loop_ub; i++) {
+        b_varargin_1 = varargin_1[i];
+        b_varargin_2 = joint_min_vel[i];
+        min_dist[i] = std::fmax(b_varargin_1, b_varargin_2);
+      }
+    } else {
+      coder::internal::expand_max(varargin_1, joint_min_vel, min_dist);
+    }
+    // 'inverseKinematicsOAModified:151' ub_joints = min(config.gamma .*
+    // (jointmaxvalues - joint_values), joint_max_vel);
+    if ((jointmaxvalues.size(0) != joint_values.size(0)) &&
+        ((jointmaxvalues.size(0) != 1) && (joint_values.size(0) != 1))) {
+      emlrtDimSizeImpxCheckR2021b(jointmaxvalues.size(0), joint_values.size(0),
+                                  f_emlrtECI);
+    }
+    if (jointmaxvalues.size(0) == joint_values.size(0)) {
+      varargin_1.set_size(jointmaxvalues.size(0));
+      loop_ub = jointmaxvalues.size(0);
+      for (i = 0; i < loop_ub; i++) {
+        varargin_1[i] =
+            configInput->gamma * (jointmaxvalues[i] - joint_values[i]);
+      }
+    } else {
+      binary_expand_op(varargin_1, configInput, jointmaxvalues, joint_values);
+    }
+    if (varargin_1.size(0) == joint_max_vel.size(0)) {
+      bp.set_size(varargin_1.size(0));
+      loop_ub = varargin_1.size(0);
+      for (i = 0; i < loop_ub; i++) {
+        b_varargin_1 = varargin_1[i];
+        b_varargin_2 = joint_max_vel[i];
+        bp[i] = std::fmin(b_varargin_1, b_varargin_2);
+      }
+    } else {
+      coder::internal::expand_min(varargin_1, joint_max_vel, bp);
+    }
+    // 'inverseKinematicsOAModified:152' lb_slack = config.Slacklowerbound;
+    // 'inverseKinematicsOAModified:153' ub_slack = config.Slackupperbound;
+    // 'inverseKinematicsOAModified:154' lb       = [lb_joints; lb_slack];
     varargin_2.set_size(min_dist.size(0) + 6);
     loop_ub = min_dist.size(0);
     for (i = 0; i < loop_ub; i++) {
@@ -954,7 +872,7 @@ void OptimizationBasedIKWithOAModified::inverseKinematicsOAModified(
     for (i = 0; i < loop_ub; i++) {
       lb[i] = varargin_2[i];
     }
-    // 'inverseKinematicsOAModified:148' ub       = [ub_joints; ub_slack];
+    // 'inverseKinematicsOAModified:155' ub       = [ub_joints; ub_slack];
     min_dist.set_size(bp.size(0) + 6);
     loop_ub = bp.size(0);
     for (i = 0; i < loop_ub; i++) {
@@ -970,13 +888,13 @@ void OptimizationBasedIKWithOAModified::inverseKinematicsOAModified(
     }
   }
   //  ---- 4.4 Expand constraints for Slack if needed ----------------------
-  // 'inverseKinematicsOAModified:152' if slackIsUsed
+  // 'inverseKinematicsOAModified:162' if slackIsUsed
   if (slackIsUsed) {
     //  Expand the equality constraints
-    // 'inverseKinematicsOAModified:154' if config.applyEqualityConstraints
+    // 'inverseKinematicsOAModified:164' if config.applyEqualityConstraints
     if (configInput->applyEqualityConstraints) {
       signed char b_I[36];
-      // 'inverseKinematicsOAModified:155' Aeq = [JacobiWeightMatrix * jacobi,
+      // 'inverseKinematicsOAModified:165' Aeq = [JacobiWeightMatrix * jacobi,
       // eye(n_slack)];
       coder::internal::blas::mtimes(jacobi, Aeq);
       for (i = 0; i < 36; i++) {
@@ -987,7 +905,7 @@ void OptimizationBasedIKWithOAModified::inverseKinematicsOAModified(
       }
       i = Aeq.size(1);
       Aeq.set_size(Aeq.size(0), Aeq.size(1) + 6);
-      // 'inverseKinematicsOAModified:156' beq = xd_eff_vel;
+      // 'inverseKinematicsOAModified:166' beq = xd_eff_vel;
       input_sizes[0] = 6;
       input_sizes[1] = 1;
       for (int i1{0}; i1 < 6; i1++) {
@@ -998,9 +916,9 @@ void OptimizationBasedIKWithOAModified::inverseKinematicsOAModified(
       }
     }
     //  Expand the inequality constraints
-    // 'inverseKinematicsOAModified:160' if ~isempty(A)
+    // 'inverseKinematicsOAModified:170' if ~isempty(A)
     if ((A.size(0) != 0) && (A.size(1) != 0)) {
-      // 'inverseKinematicsOAModified:161' A = [A, zeros(size(A,1), n_slack)];
+      // 'inverseKinematicsOAModified:171' A = [A, zeros(size(A,1), n_slack)];
       nx = A.size(0);
       loop_ub_tmp = A.size(0);
       k = A.size(1);
@@ -1017,7 +935,7 @@ void OptimizationBasedIKWithOAModified::inverseKinematicsOAModified(
         }
       }
     }
-    // 'inverseKinematicsOAModified:169' q_vel_initial_guess =
+    // 'inverseKinematicsOAModified:179' q_vel_initial_guess =
     // [starting_joint_vel;zeros(n_slack,1)];
     optimal_joint_velocity.set_size(pd_.starting_joint_vel.size(0) + 6);
     loop_ub = pd_.starting_joint_vel.size(0);
@@ -1028,8 +946,8 @@ void OptimizationBasedIKWithOAModified::inverseKinematicsOAModified(
       optimal_joint_velocity[i + pd_.starting_joint_vel.size(0)] = 0.0;
     }
   } else {
-    // 'inverseKinematicsOAModified:170' else
-    // 'inverseKinematicsOAModified:171' q_vel_initial_guess =
+    // 'inverseKinematicsOAModified:180' else
+    // 'inverseKinematicsOAModified:181' q_vel_initial_guess =
     // starting_joint_vel;
     optimal_joint_velocity.set_size(pd_.starting_joint_vel.size(0));
     loop_ub = pd_.starting_joint_vel.size(0);
@@ -1040,33 +958,33 @@ void OptimizationBasedIKWithOAModified::inverseKinematicsOAModified(
   // ----------------------------------------------------------------------
   //  5. INITIAL GUESS
   // ----------------------------------------------------------------------
-  // 'inverseKinematicsOAModified:168' if slackIsUsed
+  // 'inverseKinematicsOAModified:178' if slackIsUsed
   // ----------------------------------------------------------------------
   //  6. OPTIMIZATION OPTIONS
   // ----------------------------------------------------------------------
-  // 'inverseKinematicsOAModified:177' options = optimoptions('fmincon', ...
-  // 'inverseKinematicsOAModified:178'         'Algorithm',           'sqp', ...
-  // 'inverseKinematicsOAModified:179'         'Display',            'off', ...
-  // % or 'iter' to see solver progress 'inverseKinematicsOAModified:180'
-  // 'OptimalityTolerance', 1e-6, ... 'inverseKinematicsOAModified:181'
-  // 'ConstraintTolerance', 1e-6, ... 'inverseKinematicsOAModified:182'
-  // 'StepTolerance',       1e-6, ... 'inverseKinematicsOAModified:183'
+  // 'inverseKinematicsOAModified:187' options = optimoptions('fmincon', ...
+  // 'inverseKinematicsOAModified:188'         'Algorithm',           'sqp', ...
+  // 'inverseKinematicsOAModified:189'         'Display',            'off', ...
+  // % or 'iter' to see solver progress 'inverseKinematicsOAModified:190'
+  // 'OptimalityTolerance', 1e-6, ... 'inverseKinematicsOAModified:191'
+  // 'ConstraintTolerance', 1e-6, ... 'inverseKinematicsOAModified:192'
+  // 'StepTolerance',       1e-6, ... 'inverseKinematicsOAModified:193'
   // 'MaxIterations',       1000);
   //   % or 'iter' to see solver progress
   // ----------------------------------------------------------------------
   //  7. CALL THE OPTIMIZER (fmincon)
   // ----------------------------------------------------------------------
-  // 'inverseKinematicsOAModified:188' [q_vel_opt, ~, Exit_Flag] =
-  // fmincon(@(q_vel) objFun( ... 'inverseKinematicsOAModified:189' q_vel, ...
-  // 'inverseKinematicsOAModified:190'             jacobi, ...
-  // 'inverseKinematicsOAModified:191'             xd_eff_vel, ...
-  // 'inverseKinematicsOAModified:192'             starting_joint_vel, ...
-  // 'inverseKinematicsOAModified:193'             joint_values, ...
-  // 'inverseKinematicsOAModified:194'             jointVelocityWeightMatrix,
-  // ... 'inverseKinematicsOAModified:195'             config, ...
-  // 'inverseKinematicsOAModified:196'             slackIsUsed), ...
-  // 'inverseKinematicsOAModified:197'         q_vel_initial_guess, ...
-  // 'inverseKinematicsOAModified:198'         A, b, Aeq, beq, lb, ub, [],
+  // 'inverseKinematicsOAModified:198' [q_vel_opt, ~, Exit_Flag] =
+  // fmincon(@(q_vel) objFun( ... 'inverseKinematicsOAModified:199' q_vel, ...
+  // 'inverseKinematicsOAModified:200'             jacobi, ...
+  // 'inverseKinematicsOAModified:201'             xd_eff_vel, ...
+  // 'inverseKinematicsOAModified:202'             starting_joint_vel, ...
+  // 'inverseKinematicsOAModified:203'             joint_values, ...
+  // 'inverseKinematicsOAModified:204'             jointVelocityWeightMatrix,
+  // ... 'inverseKinematicsOAModified:205'             config, ...
+  // 'inverseKinematicsOAModified:206'             slackIsUsed), ...
+  // 'inverseKinematicsOAModified:207'         q_vel_initial_guess, ...
+  // 'inverseKinematicsOAModified:208'         A, b, Aeq, beq, lb, ub, [],
   // options);
   b_this.workspace.slackIsUsed = slackIsUsed;
   b_this.workspace.jacobi.set_size(6, jacobi.size(1));
@@ -1101,9 +1019,9 @@ void OptimizationBasedIKWithOAModified::inverseKinematicsOAModified(
   // ----------------------------------------------------------------------
   //  8. EXTRACT THE RESULT
   // ----------------------------------------------------------------------
-  // 'inverseKinematicsOAModified:203' if slackIsUsed
+  // 'inverseKinematicsOAModified:213' if slackIsUsed
   if (slackIsUsed) {
-    // 'inverseKinematicsOAModified:204' optimal_joint_velocity =
+    // 'inverseKinematicsOAModified:214' optimal_joint_velocity =
     // q_vel_opt(1:n_joints);
     if (joint_values.size(0) < 1) {
       i = 0;
@@ -1123,13 +1041,13 @@ void OptimizationBasedIKWithOAModified::inverseKinematicsOAModified(
                                      input_sizes);
     optimal_joint_velocity.set_size(i);
   } else {
-    // 'inverseKinematicsOAModified:206' else
-    // 'inverseKinematicsOAModified:207' optimal_joint_velocity = q_vel_opt;
+    // 'inverseKinematicsOAModified:216' else
+    // 'inverseKinematicsOAModified:217' optimal_joint_velocity = q_vel_opt;
   }
   // ----------------------------------------------------------------------
   //  9. UPDATE PERSISTENT STATE
   // ----------------------------------------------------------------------
-  // 'inverseKinematicsOAModified:213' starting_joint_vel =
+  // 'inverseKinematicsOAModified:223' starting_joint_vel =
   // optimal_joint_velocity;
   pd_.starting_joint_vel.set_size(optimal_joint_velocity.size(0));
   loop_ub = optimal_joint_velocity.size(0);
@@ -1163,424 +1081,178 @@ double inverseKinematicsOAModified_anonFcn1(
   static rtBoundsCheckInfo ab_emlrtBCI{
       -1,       // iFirst
       -1,       // iLast
-      3,        // lineNo
+      6,        // lineNo
+      192,      // colNo
+      "q_vel",  // aName
+      "objFun", // fName
+      "/home/shobhit/ShobhitRobotModelling/robotmodelling/"
+      "Matlab_implementation/functions_for_codegen/"
+      "obstacleAvoidanceOptmisationModif"
+      "ied/objFun.m", // pName
+      0               // checkKind
+  };
+  static rtBoundsCheckInfo bb_emlrtBCI{
+      -1,       // iFirst
+      -1,       // iLast
+      6,        // lineNo
+      42,       // colNo
+      "q_vel",  // aName
+      "objFun", // fName
+      "/home/shobhit/ShobhitRobotModelling/robotmodelling/"
+      "Matlab_implementation/functions_for_codegen/"
+      "obstacleAvoidanceOptmisationModif"
+      "ied/objFun.m", // pName
+      0               // checkKind
+  };
+  static rtBoundsCheckInfo cb_emlrtBCI{
+      -1,       // iFirst
+      -1,       // iLast
+      6,        // lineNo
       44,       // colNo
       "q_vel",  // aName
       "objFun", // fName
-      "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/"
-      "robotmodelling/Matlab_implementation/functions_for_codegen/obstacle"
-      "AvoidanceOptmisationModified/objFun.m", // pName
-      0                                        // checkKind
+      "/home/shobhit/ShobhitRobotModelling/robotmodelling/"
+      "Matlab_implementation/functions_for_codegen/"
+      "obstacleAvoidanceOptmisationModif"
+      "ied/objFun.m", // pName
+      0               // checkKind
+  };
+  static rtBoundsCheckInfo db_emlrtBCI{
+      -1,       // iFirst
+      -1,       // iLast
+      8,        // lineNo
+      42,       // colNo
+      "q_vel",  // aName
+      "objFun", // fName
+      "/home/shobhit/ShobhitRobotModelling/robotmodelling/"
+      "Matlab_implementation/functions_for_codegen/"
+      "obstacleAvoidanceOptmisationModif"
+      "ied/objFun.m", // pName
+      0               // checkKind
+  };
+  static rtBoundsCheckInfo eb_emlrtBCI{
+      -1,       // iFirst
+      -1,       // iLast
+      8,        // lineNo
+      44,       // colNo
+      "q_vel",  // aName
+      "objFun", // fName
+      "/home/shobhit/ShobhitRobotModelling/robotmodelling/"
+      "Matlab_implementation/functions_for_codegen/"
+      "obstacleAvoidanceOptmisationModif"
+      "ied/objFun.m", // pName
+      0               // checkKind
   };
   static rtBoundsCheckInfo w_emlrtBCI{
       -1,       // iFirst
       -1,       // iLast
-      7,        // lineNo
-      23,       // colNo
+      6,        // lineNo
+      240,      // colNo
       "q_vel",  // aName
       "objFun", // fName
-      "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/"
-      "robotmodelling/Matlab_implementation/functions_for_codegen/obstacle"
-      "AvoidanceOptmisationModified/objFun.m", // pName
-      0                                        // checkKind
+      "/home/shobhit/ShobhitRobotModelling/robotmodelling/"
+      "Matlab_implementation/functions_for_codegen/"
+      "obstacleAvoidanceOptmisationModif"
+      "ied/objFun.m", // pName
+      0               // checkKind
   };
   static rtBoundsCheckInfo x_emlrtBCI{
       -1,       // iFirst
       -1,       // iLast
-      7,        // lineNo
-      34,       // colNo
+      6,        // lineNo
+      251,      // colNo
       "q_vel",  // aName
       "objFun", // fName
-      "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/"
-      "robotmodelling/Matlab_implementation/functions_for_codegen/obstacle"
-      "AvoidanceOptmisationModified/objFun.m", // pName
-      0                                        // checkKind
+      "/home/shobhit/ShobhitRobotModelling/robotmodelling/"
+      "Matlab_implementation/functions_for_codegen/"
+      "obstacleAvoidanceOptmisationModif"
+      "ied/objFun.m", // pName
+      0               // checkKind
   };
   static rtBoundsCheckInfo y_emlrtBCI{
       -1,       // iFirst
       -1,       // iLast
-      3,        // lineNo
-      42,       // colNo
+      6,        // lineNo
+      181,      // colNo
       "q_vel",  // aName
       "objFun", // fName
-      "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/"
-      "robotmodelling/Matlab_implementation/functions_for_codegen/obstacle"
-      "AvoidanceOptmisationModified/objFun.m", // pName
-      0                                        // checkKind
-  };
-  static rtEqualityCheckInfo b_emlrtECI{
-      1,                       // nDims
-      17,                      // lineNo
-      110,                     // colNo
-      "configurableObjective", // fName
-      "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/"
-      "robotmodelling/Matlab_implementation/functions_for_codegen/obstacle"
-      "AvoidanceOptmisationModified/configurableObjective.m" // pName
-  };
-  static rtEqualityCheckInfo emlrtECI{
-      1,                       // nDims
-      17,                      // lineNo
-      63,                      // colNo
-      "configurableObjective", // fName
-      "/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/"
-      "robotmodelling/Matlab_implementation/functions_for_codegen/obstacle"
-      "AvoidanceOptmisationModified/configurableObjective.m" // pName
-  };
-  static rtRunTimeErrorInfo c_emlrtRTEI{
-      133,                  // lineNo
-      "dynamic_size_checks" // fName
-  };
-  static rtRunTimeErrorInfo d_emlrtRTEI{
-      13,    // lineNo
-      "sqrt" // fName
-  };
-  static rtRunTimeErrorInfo e_emlrtRTEI{
-      138,                  // lineNo
-      "dynamic_size_checks" // fName
+      "/home/shobhit/ShobhitRobotModelling/robotmodelling/"
+      "Matlab_implementation/functions_for_codegen/"
+      "obstacleAvoidanceOptmisationModif"
+      "ied/objFun.m", // pName
+      0               // checkKind
   };
   coder::array<double, 2U> y;
-  coder::array<double, 1U> b;
   coder::array<double, 1U> b_q_vel;
-  double JJt[36];
-  double x[36];
-  double a;
-  double absx;
-  double d;
-  double t;
+  double b[36];
   double varargout_1;
-  int iv[2];
-  int aoffset;
-  int i;
-  int loop_ub;
-  int pipk;
-  boolean_T isodd;
-  // 'inverseKinematicsOAModified:188' @(q_vel) objFun( ...
-  // 'inverseKinematicsOAModified:189'             q_vel, ...
-  // 'inverseKinematicsOAModified:190'             jacobi, ...
-  // 'inverseKinematicsOAModified:191'             xd_eff_vel, ...
-  // 'inverseKinematicsOAModified:192'             starting_joint_vel, ...
-  // 'inverseKinematicsOAModified:193'             joint_values, ...
-  // 'inverseKinematicsOAModified:194'             jointVelocityWeightMatrix,
-  // ... 'inverseKinematicsOAModified:195'             config, ...
-  // 'inverseKinematicsOAModified:196'             slackIsUsed)
+  // 'inverseKinematicsOAModified:198' @(q_vel) objFun( ...
+  // 'inverseKinematicsOAModified:199'             q_vel, ...
+  // 'inverseKinematicsOAModified:200'             jacobi, ...
+  // 'inverseKinematicsOAModified:201'             xd_eff_vel, ...
+  // 'inverseKinematicsOAModified:202'             starting_joint_vel, ...
+  // 'inverseKinematicsOAModified:203'             joint_values, ...
+  // 'inverseKinematicsOAModified:204'             jointVelocityWeightMatrix,
+  // ... 'inverseKinematicsOAModified:205'             config, ...
+  // 'inverseKinematicsOAModified:206'             slackIsUsed)
   // 'objFun:2' n_joints = length(joint_values);
-  // 'objFun:3' objVal = configurableObjective(q_vel(1:n_joints), jacobi,
-  // xd_eff_vel, starting_joint_vel, joint_values,jointVelocityWeightMatrix,
-  // config);
-  if (joint_values.size(0) < 1) {
-    loop_ub = 0;
-  } else {
-    if (q_vel.size(0) < 1) {
-      rtDynamicBoundsError(1, 1, q_vel.size(0), y_emlrtBCI);
-    }
-    if (joint_values.size(0) > q_vel.size(0)) {
-      rtDynamicBoundsError(joint_values.size(0), 1, q_vel.size(0), ab_emlrtBCI);
-    }
-    loop_ub = joint_values.size(0);
-  }
-  iv[0] = 1;
-  iv[1] = loop_ub;
-  coder::internal::indexShapeCheck(q_vel.size(0), iv);
-  // 'configurableObjective:2' objVal = 0;
-  varargout_1 = 0.0;
-  // 'configurableObjective:4' if config.useObjectiveNormInfinity
-  if (config.useObjectiveNormInfinity) {
-    // 'configurableObjective:5' objVal = objVal + config.weightNormInfinity *
-    // (norm(q_vel, Inf)^2) / 2;
-    if (loop_ub == 0) {
-      a = 0.0;
-    } else {
-      a = 0.0;
-      for (int k{0}; k < loop_ub; k++) {
-        absx = std::abs(q_vel[k]);
-        if (std::isnan(absx) || (absx > a)) {
-          a = absx;
-        }
-      }
-    }
-    varargout_1 = config.weightNormInfinity * (a * a) / 2.0;
-  }
-  // 'configurableObjective:8' if config.useObjectiveNormL2
-  if (config.useObjectiveNormL2) {
-    // 'configurableObjective:9' objVal = objVal + config.weightNormL2 * (q_vel'
-    // * WeightMatrix * q_vel) / 2;
-    if (loop_ub != jointVelocityWeightMatrix.size(0)) {
-      if ((loop_ub == 1) || ((jointVelocityWeightMatrix.size(0) == 1) &&
-                             (jointVelocityWeightMatrix.size(1) == 1))) {
-        h_rtErrorWithMessageID(c_emlrtRTEI.fName, c_emlrtRTEI.lineNo);
-      } else {
-        g_rtErrorWithMessageID(e_emlrtRTEI.fName, e_emlrtRTEI.lineNo);
-      }
-    }
-    b_q_vel.set_size(loop_ub);
-    for (i = 0; i < loop_ub; i++) {
-      b_q_vel[i] = q_vel[i];
-    }
-    coder::internal::blas::mtimes(b_q_vel, jointVelocityWeightMatrix, y);
-    if (y.size(1) != loop_ub) {
-      if ((y.size(1) == 1) || (loop_ub == 1)) {
-        h_rtErrorWithMessageID(c_emlrtRTEI.fName, c_emlrtRTEI.lineNo);
-      } else {
-        g_rtErrorWithMessageID(e_emlrtRTEI.fName, e_emlrtRTEI.lineNo);
-      }
-    }
-    absx = 0.0;
-    pipk = y.size(1);
-    for (i = 0; i < pipk; i++) {
-      absx += y[i] * q_vel[i];
-    }
-    varargout_1 += config.weightNormL2 * absx / 2.0;
-  }
-  // 'configurableObjective:12' if config.useObjectiveTrajectoryFollowing
-  if (config.useObjectiveTrajectoryFollowing) {
-    double b_y[6];
-    double scale;
-    // 'configurableObjective:13' objVal = objVal +
-    // config.weightTrajectoryFollowing * norm((jacobi * q_vel - xd_eff_vel),
-    // 2)^2 / 2;
-    if (jacobi.size(1) != loop_ub) {
-      if (loop_ub == 1) {
-        h_rtErrorWithMessageID(c_emlrtRTEI.fName, c_emlrtRTEI.lineNo);
-      } else {
-        g_rtErrorWithMessageID(e_emlrtRTEI.fName, e_emlrtRTEI.lineNo);
-      }
-    }
-    pipk = jacobi.size(1);
-    for (int b_i{0}; b_i < 6; b_i++) {
-      b_y[b_i] = 0.0;
-    }
-    if (jacobi.size(1) > 2147483646) {
-      coder::check_forloop_overflow_error();
-    }
-    for (int k{0}; k < pipk; k++) {
-      aoffset = k * 6;
-      for (int b_i{0}; b_i < 6; b_i++) {
-        b_y[b_i] += jacobi[aoffset + b_i] * q_vel[k];
-      }
-    }
-    a = 0.0;
-    scale = 3.3121686421112381E-170;
-    for (int k{0}; k < 6; k++) {
-      d = b_y[k] - xd_eff_vel[k];
-      b_y[k] = d;
-      absx = std::abs(d);
-      if (absx > scale) {
-        t = scale / absx;
-        a = a * t * t + 1.0;
-        scale = absx;
-      } else {
-        t = absx / scale;
-        a += t * t;
-      }
-    }
-    a = scale * std::sqrt(a);
-    varargout_1 += config.weightTrajectoryFollowing * (a * a) / 2.0;
-  }
-  // 'configurableObjective:16' if config.useObjectiveJointAcceleration
-  if (config.useObjectiveJointAcceleration) {
-    // 'configurableObjective:17' objVal =  objVal +
-    // config.weightJointAcceleration * ((q_vel - starting_joint_vel)' *
-    // WeightMatrix * (q_vel - starting_joint_vel)) /2 ;
-    isodd = ((loop_ub != starting_joint_vel.size(0)) &&
-             ((loop_ub != 1) && (starting_joint_vel.size(0) != 1)));
-    if (isodd) {
-      emlrtDimSizeImpxCheckR2021b(loop_ub, starting_joint_vel.size(0),
-                                  emlrtECI);
-    }
-    if (loop_ub == starting_joint_vel.size(0)) {
-      b.set_size(loop_ub);
-      for (i = 0; i < loop_ub; i++) {
-        b[i] = q_vel[i] - starting_joint_vel[i];
-      }
-    } else {
-      binary_expand_op_4(b, q_vel, loop_ub, starting_joint_vel);
-    }
-    if (isodd) {
-      emlrtDimSizeImpxCheckR2021b(loop_ub, starting_joint_vel.size(0),
-                                  b_emlrtECI);
-    }
-    if (b.size(0) != jointVelocityWeightMatrix.size(0)) {
-      if ((b.size(0) == 1) || ((jointVelocityWeightMatrix.size(0) == 1) &&
-                               (jointVelocityWeightMatrix.size(1) == 1))) {
-        h_rtErrorWithMessageID(c_emlrtRTEI.fName, c_emlrtRTEI.lineNo);
-      } else {
-        g_rtErrorWithMessageID(e_emlrtRTEI.fName, e_emlrtRTEI.lineNo);
-      }
-    }
-    coder::internal::blas::mtimes(b, jointVelocityWeightMatrix, y);
-    if (b.size(0) != y.size(1)) {
-      if ((y.size(1) == 1) || (b.size(0) == 1)) {
-        h_rtErrorWithMessageID(c_emlrtRTEI.fName, c_emlrtRTEI.lineNo);
-      } else {
-        g_rtErrorWithMessageID(e_emlrtRTEI.fName, e_emlrtRTEI.lineNo);
-      }
-    }
-    absx = 0.0;
-    pipk = y.size(1);
-    for (i = 0; i < pipk; i++) {
-      absx += y[i] * b[i];
-    }
-    varargout_1 += config.weightJointAcceleration * absx / 2.0;
-  }
-  // 'configurableObjective:20' if config.useObjectiveManipulability
-  if (config.useObjectiveManipulability) {
-    double H[294];
-    double J[42];
-    double inv_JJt[36];
-    double Jm_transposed[7];
-    int ipiv[6];
-    int inv_JJt_tmp;
-    signed char p[6];
-    // 'configurableObjective:21' objVal  = objVal + config.weightManipulability
-    // * (-computeManipulabilityJacobian(joint_values') * q_vel);
-    //  Compute the Jacobian and Hessian first
-    // [~, J, H] = computeKinematics(joint_values, mdhparams); because of syms
-    // was too slow J = Jacobi_final_link1(joint_values); %for code generation
-    // H = Hessian_final_link(joint_values); %for code generation
-    // 'computeManipulabilityJacobian:7' J = Jacobi_final_link(joint_values);
-    y.set_size(1, joint_values.size(0));
-    pipk = joint_values.size(0);
-    for (i = 0; i < pipk; i++) {
-      y[i] = joint_values[i];
-    }
-    Jacobi_final_link(y, J);
-    // 'computeManipulabilityJacobian:8' H = Hessian_final_link(joint_values);
-    y.set_size(1, joint_values.size(0));
-    pipk = joint_values.size(0);
-    for (i = 0; i < pipk; i++) {
-      y[i] = joint_values[i];
-    }
-    Hessian_final_link(y, H);
-    //  Compute the manipulability measure 'm'
-    // 'computeManipulabilityJacobian:10' JJt = J * J';
-    for (i = 0; i < 6; i++) {
-      for (aoffset = 0; aoffset < 6; aoffset++) {
-        d = 0.0;
-        for (pipk = 0; pipk < 7; pipk++) {
-          d += J[i + 6 * pipk] * J[aoffset + 6 * pipk];
-        }
-        JJt[i + 6 * aoffset] = d;
-      }
-    }
-    // 'computeManipulabilityJacobian:11' m = sqrt(det(JJt));
-    std::copy(&JJt[0], &JJt[36], &x[0]);
-    coder::internal::lapack::xgetrf(x, ipiv);
-    absx = x[0];
-    isodd = false;
-    for (int k{0}; k < 5; k++) {
-      absx *= x[(k + 6 * (k + 1)) + 1];
-      if (ipiv[k] > k + 1) {
-        isodd = !isodd;
-      }
-    }
-    if (isodd) {
-      absx = -absx;
-    }
-    if (absx < 0.0) {
-      b_rtErrorWithMessageID("sqrt", d_emlrtRTEI.fName, d_emlrtRTEI.lineNo);
-    }
-    t = std::sqrt(absx);
-    //  Compute the manipulability Jacobian 'Jm'
-    // 'computeManipulabilityJacobian:14' n = size(J, 2);
-    //  Number of joints
-    // 'computeManipulabilityJacobian:15' Jm_transposed = zeros(1, n);
-    //  Initialize manipulability Jacobian transposed
-    //  vec operation implemented as a function for convenience
-    // 'computeManipulabilityJacobian:18' vec = @(X) reshape(X, [], 1);
-    //  Pre-compute the inverse of JJt
-    // 'computeManipulabilityJacobian:21' inv_JJt = inv(JJt);
-    for (i = 0; i < 36; i++) {
-      inv_JJt[i] = 0.0;
-      x[i] = JJt[i];
-    }
-    coder::internal::lapack::xgetrf(x, ipiv);
-    for (i = 0; i < 6; i++) {
-      p[i] = static_cast<signed char>(i + 1);
-    }
-    for (int k{0}; k < 5; k++) {
-      i = ipiv[k];
-      if (i > k + 1) {
-        pipk = p[i - 1];
-        p[i - 1] = p[k];
-        p[k] = static_cast<signed char>(pipk);
-      }
-    }
-    for (int k{0}; k < 6; k++) {
-      inv_JJt_tmp = 6 * (p[k] - 1);
-      inv_JJt[k + inv_JJt_tmp] = 1.0;
-      for (int j{k + 1}; j < 7; j++) {
-        i = (j + inv_JJt_tmp) - 1;
-        if (inv_JJt[i] != 0.0) {
-          aoffset = j + 1;
-          for (int b_i{aoffset}; b_i < 7; b_i++) {
-            pipk = (b_i + inv_JJt_tmp) - 1;
-            inv_JJt[pipk] -= inv_JJt[i] * x[(b_i + 6 * (j - 1)) - 1];
-          }
-        }
-      }
-    }
-    for (int j{0}; j < 6; j++) {
-      pipk = 6 * j;
-      for (int k{5}; k >= 0; k--) {
-        aoffset = 6 * k;
-        i = k + pipk;
-        d = inv_JJt[i];
-        if (d != 0.0) {
-          inv_JJt[i] = d / x[k + aoffset];
-          for (int b_i{0}; b_i < k; b_i++) {
-            inv_JJt_tmp = b_i + pipk;
-            inv_JJt[inv_JJt_tmp] -= inv_JJt[i] * x[b_i + aoffset];
-          }
-        }
-      }
-    }
-    //
-    //  Pre-compute the pseudo-inverse of JJt
-    // pseudo_inv_JJt = pinv(JJt);
-    // 'computeManipulabilityJacobian:26' for i = 1:n
-    for (int b_i{0}; b_i < 7; b_i++) {
-      // 'computeManipulabilityJacobian:27' Hi = H(:,:,i);
-      // 'computeManipulabilityJacobian:28' term1 = vec(J * Hi')' *
-      // vec(inv_JJt); 'computeManipulabilityJacobian:18' @(X) reshape(X, [], 1)
-      // 'computeManipulabilityJacobian:29' Jm_transposed(i) = m * term1;
-      for (i = 0; i < 6; i++) {
-        for (aoffset = 0; aoffset < 6; aoffset++) {
-          d = 0.0;
-          for (pipk = 0; pipk < 7; pipk++) {
-            d += J[i + 6 * pipk] * H[(aoffset + 6 * pipk) + 42 * b_i];
-          }
-          JJt[i + 6 * aoffset] = d;
-        }
-      }
-      absx = 0.0;
-      for (i = 0; i < 36; i++) {
-        absx += JJt[i] * inv_JJt[i];
-      }
-      Jm_transposed[b_i] = t * absx;
-      //  Equation (11)
-    }
-    if (loop_ub != 7) {
-      if (loop_ub == 1) {
-        h_rtErrorWithMessageID(c_emlrtRTEI.fName, c_emlrtRTEI.lineNo);
-      } else {
-        g_rtErrorWithMessageID(e_emlrtRTEI.fName, e_emlrtRTEI.lineNo);
-      }
-    }
-    absx = 0.0;
-    for (i = 0; i < 7; i++) {
-      absx += -Jm_transposed[i] * q_vel[i];
-    }
-    varargout_1 += config.weightManipulability * absx;
-  }
-  //  You can add more terms similarly with their checks and weights
   //  Add the cost for the slack variables
-  // 'objFun:6' if slackIsUsed
+  // 'objFun:4' if slackIsUsed
   if (slackIsUsed) {
-    // 'objFun:7' slack = q_vel(n_joints+1:end);
+    double b_y;
+    int iv[2];
+    int b_loop_ub;
+    int i;
+    int i1;
+    int i2;
+    int loop_ub;
+    // 'objFun:6' objVal = configurableObjective(q_vel(1:n_joints), jacobi,
+    // xd_eff_vel, starting_joint_vel, joint_values,jointVelocityWeightMatrix,
+    // config) + config.SlackObjectiveWeight * q_vel(n_joints+1:end)' *
+    // diag(config.SlackPenaltyWeight) * q_vel(n_joints+1:end);
+    if (joint_values.size(0) < 1) {
+      loop_ub = 0;
+    } else {
+      if (q_vel.size(0) < 1) {
+        rtDynamicBoundsError(1, 1, q_vel.size(0), bb_emlrtBCI);
+      }
+      if (joint_values.size(0) > q_vel.size(0)) {
+        rtDynamicBoundsError(joint_values.size(0), 1, q_vel.size(0),
+                             cb_emlrtBCI);
+      }
+      loop_ub = joint_values.size(0);
+    }
+    iv[0] = 1;
+    iv[1] = loop_ub;
+    coder::internal::indexShapeCheck(q_vel.size(0), iv);
     if (static_cast<unsigned int>(joint_values.size(0)) + 1U >
         static_cast<unsigned int>(q_vel.size(0))) {
       i = 0;
-      aoffset = 0;
+      i1 = 0;
+    } else {
+      if ((static_cast<int>(static_cast<unsigned int>(joint_values.size(0)) +
+                            1U) < 1) ||
+          (static_cast<int>(static_cast<unsigned int>(joint_values.size(0)) +
+                            1U) > q_vel.size(0))) {
+        rtDynamicBoundsError(
+            static_cast<int>(static_cast<unsigned int>(joint_values.size(0)) +
+                             1U),
+            1, q_vel.size(0), y_emlrtBCI);
+      }
+      i = joint_values.size(0);
+      if (q_vel.size(0) < 1) {
+        rtDynamicBoundsError(q_vel.size(0), 1, q_vel.size(0), ab_emlrtBCI);
+      }
+      i1 = q_vel.size(0);
+    }
+    iv[0] = 1;
+    b_loop_ub = i1 - i;
+    iv[1] = b_loop_ub;
+    coder::internal::indexShapeCheck(q_vel.size(0), iv);
+    if (static_cast<unsigned int>(joint_values.size(0)) + 1U >
+        static_cast<unsigned int>(q_vel.size(0))) {
+      i1 = 0;
+      i2 = 0;
     } else {
       if ((static_cast<int>(static_cast<unsigned int>(joint_values.size(0)) +
                             1U) < 1) ||
@@ -1591,51 +1263,123 @@ double inverseKinematicsOAModified_anonFcn1(
                              1U),
             1, q_vel.size(0), w_emlrtBCI);
       }
-      i = joint_values.size(0);
+      i1 = joint_values.size(0);
       if (q_vel.size(0) < 1) {
         rtDynamicBoundsError(q_vel.size(0), 1, q_vel.size(0), x_emlrtBCI);
       }
-      aoffset = q_vel.size(0);
+      i2 = q_vel.size(0);
     }
     iv[0] = 1;
-    loop_ub = aoffset - i;
-    iv[1] = loop_ub;
+    i2 -= i1;
+    iv[1] = i2;
     coder::internal::indexShapeCheck(q_vel.size(0), iv);
-    // 'objFun:8' objVal = objVal + config.SlackObjectiveWeight * slack' *
-    // diag(config.SlackPenaltyWeight) * slack;
-    y.set_size(1, loop_ub);
-    for (aoffset = 0; aoffset < loop_ub; aoffset++) {
-      y[aoffset] = config.SlackObjectiveWeight * q_vel[i + aoffset];
+    y.set_size(1, b_loop_ub);
+    for (int i3{0}; i3 < b_loop_ub; i3++) {
+      y[i3] = config.SlackObjectiveWeight * q_vel[i + i3];
     }
-    std::memset(&JJt[0], 0, 36U * sizeof(double));
-    for (int j{0}; j < 6; j++) {
-      JJt[j + 6 * j] = config.SlackPenaltyWeight[j];
+    std::memset(&b[0], 0, 36U * sizeof(double));
+    for (b_loop_ub = 0; b_loop_ub < 6; b_loop_ub++) {
+      b[b_loop_ub + 6 * b_loop_ub] = config.SlackPenaltyWeight[b_loop_ub];
     }
     if (y.size(1) != 6) {
       if (y.size(1) == 1) {
-        h_rtErrorWithMessageID(c_emlrtRTEI.fName, c_emlrtRTEI.lineNo);
+        h_rtErrorWithMessageID(b_emlrtRTEI.fName, b_emlrtRTEI.lineNo);
       } else {
-        g_rtErrorWithMessageID(e_emlrtRTEI.fName, e_emlrtRTEI.lineNo);
+        g_rtErrorWithMessageID(emlrtRTEI.fName, emlrtRTEI.lineNo);
       }
     }
-    if (loop_ub != 6) {
-      if (loop_ub == 1) {
-        h_rtErrorWithMessageID(c_emlrtRTEI.fName, c_emlrtRTEI.lineNo);
+    if (i2 != 6) {
+      if (i2 == 1) {
+        h_rtErrorWithMessageID(b_emlrtRTEI.fName, b_emlrtRTEI.lineNo);
       } else {
-        g_rtErrorWithMessageID(e_emlrtRTEI.fName, e_emlrtRTEI.lineNo);
+        g_rtErrorWithMessageID(emlrtRTEI.fName, emlrtRTEI.lineNo);
       }
     }
-    absx = 0.0;
-    for (aoffset = 0; aoffset < 6; aoffset++) {
+    b_q_vel.set_size(loop_ub);
+    for (i = 0; i < loop_ub; i++) {
+      b_q_vel[i] = q_vel[i];
+    }
+    b_y = 0.0;
+    for (i = 0; i < 6; i++) {
+      double d;
       d = 0.0;
-      for (pipk = 0; pipk < 6; pipk++) {
-        d += y[pipk] * JJt[pipk + 6 * aoffset];
+      for (i2 = 0; i2 < 6; i2++) {
+        d += y[i2] * b[i2 + 6 * i];
       }
-      absx += d * q_vel[i + aoffset];
+      b_y += d * q_vel[i1 + i];
     }
-    varargout_1 += absx;
+    varargout_1 =
+        configurableObjective(
+            b_q_vel, jacobi, xd_eff_vel, starting_joint_vel, joint_values,
+            jointVelocityWeightMatrix, config.useObjectiveNormInfinity,
+            config.weightNormInfinity, config.useObjectiveNormL2,
+            config.weightNormL2, config.useObjectiveTrajectoryFollowing,
+            config.weightTrajectoryFollowing,
+            config.useObjectiveJointAcceleration,
+            config.weightJointAcceleration, config.useObjectiveManipulability,
+            config.weightManipulability) +
+        b_y;
+  } else {
+    int iv[2];
+    int loop_ub;
+    // 'objFun:7' else
+    // 'objFun:8' objVal = configurableObjective(q_vel(1:n_joints), jacobi,
+    // xd_eff_vel, starting_joint_vel, joint_values,jointVelocityWeightMatrix,
+    // config);
+    if (joint_values.size(0) < 1) {
+      loop_ub = 0;
+    } else {
+      if (q_vel.size(0) < 1) {
+        rtDynamicBoundsError(1, 1, q_vel.size(0), db_emlrtBCI);
+      }
+      if (joint_values.size(0) > q_vel.size(0)) {
+        rtDynamicBoundsError(joint_values.size(0), 1, q_vel.size(0),
+                             eb_emlrtBCI);
+      }
+      loop_ub = joint_values.size(0);
+    }
+    iv[0] = 1;
+    iv[1] = loop_ub;
+    coder::internal::indexShapeCheck(q_vel.size(0), iv);
+    b_q_vel.set_size(loop_ub);
+    for (int i{0}; i < loop_ub; i++) {
+      b_q_vel[i] = q_vel[i];
+    }
+    varargout_1 = configurableObjective(
+        b_q_vel, jacobi, xd_eff_vel, starting_joint_vel, joint_values,
+        jointVelocityWeightMatrix, config.useObjectiveNormInfinity,
+        config.weightNormInfinity, config.useObjectiveNormL2,
+        config.weightNormL2, config.useObjectiveTrajectoryFollowing,
+        config.weightTrajectoryFollowing, config.useObjectiveJointAcceleration,
+        config.weightJointAcceleration, config.useObjectiveManipulability,
+        config.weightManipulability);
   }
   return varargout_1;
+}
+
+//
+// Arguments    : coder::array<double, 1U> &in1
+//                const coder::array<double, 1U> &in2
+//                const coder::array<double, 1U> &in3
+// Return Type  : void
+//
+void minus(coder::array<double, 1U> &in1, const coder::array<double, 1U> &in2,
+           const coder::array<double, 1U> &in3)
+{
+  int loop_ub;
+  int stride_0_0;
+  int stride_1_0;
+  if (in3.size(0) == 1) {
+    loop_ub = in2.size(0);
+  } else {
+    loop_ub = in3.size(0);
+  }
+  in1.set_size(loop_ub);
+  stride_0_0 = (in2.size(0) != 1);
+  stride_1_0 = (in3.size(0) != 1);
+  for (int i{0}; i < loop_ub; i++) {
+    in1[i] = in2[i * stride_0_0] - in3[i * stride_1_0];
+  }
 }
 
 //

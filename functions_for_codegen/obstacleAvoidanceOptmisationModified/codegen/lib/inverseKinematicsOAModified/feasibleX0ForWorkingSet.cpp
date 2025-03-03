@@ -5,7 +5,7 @@
 // File: feasibleX0ForWorkingSet.cpp
 //
 // MATLAB Coder version            : 23.2
-// C/C++ source code generated on  : 04-Feb-2025 04:50:11
+// C/C++ source code generated on  : 03-Mar-2025 15:44:26
 //
 
 // Include Files
@@ -22,6 +22,7 @@
 #include "xgemm.h"
 #include "xzgeqp3.h"
 #include "coder_array.h"
+#include "omp.h"
 #include <cmath>
 #include <cstring>
 
@@ -63,35 +64,37 @@ boolean_T feasibleX0ForWorkingSet(array<double, 2U> &workspace,
   if (mWConstr != 0) {
     double c;
     int b;
-    int i;
     int iAcol;
+    int ia;
     int iy;
     int jBcol;
+    int offsetQR;
+    int w;
     if (mWConstr > 2147483646) {
       check_forloop_overflow_error();
     }
     for (iAcol = 0; iAcol < mWConstr; iAcol++) {
-      i = workingset.bwset.size(0);
-      if ((iAcol + 1 < 1) || (iAcol + 1 > i)) {
-        rtDynamicBoundsError(iAcol + 1, 1, i, w_emlrtBCI);
+      w = workingset.bwset.size(0);
+      if ((iAcol + 1 < 1) || (iAcol + 1 > w)) {
+        rtDynamicBoundsError(iAcol + 1, 1, w, w_emlrtBCI);
       }
-      i = workspace.size(0);
-      if (iAcol + 1 > i) {
-        rtDynamicBoundsError(iAcol + 1, 1, i, w_emlrtBCI);
+      w = workspace.size(0);
+      if (iAcol + 1 > w) {
+        rtDynamicBoundsError(iAcol + 1, 1, w, w_emlrtBCI);
       }
       c = workingset.bwset[iAcol];
       workspace[iAcol] = c;
-      i = workspace.size(1);
-      if (i < 2) {
-        rtDynamicBoundsError(2, 1, i, w_emlrtBCI);
+      w = workspace.size(1);
+      if (w < 2) {
+        rtDynamicBoundsError(2, 1, w, w_emlrtBCI);
       }
-      i = workingset.bwset.size(0);
-      if (iAcol + 1 > i) {
-        rtDynamicBoundsError(iAcol + 1, 1, i, w_emlrtBCI);
+      w = workingset.bwset.size(0);
+      if (iAcol + 1 > w) {
+        rtDynamicBoundsError(iAcol + 1, 1, w, w_emlrtBCI);
       }
-      i = workspace.size(0);
-      if (iAcol + 1 > i) {
-        rtDynamicBoundsError(iAcol + 1, 1, i, w_emlrtBCI);
+      w = workspace.size(0);
+      if (iAcol + 1 > w) {
+        rtDynamicBoundsError(iAcol + 1, 1, w, w_emlrtBCI);
       }
       workspace[iAcol + workspace.size(0)] = c;
     }
@@ -99,29 +102,30 @@ boolean_T feasibleX0ForWorkingSet(array<double, 2U> &workspace,
     if ((nVar != 0) && (mWConstr != 0)) {
       boolean_T overflow;
       iy = 0;
-      jBcol = workingset.ldA * (mWConstr - 1) + 1;
-      if ((workingset.ldA == 0) || ((workingset.ldA > 0) && (jBcol < 1)) ||
-          ((workingset.ldA < 0) && (jBcol > 1))) {
+      offsetQR = workingset.ldA * (mWConstr - 1) + 1;
+      if ((workingset.ldA == 0) || ((workingset.ldA > 0) && (offsetQR < 1)) ||
+          ((workingset.ldA < 0) && (offsetQR > 1))) {
         overflow = false;
       } else if (workingset.ldA > 0) {
-        overflow = (jBcol > MAX_int32_T - workingset.ldA);
+        overflow = (offsetQR > MAX_int32_T - workingset.ldA);
       } else {
-        overflow = (jBcol < MIN_int32_T - workingset.ldA);
+        overflow = (offsetQR < MIN_int32_T - workingset.ldA);
       }
       if (workingset.ldA == 0) {
-        m_rtErrorWithMessageID(b_emlrtRTEI.fName, b_emlrtRTEI.lineNo);
+        m_rtErrorWithMessageID(d_emlrtRTEI.fName, d_emlrtRTEI.lineNo);
       }
       if (overflow) {
         check_forloop_overflow_error();
       }
-      for (int iac{1}; iAcol < 0 ? iac >= jBcol : iac <= jBcol; iac += iAcol) {
+      for (jBcol = 1; iAcol < 0 ? jBcol >= offsetQR : jBcol <= offsetQR;
+           jBcol += iAcol) {
         c = 0.0;
-        b = (iac + nVar) - 1;
-        if ((iac <= b) && (b > 2147483646)) {
+        b = (jBcol + nVar) - 1;
+        if ((jBcol <= b) && (b > 2147483646)) {
           check_forloop_overflow_error();
         }
-        for (int ia{iac}; ia <= b; ia++) {
-          c += workingset.ATwset[ia - 1] * xCurrent[ia - iac];
+        for (ia = jBcol; ia <= b; ia++) {
+          c += workingset.ATwset[ia - 1] * xCurrent[ia - jBcol];
         }
         workspace[iy] = workspace[iy] - c;
         iy++;
@@ -131,19 +135,19 @@ boolean_T feasibleX0ForWorkingSet(array<double, 2U> &workspace,
       int ldq;
       int ldw;
       for (iAcol = 0; iAcol < nVar; iAcol++) {
-        iy = qrmanager.ldq * iAcol + 1;
-        for (int iac{0}; iac < mWConstr; iac++) {
-          i = workingset.ATwset.size(0);
-          b = (iAcol + workingset.ldA * iac) + 1;
-          if ((b < 1) || (b > i)) {
-            rtDynamicBoundsError(b, 1, i, w_emlrtBCI);
+        offsetQR = qrmanager.ldq * iAcol + 1;
+        for (jBcol = 0; jBcol < mWConstr; jBcol++) {
+          w = workingset.ATwset.size(0);
+          ia = (iAcol + workingset.ldA * jBcol) + 1;
+          if ((ia < 1) || (ia > w)) {
+            rtDynamicBoundsError(ia, 1, w, w_emlrtBCI);
           }
-          i = qrmanager.QR.size(0) * qrmanager.QR.size(1);
-          jBcol = iac + iy;
-          if ((jBcol < 1) || (jBcol > i)) {
-            rtDynamicBoundsError(jBcol, 1, i, w_emlrtBCI);
+          w = qrmanager.QR.size(0) * qrmanager.QR.size(1);
+          iy = jBcol + offsetQR;
+          if ((iy < 1) || (iy > w)) {
+            rtDynamicBoundsError(iy, 1, w, w_emlrtBCI);
           }
-          qrmanager.QR[jBcol - 1] = workingset.ATwset[b - 1];
+          qrmanager.QR[iy - 1] = workingset.ATwset[ia - 1];
         }
       }
       if (mWConstr * nVar == 0) {
@@ -155,22 +159,31 @@ boolean_T feasibleX0ForWorkingSet(array<double, 2U> &workspace,
         qrmanager.mrows = mWConstr;
         qrmanager.ncols = nVar;
         for (iAcol = 0; iAcol < nVar; iAcol++) {
-          i = qrmanager.jpvt.size(0);
-          if ((iAcol + 1 < 1) || (iAcol + 1 > i)) {
-            rtDynamicBoundsError(iAcol + 1, 1, i, m_emlrtBCI);
+          w = qrmanager.jpvt.size(0);
+          if ((iAcol + 1 < 1) || (iAcol + 1 > w)) {
+            rtDynamicBoundsError(iAcol + 1, 1, w, m_emlrtBCI);
           }
           qrmanager.jpvt[iAcol] = iAcol + 1;
         }
         if (mWConstr <= nVar) {
-          i = mWConstr;
+          offsetQR = mWConstr;
         } else {
-          i = nVar;
+          offsetQR = nVar;
         }
-        qrmanager.minRowCol = i;
+        qrmanager.minRowCol = offsetQR;
         A.set_size(qrmanager.QR.size(0), qrmanager.QR.size(1));
         iAcol = qrmanager.QR.size(0) * qrmanager.QR.size(1);
-        for (b = 0; b < iAcol; b++) {
-          A[b] = qrmanager.QR[b];
+        if (static_cast<int>(iAcol < 400)) {
+          for (int b_workspace{0}; b_workspace < iAcol; b_workspace++) {
+            A[b_workspace] = qrmanager.QR[b_workspace];
+          }
+        } else {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4)
+
+          for (int b_workspace = 0; b_workspace < iAcol; b_workspace++) {
+            A[b_workspace] = qrmanager.QR[b_workspace];
+          }
         }
         iAcol = qrmanager.QR.size(0);
         iy = qrmanager.QR.size(1);
@@ -178,16 +191,34 @@ boolean_T feasibleX0ForWorkingSet(array<double, 2U> &workspace,
           iy = iAcol;
         }
         qrmanager.tau.set_size(iy);
-        for (b = 0; b < iy; b++) {
-          qrmanager.tau[b] = 0.0;
+        if (static_cast<int>(iy < 400)) {
+          for (int b_workspace{0}; b_workspace < iy; b_workspace++) {
+            qrmanager.tau[b_workspace] = 0.0;
+          }
+        } else {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4)
+
+          for (int b_workspace = 0; b_workspace < iy; b_workspace++) {
+            qrmanager.tau[b_workspace] = 0.0;
+          }
         }
-        if (i >= 1) {
-          internal::reflapack::qrf(A, mWConstr, nVar, i, qrmanager.tau);
+        if (offsetQR >= 1) {
+          internal::reflapack::qrf(A, mWConstr, nVar, offsetQR, qrmanager.tau);
         }
         qrmanager.QR.set_size(A.size(0), A.size(1));
         iAcol = A.size(0) * A.size(1);
-        for (i = 0; i < iAcol; i++) {
-          qrmanager.QR[i] = A[i];
+        if (static_cast<int>(iAcol < 400)) {
+          for (int b_workspace{0}; b_workspace < iAcol; b_workspace++) {
+            qrmanager.QR[b_workspace] = A[b_workspace];
+          }
+        } else {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4)
+
+          for (int b_workspace = 0; b_workspace < iAcol; b_workspace++) {
+            qrmanager.QR[b_workspace] = A[b_workspace];
+          }
         }
       }
       QRManager::computeQ_(qrmanager, qrmanager.mrows);
@@ -195,57 +226,66 @@ boolean_T feasibleX0ForWorkingSet(array<double, 2U> &workspace,
       ldw = workspace.size(0);
       A.set_size(workspace.size(0), workspace.size(1));
       iAcol = workspace.size(0) * workspace.size(1);
-      for (i = 0; i < iAcol; i++) {
-        A[i] = workspace[i];
+      if (static_cast<int>(iAcol < 400)) {
+        for (int b_workspace{0}; b_workspace < iAcol; b_workspace++) {
+          A[b_workspace] = workspace[b_workspace];
+        }
+      } else {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4)
+
+        for (int b_workspace = 0; b_workspace < iAcol; b_workspace++) {
+          A[b_workspace] = workspace[b_workspace];
+        }
       }
       if (nVar != 0) {
         if (workspace.size(0) > MAX_int32_T - workspace.size(0)) {
           check_forloop_overflow_error();
         }
-        for (int iac{0}; ldw < 0 ? iac >= ldw : iac <= ldw; iac += ldw) {
-          iy = iac + 1;
-          b = iac + nVar;
-          if ((iac + 1 <= b) && (b > 2147483646)) {
+        for (ia = 0; ldw < 0 ? ia >= ldw : ia <= ldw; ia += ldw) {
+          iy = ia + 1;
+          b = ia + nVar;
+          if ((ia + 1 <= b) && (b > 2147483646)) {
             check_forloop_overflow_error();
           }
-          for (int ia{iy}; ia <= b; ia++) {
-            workspace[ia - 1] = 0.0;
+          for (jBcol = iy; jBcol <= b; jBcol++) {
+            workspace[jBcol - 1] = 0.0;
           }
         }
-        jBcol = -1;
+        iAcol = -1;
         if (workspace.size(0) > MAX_int32_T - workspace.size(0)) {
           check_forloop_overflow_error();
         }
-        for (int iac{0}; ldw < 0 ? iac >= ldw : iac <= ldw; iac += ldw) {
-          iAcol = -1;
-          iy = iac + 1;
-          b = iac + nVar;
-          if ((iac + 1 <= b) && (b > 2147483646)) {
+        for (ia = 0; ldw < 0 ? ia >= ldw : ia <= ldw; ia += ldw) {
+          offsetQR = -1;
+          iy = ia + 1;
+          b = ia + nVar;
+          if ((ia + 1 <= b) && (b > 2147483646)) {
             check_forloop_overflow_error();
           }
-          for (int ia{iy}; ia <= b; ia++) {
+          for (jBcol = iy; jBcol <= b; jBcol++) {
             c = 0.0;
-            for (int k{0}; k < mWConstr; k++) {
-              c += qrmanager.Q[(k + iAcol) + 1] * A[(k + jBcol) + 1];
+            for (w = 0; w < mWConstr; w++) {
+              c += qrmanager.Q[(w + offsetQR) + 1] * A[(w + iAcol) + 1];
             }
-            workspace[ia - 1] = workspace[ia - 1] + c;
-            iAcol += ldq;
+            workspace[jBcol - 1] = workspace[jBcol - 1] + c;
+            offsetQR += ldq;
           }
-          jBcol += ldw;
+          iAcol += ldw;
         }
       }
-      for (int iac{0}; iac < 2; iac++) {
-        jBcol = ldw * iac - 1;
+      for (b = 0; b < 2; b++) {
+        jBcol = ldw * b - 1;
         for (int k{nVar}; k >= 1; k--) {
           iy = ldq * (k - 1) - 1;
-          i = k + jBcol;
-          c = workspace[i];
+          w = k + jBcol;
+          c = workspace[w];
           if (c != 0.0) {
-            workspace[i] = c / qrmanager.QR[k + iy];
-            for (int ia{0}; ia <= k - 2; ia++) {
-              b = (ia + jBcol) + 1;
-              workspace[b] =
-                  workspace[b] - workspace[i] * qrmanager.QR[(ia + iy) + 1];
+            workspace[w] = c / qrmanager.QR[k + iy];
+            for (int i{0}; i <= k - 2; i++) {
+              ia = (i + jBcol) + 1;
+              workspace[ia] =
+                  workspace[ia] - workspace[w] * qrmanager.QR[(i + iy) + 1];
             }
           }
         }
@@ -254,25 +294,34 @@ boolean_T feasibleX0ForWorkingSet(array<double, 2U> &workspace,
       QRManager::factorQR(qrmanager, workingset.ATwset, nVar, mWConstr,
                           workingset.ldA);
       QRManager::computeQ_(qrmanager, qrmanager.minRowCol);
-      for (int iac{0}; iac < 2; iac++) {
-        jBcol = workspace.size(0) * iac;
-        for (int ia{0}; ia < mWConstr; ia++) {
-          iAcol = qrmanager.ldq * ia;
-          iy = ia + jBcol;
-          c = workspace[iy];
-          if (ia > 2147483646) {
+      for (b = 0; b < 2; b++) {
+        jBcol = workspace.size(0) * b;
+        for (int i{0}; i < mWConstr; i++) {
+          iAcol = qrmanager.ldq * i;
+          offsetQR = i + jBcol;
+          c = workspace[offsetQR];
+          if (i > 2147483646) {
             check_forloop_overflow_error();
           }
-          for (int k{0}; k < ia; k++) {
+          for (int k{0}; k < i; k++) {
             c -= qrmanager.QR[k + iAcol] * workspace[k + jBcol];
           }
-          workspace[iy] = c / qrmanager.QR[ia + iAcol];
+          workspace[offsetQR] = c / qrmanager.QR[i + iAcol];
         }
       }
       A.set_size(workspace.size(0), workspace.size(1));
       iAcol = workspace.size(0) * workspace.size(1);
-      for (i = 0; i < iAcol; i++) {
-        A[i] = workspace[i];
+      if (static_cast<int>(iAcol < 400)) {
+        for (int b_workspace{0}; b_workspace < iAcol; b_workspace++) {
+          A[b_workspace] = workspace[b_workspace];
+        }
+      } else {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4)
+
+        for (int b_workspace = 0; b_workspace < iAcol; b_workspace++) {
+          A[b_workspace] = workspace[b_workspace];
+        }
       }
       internal::blas::xgemm(nVar, mWConstr, qrmanager.Q, qrmanager.ldq, A,
                             workspace.size(0), workspace, workspace.size(0));
@@ -285,18 +334,18 @@ boolean_T feasibleX0ForWorkingSet(array<double, 2U> &workspace,
     do {
       exitg1 = 0;
       if (iAcol <= nVar - 1) {
-        i = workspace.size(0);
-        if ((iAcol + 1 < 1) || (iAcol + 1 > i)) {
-          rtDynamicBoundsError(iAcol + 1, 1, i, w_emlrtBCI);
+        w = workspace.size(0);
+        if ((iAcol + 1 < 1) || (iAcol + 1 > w)) {
+          rtDynamicBoundsError(iAcol + 1, 1, w, w_emlrtBCI);
         }
         c = workspace[iAcol];
         if (std::isinf(c) || std::isnan(c)) {
           nonDegenerateWset = false;
           exitg1 = 1;
         } else {
-          i = workspace.size(1);
-          if (i < 2) {
-            rtDynamicBoundsError(2, 1, i, w_emlrtBCI);
+          w = workspace.size(1);
+          if (w < 2) {
+            rtDynamicBoundsError(2, 1, w, w_emlrtBCI);
           }
           c = workspace[iAcol + workspace.size(0)];
           if (std::isinf(c) || std::isnan(c)) {
@@ -310,20 +359,47 @@ boolean_T feasibleX0ForWorkingSet(array<double, 2U> &workspace,
         double constrViolation_basicX;
         if (nVar >= 1) {
           iAcol = nVar - 1;
-          for (int k{0}; k <= iAcol; k++) {
-            workspace[k] = workspace[k] + xCurrent[k];
+          if (static_cast<int>(nVar < 400)) {
+            for (int b_workspace{0}; b_workspace <= iAcol; b_workspace++) {
+              workspace[b_workspace] =
+                  workspace[b_workspace] + xCurrent[b_workspace];
+            }
+          } else {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4)
+
+            for (int b_workspace = 0; b_workspace <= iAcol; b_workspace++) {
+              workspace[b_workspace] =
+                  workspace[b_workspace] + xCurrent[b_workspace];
+            }
           }
         }
         c = WorkingSet::maxConstraintViolation(workingset, workspace);
         constrViolation_basicX = WorkingSet::maxConstraintViolation(
             workingset, workspace, workspace.size(0) + 1);
         if ((c <= 2.2204460492503131E-16) || (c < constrViolation_basicX)) {
-          for (int k{0}; k < nVar; k++) {
-            xCurrent[k] = workspace[k];
+          if (static_cast<int>(nVar < 400)) {
+            for (int b_workspace{0}; b_workspace < nVar; b_workspace++) {
+              xCurrent[b_workspace] = workspace[b_workspace];
+            }
+          } else {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4)
+
+            for (int b_workspace = 0; b_workspace < nVar; b_workspace++) {
+              xCurrent[b_workspace] = workspace[b_workspace];
+            }
+          }
+        } else if (static_cast<int>(nVar < 400)) {
+          for (int b_workspace{0}; b_workspace < nVar; b_workspace++) {
+            xCurrent[b_workspace] = workspace[workspace.size(0) + b_workspace];
           }
         } else {
-          for (int k{0}; k < nVar; k++) {
-            xCurrent[k] = workspace[workspace.size(0) + k];
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4)
+
+          for (int b_workspace = 0; b_workspace < nVar; b_workspace++) {
+            xCurrent[b_workspace] = workspace[workspace.size(0) + b_workspace];
           }
         }
         exitg1 = 1;

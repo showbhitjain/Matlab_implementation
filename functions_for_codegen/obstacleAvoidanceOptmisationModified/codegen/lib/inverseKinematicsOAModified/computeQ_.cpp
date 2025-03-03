@@ -5,7 +5,7 @@
 // File: computeQ_.cpp
 //
 // MATLAB Coder version            : 23.2
-// C/C++ source code generated on  : 04-Feb-2025 04:50:11
+// C/C++ source code generated on  : 03-Mar-2025 15:44:26
 //
 
 // Include Files
@@ -15,6 +15,7 @@
 #include "rt_nonfinite.h"
 #include "xgemv.h"
 #include "coder_array.h"
+#include "omp.h"
 #include <cstring>
 
 // Function Definitions
@@ -33,7 +34,6 @@ void computeQ_(e_struct_T &obj, int nrows)
   array<double, 1U> work;
   int colbottom;
   int iQR0;
-  int iaii;
   int jA;
   int lastc;
   int lastv;
@@ -49,31 +49,41 @@ void computeQ_(e_struct_T &obj, int nrows)
     if (colbottom > 2147483646) {
       check_forloop_overflow_error();
     }
-    for (jA = 0; jA < colbottom; jA++) {
-      iaii = (iQR0 + jA) + 1;
-      obj.Q[iaii] = obj.QR[iaii];
+    for (int k{0}; k < colbottom; k++) {
+      jA = (iQR0 + k) + 1;
+      obj.Q[jA] = obj.QR[jA];
     }
   }
   m = obj.mrows;
   lda = obj.ldq;
   if (nrows >= 1) {
     int itau;
-    iaii = nrows - 1;
-    for (int j{lastv}; j <= iaii; j++) {
-      iQR0 = j * lda;
+    jA = nrows - 1;
+    for (int k{lastv}; k <= jA; k++) {
+      iQR0 = k * lda;
       colbottom = m - 1;
       for (int i{0}; i <= colbottom; i++) {
         obj.Q[iQR0 + i] = 0.0;
       }
-      obj.Q[iQR0 + j] = 1.0;
+      obj.Q[iQR0 + k] = 1.0;
     }
     itau = obj.minRowCol - 1;
     work.set_size(obj.Q.size(1));
     iQR0 = obj.Q.size(1);
-    for (iaii = 0; iaii < iQR0; iaii++) {
-      work[iaii] = 0.0;
+    if (static_cast<int>(iQR0 < 400)) {
+      for (int b_i{0}; b_i < iQR0; b_i++) {
+        work[b_i] = 0.0;
+      }
+    } else {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4)
+
+      for (int b_i = 0; b_i < iQR0; b_i++) {
+        work[b_i] = 0.0;
+      }
     }
     for (int i{obj.minRowCol}; i >= 1; i--) {
+      int iaii;
       iaii = i + (i - 1) * lda;
       if (i < nrows) {
         obj.Q[iaii - 1] = 1.0;
@@ -123,10 +133,10 @@ void computeQ_(e_struct_T &obj, int nrows)
           alpha1 = -obj.tau[itau];
           A = &obj.Q;
           if (!(alpha1 == 0.0)) {
-            for (int j{0}; j < lastc; j++) {
-              if (work[j] != 0.0) {
+            for (int k{0}; k < lastc; k++) {
+              if (work[k] != 0.0) {
                 double temp;
-                temp = work[j] * alpha1;
+                temp = work[k] * alpha1;
                 colbottom = (lastv + jA) - 1;
                 if ((jA <= colbottom) && (colbottom > 2147483646)) {
                   check_forloop_overflow_error();
@@ -147,13 +157,13 @@ void computeQ_(e_struct_T &obj, int nrows)
         if ((iaii + 1 <= colbottom) && (colbottom > 2147483646)) {
           check_forloop_overflow_error();
         }
-        for (jA = iQR0; jA <= colbottom; jA++) {
-          obj.Q[jA - 1] = -obj.tau[itau] * obj.Q[jA - 1];
+        for (int k{iQR0}; k <= colbottom; k++) {
+          obj.Q[k - 1] = -obj.tau[itau] * obj.Q[k - 1];
         }
       }
       obj.Q[iaii - 1] = 1.0 - obj.tau[itau];
-      for (int j{0}; j <= i - 2; j++) {
-        obj.Q[(iaii - j) - 2] = 0.0;
+      for (int k{0}; k <= i - 2; k++) {
+        obj.Q[(iaii - k) - 2] = 0.0;
       }
       itau--;
     }

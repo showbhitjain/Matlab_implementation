@@ -5,7 +5,7 @@
 // File: step.cpp
 //
 // MATLAB Coder version            : 23.2
-// C/C++ source code generated on  : 04-Feb-2025 04:50:11
+// C/C++ source code generated on  : 01-Mar-2025 01:36:28
 //
 
 // Include Files
@@ -315,7 +315,8 @@ boolean_T b_step(int &STEP_TYPE, array<double, 2U> &Hessian,
       } else {
         int b_nVar;
         if ((Hessian.size(0) == 0) || (Hessian.size(1) == 0)) {
-          d_rtErrorWithMessageID("input", emlrtRTEI.fName, emlrtRTEI.lineNo);
+          d_rtErrorWithMessageID("input", c_emlrtRTEI.fName,
+                                 c_emlrtRTEI.lineNo);
         }
         b_nVar = Hessian.size(0) - 1;
         constrViolationEq = 0.0;

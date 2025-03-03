@@ -5,7 +5,7 @@
 // File: inverseKinematicsOAModified_data.cpp
 //
 // MATLAB Coder version            : 23.2
-// C/C++ source code generated on  : 04-Feb-2025 04:50:11
+// C/C++ source code generated on  : 01-Mar-2025 01:36:28
 //
 
 // Include Files
@@ -15,6 +15,16 @@
 #include <cstring>
 
 // Variable Definitions
+rtRunTimeErrorInfo emlrtRTEI{
+    138,                  // lineNo
+    "dynamic_size_checks" // fName
+};
+
+rtRunTimeErrorInfo b_emlrtRTEI{
+    133,                  // lineNo
+    "dynamic_size_checks" // fName
+};
+
 rtBoundsCheckInfo b_emlrtBCI{
     -1,                            // iFirst
     -1,                            // iLast
@@ -27,12 +37,12 @@ rtBoundsCheckInfo b_emlrtBCI{
     0                                               // checkKind
 };
 
-rtRunTimeErrorInfo emlrtRTEI{
+rtRunTimeErrorInfo c_emlrtRTEI{
     13,                // lineNo
     "validatenonempty" // fName
 };
 
-rtRunTimeErrorInfo b_emlrtRTEI{
+rtRunTimeErrorInfo d_emlrtRTEI{
     18,                              // lineNo
     "eml_int_forloop_overflow_check" // fName
 };

@@ -82,10 +82,15 @@ if config.applyInequalityConstraints
         A = [J_g;In];
         b = [b_g;bp];
     end
+else
+    if config.applyVelocityDamper
+        A = In;
+        b = bp;
+    end
 
 end
 
-if isempty(J_g) && isempty(b_g)
+if isempty(J_g) && isempty(b_g) && config.obstacleAvoidanceScheme   
     Aeq = JacobiWeightMatrix * jacobi;
     beq = xd_eff_vel;
     % A = J_g;
@@ -120,8 +125,8 @@ if config.applySlack
     if ~config.applyVelocityDamper
         lb = [max(config.gamma .* (jointminvalues - joint_values), joint_min_vel); config.Slacklowerbound]; % Slack lower bounds
         ub = [min(config.gamma .* (jointmaxvalues - joint_values), joint_max_vel); config.Slackupperbound]; % Slack upper bounds
-    end
-    if config.applyVelocityDamper
+    
+    else 
         lb = [joint_min_vel;config.Slacklowerbound];
         ub = [joint_max_vel;config.Slackupperbound];
     end
@@ -139,8 +144,8 @@ if config.applySlack
         if config.applyVelocityDamper
             A = [[J_g, zeros(num_rows,n_slack)];[In,zeros(n_joints,n_slack)]];
             b = [b_g; bp];  % Make sure this accounts for the slack if necessary
-        end
-        if ~config.applyVelocityDamper
+        
+        else 
             A = [J_g, zeros(num_rows,n_slack)];
             b = b_g;
         end
@@ -157,8 +162,7 @@ else
     if ~config.applyVelocityDamper
         lb = max(config.gamma .* (jointminvalues - joint_values), joint_min_vel); % Element-wise max
         ub = min(config.gamma .* (jointmaxvalues - joint_values), joint_max_vel); % Element-wise min
-    end
-    if config.applyVelocityDamper
+    else
         lb = joint_min_vel;
         ub = joint_max_vel;
     end

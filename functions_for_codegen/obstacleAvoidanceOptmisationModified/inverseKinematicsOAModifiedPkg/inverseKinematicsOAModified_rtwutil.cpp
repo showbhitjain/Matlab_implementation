@@ -5,7 +5,7 @@
 // File: inverseKinematicsOAModified_rtwutil.cpp
 //
 // MATLAB Coder version            : 23.2
-// C/C++ source code generated on  : 04-Feb-2025 04:50:11
+// C/C++ source code generated on  : 01-Mar-2025 01:36:28
 //
 
 // Include Files
@@ -28,6 +28,64 @@ void d_rtErrorWithMessageID(const char *r, const char *aFcnName, int aLineNum)
 {
   std::stringstream outStream;
   ((outStream << "Expected ") << r) << " to be nonempty.";
+  outStream << "\n";
+  ((((outStream << "Error in ") << aFcnName) << " (line ") << aLineNum) << ")";
+  throw std::runtime_error(outStream.str());
+}
+
+//
+// Arguments    : const int aDim1
+//                const int aDim2
+//                const rtEqualityCheckInfo &aInfo
+// Return Type  : void
+//
+void emlrtDimSizeImpxCheckR2021b(const int aDim1, const int aDim2,
+                                 const rtEqualityCheckInfo &aInfo)
+{
+  std::stringstream outStream;
+  ((((((outStream << "Size mismatch error on dimension ") << aInfo.nDims)
+      << ": expected ")
+     << aDim1)
+    << " or a singleton, but actual size is ")
+   << aDim2)
+      << ".";
+  outStream << "\n";
+  ((((outStream << "Error in ") << aInfo.fName) << " (line ") << aInfo.lineNo)
+      << ")";
+  throw std::runtime_error(outStream.str());
+}
+
+//
+// Arguments    : const char *aFcnName
+//                int aLineNum
+// Return Type  : void
+//
+void g_rtErrorWithMessageID(const char *aFcnName, int aLineNum)
+{
+  std::stringstream outStream;
+  outStream
+      << "Incorrect dimensions for matrix multiplication. Check that the "
+         "number of columns in the first matrix matches the number of rows "
+         "in the second matrix. To operate on each element of the matrix "
+         "individually, use TIMES (.*) for elementwise multiplication.";
+  outStream << "\n";
+  ((((outStream << "Error in ") << aFcnName) << " (line ") << aLineNum) << ")";
+  throw std::runtime_error(outStream.str());
+}
+
+//
+// Arguments    : const char *aFcnName
+//                int aLineNum
+// Return Type  : void
+//
+void h_rtErrorWithMessageID(const char *aFcnName, int aLineNum)
+{
+  std::stringstream outStream;
+  outStream
+      << "Inner dimensions must agree. Generated code for a general matrix "
+         "multiplication at this call site. If this should have been a sc"
+         "alar times a variable-size matrix, the scalar input must be "
+         "fixed-size.";
   outStream << "\n";
   ((((outStream << "Error in ") << aFcnName) << " (line ") << aLineNum) << ")";
   throw std::runtime_error(outStream.str());

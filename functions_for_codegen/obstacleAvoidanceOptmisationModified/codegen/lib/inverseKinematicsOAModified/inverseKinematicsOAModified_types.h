@@ -5,7 +5,7 @@
 // File: inverseKinematicsOAModified_types.h
 //
 // MATLAB Coder version            : 23.2
-// C/C++ source code generated on  : 04-Feb-2025 04:50:11
+// C/C++ source code generated on  : 03-Mar-2025 15:44:26
 //
 
 #ifndef INVERSEKINEMATICSOAMODIFIED_TYPES_H
@@ -14,6 +14,7 @@
 // Include Files
 #include "rtwtypes.h"
 #include "coder_array.h"
+#define MAX_THREADS omp_get_max_threads()
 
 // Type Definitions
 struct struct0_T {
@@ -53,6 +54,14 @@ struct rtBoundsCheckInfo {
   const char *fName;
   const char *pName;
   int checkKind;
+};
+
+struct rtEqualityCheckInfo {
+  int nDims;
+  int lineNo;
+  int colNo;
+  const char *fName;
+  const char *pName;
 };
 
 struct rtRunTimeErrorInfo {

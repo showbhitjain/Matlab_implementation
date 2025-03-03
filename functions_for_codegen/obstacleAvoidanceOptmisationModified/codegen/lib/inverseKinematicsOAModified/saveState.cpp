@@ -5,7 +5,7 @@
 // File: saveState.cpp
 //
 // MATLAB Coder version            : 23.2
-// C/C++ source code generated on  : 04-Feb-2025 04:50:11
+// C/C++ source code generated on  : 03-Mar-2025 15:44:26
 //
 
 // Include Files
@@ -17,6 +17,7 @@
 #include "rt_nonfinite.h"
 #include "coder_array.h"
 #include "coder_bounded_array.h"
+#include "omp.h"
 #include <cstring>
 
 // Function Definitions
@@ -43,54 +44,81 @@ void saveState(j_struct_T &obj)
       0                          // checkKind
   };
   array<double, 1U> y;
+  int b_i;
   int i;
-  int n;
   int nVar;
   obj.sqpFval_old = obj.sqpFval;
   nVar = obj.xstarsqp.size(0) - 1;
   if (obj.xstarsqp.size(0) > 2147483646) {
     check_forloop_overflow_error();
   }
-  for (int k{0}; k <= nVar; k++) {
-    obj.xstarsqp_old[k] = obj.xstarsqp[k];
+  if (static_cast<int>(nVar + 1 < 400)) {
+    for (int k{0}; k <= nVar; k++) {
+      obj.xstarsqp_old[k] = obj.xstarsqp[k];
+    }
+  } else {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4)
+
+    for (int k = 0; k <= nVar; k++) {
+      obj.xstarsqp_old[k] = obj.xstarsqp[k];
+    }
   }
   if (obj.xstarsqp.size(0) > 2147483646) {
     check_forloop_overflow_error();
   }
-  for (int k{0}; k <= nVar; k++) {
-    i = obj.grad.size(0);
-    if (k + 1 > i) {
-      rtDynamicBoundsError(k + 1, 1, i, w_emlrtBCI);
+  for (i = 0; i <= nVar; i++) {
+    b_i = obj.grad.size(0);
+    if (i + 1 > b_i) {
+      rtDynamicBoundsError(i + 1, 1, b_i, w_emlrtBCI);
     }
-    i = obj.grad_old.size(0);
-    if (k + 1 > i) {
-      rtDynamicBoundsError(k + 1, 1, i, w_emlrtBCI);
+    b_i = obj.grad_old.size(0);
+    if (i + 1 > b_i) {
+      rtDynamicBoundsError(i + 1, 1, b_i, w_emlrtBCI);
     }
-    obj.grad_old[k] = obj.grad[k];
+    obj.grad_old[i] = obj.grad[i];
   }
-  n = obj.mIneq;
+  i = obj.mIneq;
   if (obj.mIneq > 2147483646) {
     check_forloop_overflow_error();
   }
-  for (int k{0}; k < n; k++) {
-    obj.cIneq_old[k] = obj.cIneq[k];
+  if (static_cast<int>(i < 400)) {
+    for (int k{0}; k < i; k++) {
+      obj.cIneq_old[k] = obj.cIneq[k];
+    }
+  } else {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4)
+
+    for (int k = 0; k < i; k++) {
+      obj.cIneq_old[k] = obj.cIneq[k];
+    }
   }
-  n = obj.mEq;
+  i = obj.mEq;
   y.set_size(obj.cEq_old.size[0]);
   nVar = obj.cEq_old.size[0];
-  for (i = 0; i < nVar; i++) {
-    y[i] = obj.cEq_old.data[i];
+  for (b_i = 0; b_i < nVar; b_i++) {
+    y[b_i] = obj.cEq_old.data[b_i];
   }
   if (obj.mEq > 2147483646) {
     check_forloop_overflow_error();
   }
-  for (int k{0}; k < n; k++) {
-    y[k] = obj.cEq.data[k];
+  if (static_cast<int>(i < 400)) {
+    for (int k{0}; k < i; k++) {
+      y[k] = obj.cEq.data[k];
+    }
+  } else {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4)
+
+    for (int k = 0; k < i; k++) {
+      y[k] = obj.cEq.data[k];
+    }
   }
   obj.cEq_old.size[0] = y.size(0);
   nVar = y.size(0);
-  for (i = 0; i < nVar; i++) {
-    obj.cEq_old.data[i] = y[i];
+  for (b_i = 0; b_i < nVar; b_i++) {
+    obj.cEq_old.data[b_i] = y[b_i];
   }
 }
 

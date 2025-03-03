@@ -5,7 +5,7 @@
 // File: indexShapeCheck.cpp
 //
 // MATLAB Coder version            : 23.2
-// C/C++ source code generated on  : 04-Feb-2025 04:50:11
+// C/C++ source code generated on  : 01-Mar-2025 01:36:28
 //
 
 // Include Files
@@ -47,12 +47,12 @@ namespace coder {
 namespace internal {
 void indexShapeCheck(int matrixSize, const int indexSize[2])
 {
-  static rtRunTimeErrorInfo c_emlrtRTEI{
+  static rtRunTimeErrorInfo e_emlrtRTEI{
       122,          // lineNo
       "errOrWarnIf" // fName
   };
   if ((matrixSize == 1) && (indexSize[1] != 1)) {
-    i_rtErrorWithMessageID(c_emlrtRTEI.fName, c_emlrtRTEI.lineNo);
+    i_rtErrorWithMessageID(e_emlrtRTEI.fName, e_emlrtRTEI.lineNo);
   }
 }
 

@@ -18,7 +18,7 @@ function plotLinksModeling(linesegments)
         end
     end
 
-
+ %show(robot, Homejointpositions, 'PreservePlot', true, 'Frames', 'on')
    
 end
 

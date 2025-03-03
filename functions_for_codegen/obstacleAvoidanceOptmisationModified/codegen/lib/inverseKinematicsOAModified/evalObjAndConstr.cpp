@@ -5,7 +5,7 @@
 // File: evalObjAndConstr.cpp
 //
 // MATLAB Coder version            : 23.2
-// C/C++ source code generated on  : 04-Feb-2025 04:50:11
+// C/C++ source code generated on  : 03-Mar-2025 15:44:26
 //
 
 // Include Files
@@ -40,7 +40,7 @@ double evalObjAndConstr(const ::coder::internal::i_stickyStruct &obj,
   double fval;
   boolean_T b;
   if (x.size(0) == 0) {
-    d_rtErrorWithMessageID("input", emlrtRTEI.fName, emlrtRTEI.lineNo);
+    d_rtErrorWithMessageID("input", c_emlrtRTEI.fName, c_emlrtRTEI.lineNo);
   }
   fval = inverseKinematicsOAModified_anonFcn1(
       obj.next.next.next.next.next.next.next.next.value.workspace.jacobi,

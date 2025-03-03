@@ -221,4 +221,6 @@ function [optimal_joint_velocity, Exit_Flag] = inverseKinematicsOAModified( ...
     % 9. UPDATE PERSISTENT STATE
     %----------------------------------------------------------------------
     starting_joint_vel = optimal_joint_velocity;
+
+
 end

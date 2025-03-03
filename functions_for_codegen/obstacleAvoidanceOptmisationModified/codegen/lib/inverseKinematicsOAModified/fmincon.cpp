@@ -5,7 +5,7 @@
 // File: fmincon.cpp
 //
 // MATLAB Coder version            : 23.2
-// C/C++ source code generated on  : 04-Feb-2025 04:50:11
+// C/C++ source code generated on  : 03-Mar-2025 15:44:26
 //
 
 // Include Files
@@ -34,7 +34,10 @@
 #include "updateWorkingSetForNewQP.h"
 #include "coder_array.h"
 #include "coder_bounded_array.h"
+#include "omp.h"
 #include <cmath>
+#include <cstdio>
+#include <cstdlib>
 #include <cstring>
 #include <sstream>
 #include <stdexcept>
@@ -53,12 +56,19 @@ static void l_rtErrorWithMessageID(const char *aFcnName, int aLineNum);
 //
 static void k_rtErrorWithMessageID(const char *aFcnName, int aLineNum)
 {
+  std::string errMsg;
   std::stringstream outStream;
   outStream << "Objective or nonlinear constraint undefined at initial point. "
                "Fmincon cannot continue.";
   outStream << "\n";
   ((((outStream << "Error in ") << aFcnName) << " (line ") << aLineNum) << ")";
-  throw std::runtime_error(outStream.str());
+  if (omp_in_parallel()) {
+    errMsg = outStream.str();
+    std::fprintf(stderr, "%s", errMsg.c_str());
+    std::abort();
+  } else {
+    throw std::runtime_error(outStream.str());
+  }
 }
 
 //
@@ -68,11 +78,18 @@ static void k_rtErrorWithMessageID(const char *aFcnName, int aLineNum)
 //
 static void l_rtErrorWithMessageID(const char *aFcnName, int aLineNum)
 {
+  std::string errMsg;
   std::stringstream outStream;
   outStream << "Initial point must be non-empty.";
   outStream << "\n";
   ((((outStream << "Error in ") << aFcnName) << " (line ") << aLineNum) << ")";
-  throw std::runtime_error(outStream.str());
+  if (omp_in_parallel()) {
+    errMsg = outStream.str();
+    std::fprintf(stderr, "%s", errMsg.c_str());
+    std::abort();
+  } else {
+    throw std::runtime_error(outStream.str());
+  }
 }
 
 //
@@ -116,11 +133,11 @@ double fmincon(const anonymous_function &fun, array<double, 1U> &x0,
       "/usr/local/MATLAB/R2023b/toolbox/optim/eml/fmincon.p", // pName
       0                                                       // checkKind
   };
-  static rtRunTimeErrorInfo c_emlrtRTEI{
+  static rtRunTimeErrorInfo e_emlrtRTEI{
       1,        // lineNo
       "checkX0" // fName
   };
-  static rtRunTimeErrorInfo d_emlrtRTEI{
+  static rtRunTimeErrorInfo f_emlrtRTEI{
       1,        // lineNo
       "fmincon" // fName
   };
@@ -141,7 +158,6 @@ double fmincon(const anonymous_function &fun, array<double, 1U> &x0,
   struct_T MeritFunction;
   double d;
   double fval;
-  int i;
   int mConstrMax;
   int mLinEq;
   int mLinIneq;
@@ -149,17 +165,28 @@ double fmincon(const anonymous_function &fun, array<double, 1U> &x0,
   int nDepEq;
   int nVar;
   int nVarMax;
+  int runTimeOptions_MaxFunctionEvaluations;
   int varargin_1;
   boolean_T exitg1;
   boolean_T y;
   if (x0.size(0) == 0) {
-    l_rtErrorWithMessageID(c_emlrtRTEI.fName, c_emlrtRTEI.lineNo);
+    l_rtErrorWithMessageID(e_emlrtRTEI.fName, e_emlrtRTEI.lineNo);
   }
   b.set_size(x0.size(0));
   nDepEq = x0.size(0);
-  for (i = 0; i < nDepEq; i++) {
-    d = x0[i];
-    b[i] = ((!std::isinf(d)) && (!std::isnan(d)));
+  if (static_cast<int>(nDepEq < 400)) {
+    for (int i{0}; i < nDepEq; i++) {
+      d = x0[i];
+      b[i] = ((!std::isinf(d)) && (!std::isnan(d)));
+    }
+  } else {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4) private(d)
+
+    for (int i = 0; i < nDepEq; i++) {
+      d = x0[i];
+      b[i] = ((!std::isinf(d)) && (!std::isnan(d)));
+    }
   }
   y = true;
   if (b.size(0) > 2147483646) {
@@ -176,7 +203,7 @@ double fmincon(const anonymous_function &fun, array<double, 1U> &x0,
     }
   }
   if (!y) {
-    rtErrorWithMessageID("x0", c_emlrtRTEI.fName, c_emlrtRTEI.lineNo);
+    rtErrorWithMessageID("x0", e_emlrtRTEI.fName, e_emlrtRTEI.lineNo);
   }
   nVar = x0.size(0) - 1;
   *exitflag = optim::coder::validate::checkLinearInputs(
@@ -184,8 +211,8 @@ double fmincon(const anonymous_function &fun, array<double, 1U> &x0,
   expl_temp.FiniteDifferenceStepSize.set_size(x0.size(0));
   expl_temp.TypicalX.set_size(x0.size(0));
   nDepEq = x0.size(0);
-  for (i = 0; i < nDepEq; i++) {
-    expl_temp.TypicalX[i] = 1.0;
+  for (varargin_1 = 0; varargin_1 < nDepEq; varargin_1++) {
+    expl_temp.TypicalX[varargin_1] = 1.0;
   }
   if (x0.size(0) > 2147483646) {
     check_forloop_overflow_error();
@@ -198,6 +225,7 @@ double fmincon(const anonymous_function &fun, array<double, 1U> &x0,
     }
     expl_temp.FiniteDifferenceStepSize[mConstrMax] = 1.4901161193847656E-8;
   }
+  runTimeOptions_MaxFunctionEvaluations = 100 * x0.size(0);
   mLinEq = beq_size[0] * beq_size[1];
   mLinIneq = bineq.size(0) * bineq.size(1);
   nDepEq = (mLinEq << 1) + 1;
@@ -212,8 +240,17 @@ double fmincon(const anonymous_function &fun, array<double, 1U> &x0,
   varargin_1 = x0.size(0);
   Hessian.set_size(x0.size(0), x0.size(0));
   nDepEq = x0.size(0) * x0.size(0);
-  for (i = 0; i < nDepEq; i++) {
-    Hessian[i] = 0.0;
+  if (static_cast<int>(nDepEq < 400)) {
+    for (int i{0}; i < nDepEq; i++) {
+      Hessian[i] = 0.0;
+    }
+  } else {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4)
+
+    for (int i = 0; i < nDepEq; i++) {
+      Hessian[i] = 0.0;
+    }
   }
   if (x0.size(0) > 0) {
     if (x0.size(0) > 2147483646) {
@@ -245,12 +282,12 @@ double fmincon(const anonymous_function &fun, array<double, 1U> &x0,
     QRManager.QR.set_size(maxDims, maxDims);
     QRManager.Q.set_size(maxDims, maxDims);
     nDepEq = maxDims * maxDims;
-    for (i = 0; i < nDepEq; i++) {
-      QRManager.Q[i] = 0.0;
+    for (varargin_1 = 0; varargin_1 < nDepEq; varargin_1++) {
+      QRManager.Q[varargin_1] = 0.0;
     }
     QRManager.jpvt.set_size(maxDims);
-    for (i = 0; i < maxDims; i++) {
-      QRManager.jpvt[i] = 0;
+    for (varargin_1 = 0; varargin_1 < maxDims; varargin_1++) {
+      QRManager.jpvt[varargin_1] = 0;
     }
     QRManager.mrows = 0;
     QRManager.ncols = 0;
@@ -287,8 +324,17 @@ double fmincon(const anonymous_function &fun, array<double, 1U> &x0,
     memspace.workspace_int.set_size(maxDims);
     memspace.workspace_sort.set_size(maxDims);
     fscales_lineq_constraint.set_size(mLinIneq);
-    for (i = 0; i < mLinIneq; i++) {
-      fscales_lineq_constraint[i] = 1.0;
+    if (static_cast<int>(mLinIneq < 400)) {
+      for (int i{0}; i < mLinIneq; i++) {
+        fscales_lineq_constraint[i] = 1.0;
+      }
+    } else {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4)
+
+      for (int i = 0; i < mLinIneq; i++) {
+        fscales_lineq_constraint[i] = 1.0;
+      }
     }
     optim::coder::qpactiveset::WorkingSet::factoryConstruct(
         mLinIneq, mLinEq, x0.size(0), nVarMax, mConstrMax, WorkingSet);
@@ -387,7 +433,7 @@ double fmincon(const anonymous_function &fun, array<double, 1U> &x0,
       }
     }
     if (TrialState.xstarsqp.size(0) == 0) {
-      d_rtErrorWithMessageID("input", emlrtRTEI.fName, emlrtRTEI.lineNo);
+      d_rtErrorWithMessageID("input", c_emlrtRTEI.fName, c_emlrtRTEI.lineNo);
     }
     fval = inverseKinematicsOAModified_anonFcn1(
         fun.workspace.jacobi, fun.workspace.xd_eff_vel,
@@ -410,7 +456,7 @@ double fmincon(const anonymous_function &fun, array<double, 1U> &x0,
       nDepEq = 1;
     }
     if (nDepEq != 1) {
-      k_rtErrorWithMessageID(d_emlrtRTEI.fName, d_emlrtRTEI.lineNo);
+      k_rtErrorWithMessageID(f_emlrtRTEI.fName, f_emlrtRTEI.lineNo);
     }
     optim::coder::utils::FiniteDifferences::computeFiniteDifferences(
         FiniteDifferences, fval, TrialState.xstarsqp, TrialState.grad, lb, ub,
@@ -436,8 +482,8 @@ double fmincon(const anonymous_function &fun, array<double, 1U> &x0,
       if (varargin_1 > 2147483646) {
         check_forloop_overflow_error();
       }
-      i = static_cast<unsigned char>(varargin_1);
-      for (nDepEq = 0; nDepEq < i; nDepEq++) {
+      varargin_1 = static_cast<unsigned char>(varargin_1);
+      for (nDepEq = 0; nDepEq < varargin_1; nDepEq++) {
         normResid += std::abs(TrialState.cEq.data[nDepEq]);
       }
     }
@@ -447,17 +493,18 @@ double fmincon(const anonymous_function &fun, array<double, 1U> &x0,
       check_forloop_overflow_error();
     }
     for (mConstrMax = 0; mConstrMax < mLinIneq; mConstrMax++) {
+      double d1;
       if (mConstrMax + 1 > TrialState.cIneq.size(0)) {
         rtDynamicBoundsError(mConstrMax + 1, 1, TrialState.cIneq.size(0),
                              b_emlrtBCI);
       }
-      d = TrialState.cIneq[mConstrMax];
-      if (d > 0.0) {
+      d1 = TrialState.cIneq[mConstrMax];
+      if (d1 > 0.0) {
         if (mConstrMax + 1 > TrialState.cIneq.size(0)) {
           rtDynamicBoundsError(mConstrMax + 1, 1, TrialState.cIneq.size(0),
                                b_emlrtBCI);
         }
-        normResid += d;
+        normResid += d1;
       }
     }
     MeritFunction.initConstrViolationIneq = normResid;
@@ -471,7 +518,7 @@ double fmincon(const anonymous_function &fun, array<double, 1U> &x0,
     MeritFunction.firstOrderOpt = 0.0;
     MeritFunction.hasObjective = true;
     expl_temp.ConstrRelTolFactor = 1.0;
-    expl_temp.MaxFunctionEvaluations = 100 * x0.size(0);
+    expl_temp.MaxFunctionEvaluations = runTimeOptions_MaxFunctionEvaluations;
     expl_temp.MaxIterations = 1000;
     optim::coder::fminconsqp::driver(
         Hessian, bineq, (const double *)b_y.data(), lb, ub, TrialState,
@@ -480,8 +527,8 @@ double fmincon(const anonymous_function &fun, array<double, 1U> &x0,
         expl_temp);
     x0.set_size(TrialState.xstarsqp.size(0));
     nDepEq = TrialState.xstarsqp.size(0);
-    for (i = 0; i < nDepEq; i++) {
-      x0[i] = TrialState.xstarsqp[i];
+    for (varargin_1 = 0; varargin_1 < nDepEq; varargin_1++) {
+      x0[varargin_1] = TrialState.xstarsqp[varargin_1];
     }
     fval = TrialState.sqpFval;
     *exitflag = TrialState.sqpExitFlag;

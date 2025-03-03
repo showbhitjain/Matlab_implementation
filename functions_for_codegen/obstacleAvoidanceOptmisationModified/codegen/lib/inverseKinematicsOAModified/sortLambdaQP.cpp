@@ -5,7 +5,7 @@
 // File: sortLambdaQP.cpp
 //
 // MATLAB Coder version            : 23.2
-// C/C++ source code generated on  : 04-Feb-2025 04:50:11
+// C/C++ source code generated on  : 03-Mar-2025 15:44:26
 //
 
 // Include Files
@@ -15,6 +15,7 @@
 #include "inverseKinematicsOAModified_types.h"
 #include "rt_nonfinite.h"
 #include "coder_array.h"
+#include "omp.h"
 #include <cstring>
 
 // Function Definitions
@@ -64,11 +65,26 @@ void sortLambdaQP(array<double, 1U> &lambda, int WorkingSet_nActiveConstr,
     if (mAll > 2147483646) {
       check_forloop_overflow_error();
     }
-    for (currentMplier = 0; currentMplier < mAll; currentMplier++) {
-      workspace[currentMplier] = lambda[currentMplier];
-    }
-    for (currentMplier = 0; currentMplier < mAll; currentMplier++) {
-      lambda[currentMplier] = 0.0;
+    if (static_cast<int>(mAll < 400)) {
+      for (int k{0}; k < mAll; k++) {
+        workspace[k] = lambda[k];
+      }
+      for (int k{0}; k < mAll; k++) {
+        lambda[k] = 0.0;
+      }
+    } else {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4)
+
+      for (int k = 0; k < mAll; k++) {
+        workspace[k] = lambda[k];
+      }
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4)
+
+      for (int k = 0; k < mAll; k++) {
+        lambda[k] = 0.0;
+      }
     }
     currentMplier = 1;
     idx = 1;

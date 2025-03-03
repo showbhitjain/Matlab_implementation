@@ -5,7 +5,7 @@
 // File: factorQR.cpp
 //
 // MATLAB Coder version            : 23.2
-// C/C++ source code generated on  : 04-Feb-2025 04:50:11
+// C/C++ source code generated on  : 03-Mar-2025 15:44:26
 //
 
 // Include Files
@@ -18,6 +18,7 @@
 #include "rt_nonfinite.h"
 #include "xzgeqp3.h"
 #include "coder_array.h"
+#include "omp.h"
 #include <cstring>
 
 // Function Definitions
@@ -37,12 +38,12 @@ void factorQR(e_struct_T &obj, const array<double, 1U> &A, int mrows, int ncols,
               int ldA)
 {
   int ix0;
-  int k;
   int minmana;
+  int minmn;
   boolean_T guard1;
-  k = mrows * ncols;
+  ix0 = mrows * ncols;
   guard1 = false;
-  if (k > 0) {
+  if (ix0 > 0) {
     if (ncols > 2147483646) {
       check_forloop_overflow_error();
     }
@@ -52,12 +53,12 @@ void factorQR(e_struct_T &obj, const array<double, 1U> &A, int mrows, int ncols,
       if (mrows > 2147483646) {
         check_forloop_overflow_error();
       }
-      for (k = 0; k < mrows; k++) {
-        obj.QR[minmana + k] = A[ix0 + k];
+      for (minmn = 0; minmn < mrows; minmn++) {
+        obj.QR[minmana + minmn] = A[ix0 + minmn];
       }
     }
     guard1 = true;
-  } else if (k == 0) {
+  } else if (ix0 == 0) {
     obj.mrows = mrows;
     obj.ncols = ncols;
     obj.minRowCol = 0;
@@ -72,29 +73,38 @@ void factorQR(e_struct_T &obj, const array<double, 1U> &A, int mrows, int ncols,
       check_forloop_overflow_error();
     }
     for (int idx{0}; idx < ncols; idx++) {
-      k = obj.jpvt.size(0);
-      if ((idx + 1 < 1) || (idx + 1 > k)) {
-        rtDynamicBoundsError(idx + 1, 1, k, m_emlrtBCI);
+      ix0 = obj.jpvt.size(0);
+      if ((idx + 1 < 1) || (idx + 1 > ix0)) {
+        rtDynamicBoundsError(idx + 1, 1, ix0, m_emlrtBCI);
       }
       obj.jpvt[idx] = idx + 1;
     }
     if (mrows <= ncols) {
-      k = mrows;
+      minmn = mrows;
     } else {
-      k = ncols;
+      minmn = ncols;
     }
-    obj.minRowCol = k;
+    obj.minRowCol = minmn;
     ix0 = obj.QR.size(0);
     minmana = obj.QR.size(1);
     if (ix0 <= minmana) {
       minmana = ix0;
     }
     obj.tau.set_size(minmana);
-    for (ix0 = 0; ix0 < minmana; ix0++) {
-      obj.tau[ix0] = 0.0;
+    if (static_cast<int>(minmana < 400)) {
+      for (int i{0}; i < minmana; i++) {
+        obj.tau[i] = 0.0;
+      }
+    } else {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4)
+
+      for (int i = 0; i < minmana; i++) {
+        obj.tau[i] = 0.0;
+      }
     }
-    if (k >= 1) {
-      internal::reflapack::qrf(obj.QR, mrows, ncols, k, obj.tau);
+    if (minmn >= 1) {
+      internal::reflapack::qrf(obj.QR, mrows, ncols, minmn, obj.tau);
     }
   }
 }

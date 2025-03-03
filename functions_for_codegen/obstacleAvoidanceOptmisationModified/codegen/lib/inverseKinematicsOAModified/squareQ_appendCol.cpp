@@ -5,7 +5,7 @@
 // File: squareQ_appendCol.cpp
 //
 // MATLAB Coder version            : 23.2
-// C/C++ source code generated on  : 04-Feb-2025 04:50:11
+// C/C++ source code generated on  : 03-Mar-2025 15:44:26
 //
 
 // Include Files
@@ -18,6 +18,7 @@
 #include "rt_nonfinite.h"
 #include "xrotg.h"
 #include "coder_array.h"
+#include "omp.h"
 #include <cstring>
 
 // Function Definitions
@@ -48,7 +49,7 @@ void squareQ_appendCol(e_struct_T &obj, const array<double, 1U> &vec, int iv0)
   double s;
   double temp;
   int Qk0;
-  int b_iy;
+  int ia;
   int iac;
   int iy;
   int iyend;
@@ -67,8 +68,17 @@ void squareQ_appendCol(e_struct_T &obj, const array<double, 1U> &vec, int iv0)
     if ((iy + 1 <= iyend) && (iyend > 2147483646)) {
       check_forloop_overflow_error();
     }
-    for (b_iy = iy + 1; b_iy <= iyend; b_iy++) {
-      obj.QR[b_iy - 1] = 0.0;
+    if (static_cast<int>(iyend - iy < 400)) {
+      for (int b_iy{iy + 1}; b_iy <= iyend; b_iy++) {
+        obj.QR[b_iy - 1] = 0.0;
+      }
+    } else {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4)
+
+      for (int b_iy = iy + 1; b_iy <= iyend; b_iy++) {
+        obj.QR[b_iy - 1] = 0.0;
+      }
     }
     Qk0 = obj.ldq * (obj.mrows - 1) + 1;
     if ((obj.ldq == 0) || ((obj.ldq > 0) && (Qk0 < 1)) ||
@@ -80,7 +90,7 @@ void squareQ_appendCol(e_struct_T &obj, const array<double, 1U> &vec, int iv0)
       overflow = (Qk0 < MIN_int32_T - obj.ldq);
     }
     if (obj.ldq == 0) {
-      m_rtErrorWithMessageID(b_emlrtRTEI.fName, b_emlrtRTEI.lineNo);
+      m_rtErrorWithMessageID(d_emlrtRTEI.fName, d_emlrtRTEI.lineNo);
     }
     if (overflow) {
       check_forloop_overflow_error();
@@ -91,23 +101,23 @@ void squareQ_appendCol(e_struct_T &obj, const array<double, 1U> &vec, int iv0)
       if ((iac <= iyend) && (iyend > 2147483646)) {
         check_forloop_overflow_error();
       }
-      for (int idx{iac}; idx <= iyend; idx++) {
-        c += obj.Q[idx - 1] * vec[((iv0 + idx) - iac) - 1];
+      for (ia = iac; ia <= iyend; ia++) {
+        c += obj.Q[ia - 1] * vec[((iv0 + ia) - iac) - 1];
       }
       obj.QR[iy] = obj.QR[iy] + c;
       iy++;
     }
   }
   obj.ncols++;
-  iac = obj.jpvt.size(0);
-  if ((obj.ncols < 1) || (obj.ncols > iac)) {
-    rtDynamicBoundsError(obj.ncols, 1, iac, w_emlrtBCI);
+  ia = obj.jpvt.size(0);
+  if ((obj.ncols < 1) || (obj.ncols > ia)) {
+    rtDynamicBoundsError(obj.ncols, 1, ia, w_emlrtBCI);
   }
-  iac = obj.ncols - 1;
-  obj.jpvt[iac] = obj.ncols;
+  ia = obj.ncols - 1;
+  obj.jpvt[ia] = obj.ncols;
   for (int idx{obj.mrows}; idx > obj.ncols; idx--) {
     Qk0 = obj.QR.size(0) * obj.QR.size(1);
-    iyend = idx + obj.ldq * iac;
+    iyend = idx + obj.ldq * ia;
     if ((iyend < 1) || (iyend > Qk0)) {
       rtDynamicBoundsError(iyend, 1, Qk0, w_emlrtBCI);
     }
@@ -125,16 +135,16 @@ void squareQ_appendCol(e_struct_T &obj, const array<double, 1U> &vec, int iv0)
     Qk0 = obj.ldq * (idx - 2);
     iyend = obj.mrows;
     if (obj.mrows >= 1) {
-      b_iy = obj.ldq + Qk0;
+      iy = obj.ldq + Qk0;
       if (obj.mrows > 2147483646) {
         check_forloop_overflow_error();
       }
       for (int k{0}; k < iyend; k++) {
-        lda = b_iy + k;
-        iy = Qk0 + k;
-        temp = c * obj.Q[iy] + s * obj.Q[lda];
-        obj.Q[lda] = c * obj.Q[lda] - s * obj.Q[iy];
-        obj.Q[iy] = temp;
+        lda = iy + k;
+        iac = Qk0 + k;
+        temp = c * obj.Q[iac] + s * obj.Q[lda];
+        obj.Q[lda] = c * obj.Q[lda] - s * obj.Q[iac];
+        obj.Q[iac] = temp;
       }
     }
   }

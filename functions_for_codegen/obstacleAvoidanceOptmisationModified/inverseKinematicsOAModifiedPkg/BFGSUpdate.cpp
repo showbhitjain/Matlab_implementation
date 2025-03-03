@@ -5,7 +5,7 @@
 // File: BFGSUpdate.cpp
 //
 // MATLAB Coder version            : 23.2
-// C/C++ source code generated on  : 04-Feb-2025 04:50:11
+// C/C++ source code generated on  : 01-Mar-2025 01:36:28
 //
 
 // Include Files
@@ -67,7 +67,7 @@ boolean_T BFGSUpdate(int nvar, array<double, 2U> &Bk,
       overflow = (k > MAX_int32_T - Bk.size(0));
     }
     if (Bk.size(0) == 0) {
-      m_rtErrorWithMessageID(b_emlrtRTEI.fName, b_emlrtRTEI.lineNo);
+      m_rtErrorWithMessageID(d_emlrtRTEI.fName, d_emlrtRTEI.lineNo);
     }
     if (overflow) {
       check_forloop_overflow_error();

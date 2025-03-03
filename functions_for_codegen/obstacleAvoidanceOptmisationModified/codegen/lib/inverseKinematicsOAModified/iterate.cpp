@@ -5,7 +5,7 @@
 // File: iterate.cpp
 //
 // MATLAB Coder version            : 23.2
-// C/C++ source code generated on  : 04-Feb-2025 04:50:11
+// C/C++ source code generated on  : 03-Mar-2025 15:44:26
 //
 
 // Include Files
@@ -31,6 +31,7 @@
 #include "xgemv.h"
 #include "xnrm2.h"
 #include "coder_array.h"
+#include "omp.h"
 #include <cmath>
 #include <cstring>
 
@@ -121,7 +122,6 @@ void iterate(const array<double, 2U> &H, const array<double, 1U> &f,
   int activeSetChangeID;
   int globalActiveConstrIdx;
   int i;
-  int iAw0;
   int idx_local;
   int nVar;
   int ret;
@@ -145,8 +145,17 @@ void iterate(const array<double, 2U> &H, const array<double, 1U> &f,
   if (workingset.mConstrMax > 2147483646) {
     check_forloop_overflow_error();
   }
-  for (iAw0 = 0; iAw0 < ret; iAw0++) {
-    solution.lambda[iAw0] = 0.0;
+  if (static_cast<int>(ret < 400)) {
+    for (int k{0}; k < ret; k++) {
+      solution.lambda[k] = 0.0;
+    }
+  } else {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4)
+
+    for (int k = 0; k < ret; k++) {
+      solution.lambda[k] = 0.0;
+    }
   }
   int exitg1;
   do {
@@ -155,6 +164,7 @@ void iterate(const array<double, 2U> &H, const array<double, 1U> &f,
       double a;
       double normDelta;
       int i1;
+      int iAw0;
       int idx;
       int idxMinLambda;
       int j;

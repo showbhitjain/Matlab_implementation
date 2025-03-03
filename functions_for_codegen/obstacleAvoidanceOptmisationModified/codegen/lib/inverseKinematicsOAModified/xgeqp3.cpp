@@ -5,7 +5,7 @@
 // File: xgeqp3.cpp
 //
 // MATLAB Coder version            : 23.2
-// C/C++ source code generated on  : 04-Feb-2025 04:50:11
+// C/C++ source code generated on  : 03-Mar-2025 15:44:26
 //
 
 // Include Files
@@ -17,6 +17,7 @@
 #include "xzlarf.h"
 #include "xzlarfg.h"
 #include "coder_array.h"
+#include "omp.h"
 #include <cmath>
 #include <cstring>
 
@@ -39,11 +40,10 @@ void xgeqp3(array<double, 2U> &A, int m, int n, array<int, 1U> &jpvt,
   array<double, 1U> vn2;
   array<double, 1U> work;
   double temp;
-  int i;
   int ij;
   int ma;
   int minmana;
-  int minmn_tmp;
+  int minmn;
   ma = A.size(0);
   ij = A.size(0);
   minmana = A.size(1);
@@ -51,22 +51,41 @@ void xgeqp3(array<double, 2U> &A, int m, int n, array<int, 1U> &jpvt,
     minmana = ij;
   }
   if (m <= n) {
-    minmn_tmp = m;
+    minmn = m;
   } else {
-    minmn_tmp = n;
+    minmn = n;
   }
   tau.set_size(minmana);
-  for (i = 0; i < minmana; i++) {
-    tau[i] = 0.0;
+  if (static_cast<int>(minmana < 400)) {
+    for (int j{0}; j < minmana; j++) {
+      tau[j] = 0.0;
+    }
+  } else {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4)
+
+    for (int j = 0; j < minmana; j++) {
+      tau[j] = 0.0;
+    }
   }
-  if (minmn_tmp < 1) {
+  if (minmn < 1) {
     if (n > 2147483646) {
       check_forloop_overflow_error();
     }
-    for (int ii{0}; ii < n; ii++) {
-      jpvt[ii] = ii + 1;
+    if (static_cast<int>(n < 400)) {
+      for (int j{0}; j < n; j++) {
+        jpvt[j] = j + 1;
+      }
+    } else {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4)
+
+      for (int j = 0; j < n; j++) {
+        jpvt[j] = j + 1;
+      }
     }
   } else {
+    int i;
     int ii;
     int ix;
     int nfxd;
@@ -100,11 +119,11 @@ void xgeqp3(array<double, 2U> &A, int m, int n, array<int, 1U> &jpvt,
         jpvt[ii] = ii + 1;
       }
     }
-    if (nfxd > minmn_tmp) {
-      nfxd = minmn_tmp;
+    if (nfxd > minmn) {
+      nfxd = minmn;
     }
     reflapack::qrf(A, m, n, nfxd, tau);
-    if (nfxd < minmn_tmp) {
+    if (nfxd < minmn) {
       double d;
       int a_tmp;
       ma = A.size(0);
@@ -112,10 +131,21 @@ void xgeqp3(array<double, 2U> &A, int m, int n, array<int, 1U> &jpvt,
       ij = A.size(1);
       vn1.set_size(A.size(1));
       vn2.set_size(A.size(1));
-      for (i = 0; i < ij; i++) {
-        work[i] = 0.0;
-        vn1[i] = 0.0;
-        vn2[i] = 0.0;
+      if (static_cast<int>(ij < 400)) {
+        for (int j{0}; j < ij; j++) {
+          work[j] = 0.0;
+          vn1[j] = 0.0;
+          vn2[j] = 0.0;
+        }
+      } else {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4)
+
+        for (int j = 0; j < ij; j++) {
+          work[j] = 0.0;
+          vn1[j] = 0.0;
+          vn2[j] = 0.0;
+        }
       }
       a_tmp = nfxd + 1;
       for (ii = a_tmp; ii <= n; ii++) {
@@ -123,7 +153,7 @@ void xgeqp3(array<double, 2U> &A, int m, int n, array<int, 1U> &jpvt,
         vn1[ii - 1] = d;
         vn2[ii - 1] = d;
       }
-      for (int b_i{a_tmp}; b_i <= minmn_tmp; b_i++) {
+      for (int b_i{a_tmp}; b_i <= minmn; b_i++) {
         double s;
         int ip1;
         int mmi;

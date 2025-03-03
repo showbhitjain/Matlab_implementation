@@ -5,7 +5,7 @@
 // File: main.cpp
 //
 // MATLAB Coder version            : 23.2
-// C/C++ source code generated on  : 04-Feb-2025 04:50:11
+// C/C++ source code generated on  : 03-Mar-2025 15:44:26
 //
 
 /*************************************************************************/
@@ -39,6 +39,9 @@
 #include "inverseKinematicsOAModified_types.h"
 #include "rt_nonfinite.h"
 #include "coder_array.h"
+#include "omp.h"
+#include <cstdio>
+#include <cstdlib>
 #include <cstring>
 #include <sstream>
 #include <stdexcept>
@@ -83,15 +86,29 @@ static void argInit_6x1_real_T(double result[6])
 static coder::array<double, 2U> argInit_6xUnbounded_real_T()
 {
   coder::array<double, 2U> result;
+  int idx1;
   // Set the size of the array.
   // Change this size to the value that the application requires.
   result.set_size(6, 2);
   // Loop over the array to initialize each element.
-  for (int idx0{0}; idx0 < 6; idx0++) {
-    for (int idx1{0}; idx1 < result.size(1); idx1++) {
-      // Set the value of the array element.
-      // Change this value to the value that the application requires.
-      result[idx0 + 6 * idx1] = argInit_real_T();
+  if (static_cast<int>(6 * result.size(1) < 400)) {
+    for (int idx0{0}; idx0 < 6; idx0++) {
+      for (idx1 = 0; idx1 < result.size(1); idx1++) {
+        // Set the value of the array element.
+        // Change this value to the value that the application requires.
+        result[idx0 + 6 * idx1] = argInit_real_T();
+      }
+    }
+  } else {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4) private(idx1)
+
+    for (int idx0 = 0; idx0 < 6; idx0++) {
+      for (idx1 = 0; idx1 < result.size(1); idx1++) {
+        // Set the value of the array element.
+        // Change this value to the value that the application requires.
+        result[idx0 + 6 * idx1] = argInit_real_T();
+      }
     }
   }
   return result;
@@ -108,10 +125,21 @@ static coder::array<double, 1U> argInit_Unboundedx1_real_T()
   // Change this size to the value that the application requires.
   result.set_size(2);
   // Loop over the array to initialize each element.
-  for (int idx0{0}; idx0 < result.size(0); idx0++) {
-    // Set the value of the array element.
-    // Change this value to the value that the application requires.
-    result[idx0] = argInit_real_T();
+  if (static_cast<int>(result.size(0) < 400)) {
+    for (int idx0{0}; idx0 < result.size(0); idx0++) {
+      // Set the value of the array element.
+      // Change this value to the value that the application requires.
+      result[idx0] = argInit_real_T();
+    }
+  } else {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4)
+
+    for (int idx0 = 0; idx0 < result.size(0); idx0++) {
+      // Set the value of the array element.
+      // Change this value to the value that the application requires.
+      result[idx0] = argInit_real_T();
+    }
   }
   return result;
 }
@@ -123,15 +151,29 @@ static coder::array<double, 1U> argInit_Unboundedx1_real_T()
 static coder::array<double, 2U> argInit_UnboundedxUnbounded_real_T()
 {
   coder::array<double, 2U> result;
+  int idx1;
   // Set the size of the array.
   // Change this size to the value that the application requires.
   result.set_size(2, 2);
   // Loop over the array to initialize each element.
-  for (int idx0{0}; idx0 < result.size(0); idx0++) {
-    for (int idx1{0}; idx1 < result.size(1); idx1++) {
-      // Set the value of the array element.
-      // Change this value to the value that the application requires.
-      result[idx0 + result.size(0) * idx1] = argInit_real_T();
+  if (static_cast<int>(result.size(0) * result.size(1) < 400)) {
+    for (int idx0{0}; idx0 < result.size(0); idx0++) {
+      for (idx1 = 0; idx1 < result.size(1); idx1++) {
+        // Set the value of the array element.
+        // Change this value to the value that the application requires.
+        result[idx0 + result.size(0) * idx1] = argInit_real_T();
+      }
+    }
+  } else {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4) private(idx1)
+
+    for (int idx0 = 0; idx0 < result.size(0); idx0++) {
+      for (idx1 = 0; idx1 < result.size(1); idx1++) {
+        // Set the value of the array element.
+        // Change this value to the value that the application requires.
+        result[idx0 + result.size(0) * idx1] = argInit_real_T();
+      }
     }
   }
   return result;
@@ -203,11 +245,18 @@ static void argInit_struct0_T(struct0_T &result)
 //
 static void j_rtErrorWithMessageID(const char *aFcnName, int aLineNum)
 {
+  std::string errMsg;
   std::stringstream outStream;
   outStream << "Example main does not support command line arguments.";
   outStream << "\n";
   ((((outStream << "Error in ") << aFcnName) << " (line ") << aLineNum) << ")";
-  throw std::runtime_error(outStream.str());
+  if (omp_in_parallel()) {
+    errMsg = outStream.str();
+    std::fprintf(stderr, "%s", errMsg.c_str());
+    std::abort();
+  } else {
+    throw std::runtime_error(outStream.str());
+  }
 }
 
 //
@@ -217,14 +266,14 @@ static void j_rtErrorWithMessageID(const char *aFcnName, int aLineNum)
 //
 int main(int argc, char **)
 {
-  static rtRunTimeErrorInfo c_emlrtRTEI{
+  static rtRunTimeErrorInfo e_emlrtRTEI{
       1,                            // lineNo
       "inverseKinematicsOAModified" // fName
   };
   OptimizationBasedIKWithOAModified *classInstance;
   classInstance = new OptimizationBasedIKWithOAModified;
   if (argc > 1) {
-    j_rtErrorWithMessageID(c_emlrtRTEI.fName, c_emlrtRTEI.lineNo);
+    j_rtErrorWithMessageID(e_emlrtRTEI.fName, e_emlrtRTEI.lineNo);
   }
   // Invoke the entry-point functions.
   // You can call entry-point functions multiple times.

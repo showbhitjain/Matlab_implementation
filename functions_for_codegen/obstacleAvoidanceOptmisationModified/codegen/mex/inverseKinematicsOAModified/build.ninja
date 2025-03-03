@@ -1,0 +1,140 @@
+# CompilerName=gcc
+# Mode=optim
+ninja_required_version = 1.3
+
+# Basic folders
+root = .
+builddir = $root/build/glnxa64
+matlabdir = /usr/local/MATLAB/R2023b
+startdir = /home/shobhit/ShobhitRobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/obstacleAvoidanceOptmisationModified
+
+# Toolchain information
+cc = gcc
+cxx = /usr/bin/g++
+linker = gcc
+linkerxx = /usr/bin/g++
+
+cflags =  -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -std=c99 -I "$root" -I "$startdir" -I "$root/interface" -I "$matlabdir/extern/include" -I "." -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematicsOAModified_mex -DMW_NEEDS_VERSION_H -msse2 -c 
+
+cxxflags =  -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I "$root" -I "$startdir" -I "$root/interface" -I "$matlabdir/extern/include" -I "." -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematicsOAModified_mex -DMW_NEEDS_VERSION_H -msse2 -c 
+
+ldflags =  -pthread -Wl,--no-undefined  -shared -lstdc++ -Wl,--as-needed -Wl,-rpath-link,$matlabdir/bin/glnxa64 -L"$matlabdir/bin/glnxa64" -Wl,-rpath-link,$matlabdir/extern/bin/glnxa64 -L"$matlabdir/extern/bin/glnxa64" -lMatlabDataArray -lmx -lmex -lm -lmat  -Wl,-Bsymbolic -o inverseKinematicsOAModified_mex.mexa64 -Wl,--exclude-libs,ALL -L"$matlabdir/bin/glnxa64" -lmwblas -lmwlapack -lemlrt -lcovrt -lut -lmwmathutil 
+
+linkobjs = 
+
+# Build Rules
+rule cc
+    command = $cc $cflags $in -o $out
+
+rule cxx
+    command = $cxx $cxxflags $in -o $out
+
+rule link
+    command = $linker $in $linkobjs $ldflags
+
+rule linkxx
+    command = $linkerxx $in $linkobjs $ldflags
+
+# Build
+build $builddir/inverseKinematicsOAModified_data.o : cxx $root/inverseKinematicsOAModified_data.cpp
+build $builddir/rt_nonfinite.o : cxx $root/rt_nonfinite.cpp
+build $builddir/inverseKinematicsOAModified_initialize.o : cxx $root/inverseKinematicsOAModified_initialize.cpp
+build $builddir/inverseKinematicsOAModified_terminate.o : cxx $root/inverseKinematicsOAModified_terminate.cpp
+build $builddir/inverseKinematicsOAModified.o : cxx $root/inverseKinematicsOAModified.cpp
+build $builddir/abs.o : cxx $root/abs.cpp
+build $builddir/ixfun.o : cxx $root/ixfun.cpp
+build $builddir/mtimes.o : cxx $root/mtimes.cpp
+build $builddir/eye.o : cxx $root/eye.cpp
+build $builddir/checkX0.o : cxx $root/checkX0.cpp
+build $builddir/checkLinearInputs.o : cxx $root/checkLinearInputs.cpp
+build $builddir/all.o : cxx $root/all.cpp
+build $builddir/any1.o : cxx $root/any1.cpp
+build $builddir/factoryConstruct.o : cxx $root/factoryConstruct.cpp
+build $builddir/factoryConstruct1.o : cxx $root/factoryConstruct1.cpp
+build $builddir/factoryConstruct2.o : cxx $root/factoryConstruct2.cpp
+build $builddir/indexShapeCheck.o : cxx $root/indexShapeCheck.cpp
+build $builddir/configurableObjective.o : cxx $root/configurableObjective.cpp
+build $builddir/Jacobi_final_link.o : cxx $root/Jacobi_final_link.cpp
+build $builddir/Hessian_final_link.o : cxx $root/Hessian_final_link.cpp
+build $builddir/inv.o : cxx $root/inv.cpp
+build $builddir/warning.o : cxx $root/warning.cpp
+build $builddir/computeConstrViolationIneq_.o : cxx $root/computeConstrViolationIneq_.cpp
+build $builddir/computeDualFeasError.o : cxx $root/computeDualFeasError.cpp
+build $builddir/computeComplError.o : cxx $root/computeComplError.cpp
+build $builddir/isDeltaXTooSmall.o : cxx $root/isDeltaXTooSmall.cpp
+build $builddir/_coder_inverseKinematicsOAModified_api.o : cxx $root/interface/_coder_inverseKinematicsOAModified_api.cpp
+build $builddir/_coder_inverseKinematicsOAModified_mex.o : cxx $root/interface/_coder_inverseKinematicsOAModified_mex.cpp
+build $builddir/eml_int_forloop_overflow_check.o : cxx $root/eml_int_forloop_overflow_check.cpp
+build $builddir/computePrimalFeasError.o : cxx $root/computePrimalFeasError.cpp
+build $builddir/fmincon.o : cxx $root/fmincon.cpp
+build $builddir/compressBounds.o : cxx $root/compressBounds.cpp
+build $builddir/loadProblem.o : cxx $root/loadProblem.cpp
+build $builddir/removeDependentLinearEq.o : cxx $root/removeDependentLinearEq.cpp
+build $builddir/ComputeNumDependentEq_.o : cxx $root/ComputeNumDependentEq_.cpp
+build $builddir/xgeqp3.o : cxx $root/xgeqp3.cpp
+build $builddir/computeQ_.o : cxx $root/computeQ_.cpp
+build $builddir/IndexOfDependentEq_.o : cxx $root/IndexOfDependentEq_.cpp
+build $builddir/countsort.o : cxx $root/countsort.cpp
+build $builddir/computeObjective_.o : cxx $root/computeObjective_.cpp
+build $builddir/xgetrf.o : cxx $root/xgetrf.cpp
+build $builddir/computeFiniteDifferences.o : cxx $root/computeFiniteDifferences.cpp
+build $builddir/computeLinearResiduals.o : cxx $root/computeLinearResiduals.cpp
+build $builddir/xgemv.o : cxx $root/xgemv.cpp
+build $builddir/setProblemType.o : cxx $root/setProblemType.cpp
+build $builddir/modifyOverheadPhaseOne_.o : cxx $root/modifyOverheadPhaseOne_.cpp
+build $builddir/modifyOverheadRegularized_.o : cxx $root/modifyOverheadRegularized_.cpp
+build $builddir/driver.o : cxx $root/driver.cpp
+build $builddir/test_exit.o : cxx $root/test_exit.cpp
+build $builddir/computeGradLag.o : cxx $root/computeGradLag.cpp
+build $builddir/xcopy.o : cxx $root/xcopy.cpp
+build $builddir/xtrsv.o : cxx $root/xtrsv.cpp
+build $builddir/sortLambdaQP.o : cxx $root/sortLambdaQP.cpp
+build $builddir/saveJacobian.o : cxx $root/saveJacobian.cpp
+build $builddir/saveState.o : cxx $root/saveState.cpp
+build $builddir/step.o : cxx $root/step.cpp
+build $builddir/driver1.o : cxx $root/driver1.cpp
+build $builddir/PresolveWorkingSet.o : cxx $root/PresolveWorkingSet.cpp
+build $builddir/moveConstraint_.o : cxx $root/moveConstraint_.cpp
+build $builddir/feasibleX0ForWorkingSet.o : cxx $root/feasibleX0ForWorkingSet.cpp
+build $builddir/xgeqrf.o : cxx $root/xgeqrf.cpp
+build $builddir/factorQR.o : cxx $root/factorQR.cpp
+build $builddir/maxConstraintViolation.o : cxx $root/maxConstraintViolation.cpp
+build $builddir/RemoveDependentIneq_.o : cxx $root/RemoveDependentIneq_.cpp
+build $builddir/removeAllIneqConstr.o : cxx $root/removeAllIneqConstr.cpp
+build $builddir/computeFval.o : cxx $root/computeFval.cpp
+build $builddir/linearForm_.o : cxx $root/linearForm_.cpp
+build $builddir/iterate.o : cxx $root/iterate.cpp
+build $builddir/computeGrad_StoreHx.o : cxx $root/computeGrad_StoreHx.cpp
+build $builddir/computeFval_ReuseHx.o : cxx $root/computeFval_ReuseHx.cpp
+build $builddir/squareQ_appendCol.o : cxx $root/squareQ_appendCol.cpp
+build $builddir/deleteColMoveEnd.o : cxx $root/deleteColMoveEnd.cpp
+build $builddir/compute_deltax.o : cxx $root/compute_deltax.cpp
+build $builddir/factor.o : cxx $root/factor.cpp
+build $builddir/xpotrf.o : cxx $root/xpotrf.cpp
+build $builddir/factor1.o : cxx $root/factor1.cpp
+build $builddir/xger.o : cxx $root/xger.cpp
+build $builddir/solve.o : cxx $root/solve.cpp
+build $builddir/solve1.o : cxx $root/solve1.cpp
+build $builddir/xgemm.o : cxx $root/xgemm.cpp
+build $builddir/addAineqConstr.o : cxx $root/addAineqConstr.cpp
+build $builddir/addBoundToActiveSetMatrix_.o : cxx $root/addBoundToActiveSetMatrix_.cpp
+build $builddir/checkStoppingAndUpdateFval.o : cxx $root/checkStoppingAndUpdateFval.cpp
+build $builddir/addAeqConstr.o : cxx $root/addAeqConstr.cpp
+build $builddir/makeBoundFeasible.o : cxx $root/makeBoundFeasible.cpp
+build $builddir/relaxed.o : cxx $root/relaxed.cpp
+build $builddir/assignResidualsToXSlack.o : cxx $root/assignResidualsToXSlack.cpp
+build $builddir/soc.o : cxx $root/soc.cpp
+build $builddir/evalObjAndConstr.o : cxx $root/evalObjAndConstr.cpp
+build $builddir/linesearch.o : cxx $root/linesearch.cpp
+build $builddir/BFGSUpdate.o : cxx $root/BFGSUpdate.cpp
+build $builddir/updateWorkingSetForNewQP.o : cxx $root/updateWorkingSetForNewQP.cpp
+build $builddir/initActiveSet.o : cxx $root/initActiveSet.cpp
+build $builddir/feasibleratiotest.o : cxx $root/feasibleratiotest.cpp
+build $builddir/partialColLDL3_.o : cxx $root/partialColLDL3_.cpp
+build $builddir/fullColLDL2_.o : cxx $root/fullColLDL2_.cpp
+build $builddir/inverseKinematicsOAModified_mexutil.o : cxx $root/inverseKinematicsOAModified_mexutil.cpp
+build $builddir/_coder_inverseKinematicsOAModified_info.o : cxx $root/interface/_coder_inverseKinematicsOAModified_info.cpp
+build $builddir/cpp_mexapi_version.o : cxx $matlabdir/extern/version/cpp_mexapi_version.cpp
+
+# Link
+build $root/inverseKinematicsOAModified_mex.mexa64 : linkxx $builddir/inverseKinematicsOAModified_data.o $builddir/rt_nonfinite.o $builddir/inverseKinematicsOAModified_initialize.o $builddir/inverseKinematicsOAModified_terminate.o $builddir/inverseKinematicsOAModified.o $builddir/abs.o $builddir/ixfun.o $builddir/mtimes.o $builddir/eye.o $builddir/checkX0.o $builddir/checkLinearInputs.o $builddir/all.o $builddir/any1.o $builddir/factoryConstruct.o $builddir/factoryConstruct1.o $builddir/factoryConstruct2.o $builddir/indexShapeCheck.o $builddir/configurableObjective.o $builddir/Jacobi_final_link.o $builddir/Hessian_final_link.o $builddir/inv.o $builddir/warning.o $builddir/computeConstrViolationIneq_.o $builddir/computeDualFeasError.o $builddir/computeComplError.o $builddir/isDeltaXTooSmall.o $builddir/_coder_inverseKinematicsOAModified_api.o $builddir/_coder_inverseKinematicsOAModified_mex.o $builddir/eml_int_forloop_overflow_check.o $builddir/computePrimalFeasError.o $builddir/fmincon.o $builddir/compressBounds.o $builddir/loadProblem.o $builddir/removeDependentLinearEq.o $builddir/ComputeNumDependentEq_.o $builddir/xgeqp3.o $builddir/computeQ_.o $builddir/IndexOfDependentEq_.o $builddir/countsort.o $builddir/computeObjective_.o $builddir/xgetrf.o $builddir/computeFiniteDifferences.o $builddir/computeLinearResiduals.o $builddir/xgemv.o $builddir/setProblemType.o $builddir/modifyOverheadPhaseOne_.o $builddir/modifyOverheadRegularized_.o $builddir/driver.o $builddir/test_exit.o $builddir/computeGradLag.o $builddir/xcopy.o $builddir/xtrsv.o $builddir/sortLambdaQP.o $builddir/saveJacobian.o $builddir/saveState.o $builddir/step.o $builddir/driver1.o $builddir/PresolveWorkingSet.o $builddir/moveConstraint_.o $builddir/feasibleX0ForWorkingSet.o $builddir/xgeqrf.o $builddir/factorQR.o $builddir/maxConstraintViolation.o $builddir/RemoveDependentIneq_.o $builddir/removeAllIneqConstr.o $builddir/computeFval.o $builddir/linearForm_.o $builddir/iterate.o $builddir/computeGrad_StoreHx.o $builddir/computeFval_ReuseHx.o $builddir/squareQ_appendCol.o $builddir/deleteColMoveEnd.o $builddir/compute_deltax.o $builddir/factor.o $builddir/xpotrf.o $builddir/factor1.o $builddir/xger.o $builddir/solve.o $builddir/solve1.o $builddir/xgemm.o $builddir/addAineqConstr.o $builddir/addBoundToActiveSetMatrix_.o $builddir/checkStoppingAndUpdateFval.o $builddir/addAeqConstr.o $builddir/makeBoundFeasible.o $builddir/relaxed.o $builddir/assignResidualsToXSlack.o $builddir/soc.o $builddir/evalObjAndConstr.o $builddir/linesearch.o $builddir/BFGSUpdate.o $builddir/updateWorkingSetForNewQP.o $builddir/initActiveSet.o $builddir/feasibleratiotest.o $builddir/partialColLDL3_.o $builddir/fullColLDL2_.o $builddir/inverseKinematicsOAModified_mexutil.o $builddir/_coder_inverseKinematicsOAModified_info.o $builddir/cpp_mexapi_version.o 

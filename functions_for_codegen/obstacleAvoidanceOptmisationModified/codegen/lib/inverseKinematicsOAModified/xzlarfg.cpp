@@ -5,7 +5,7 @@
 // File: xzlarfg.cpp
 //
 // MATLAB Coder version            : 23.2
-// C/C++ source code generated on  : 04-Feb-2025 04:50:11
+// C/C++ source code generated on  : 03-Mar-2025 15:44:26
 //
 
 // Include Files
@@ -14,6 +14,7 @@
 #include "rt_nonfinite.h"
 #include "xnrm2.h"
 #include "coder_array.h"
+#include "omp.h"
 #include <cmath>
 #include <cstring>
 
@@ -81,8 +82,8 @@ double xzlarfg(int n, double &alpha1, array<double, 2U> &x, int ix0)
           if (overflow_tmp) {
             check_forloop_overflow_error();
           }
-          for (int k{ix0}; k <= b_tmp; k++) {
-            x[k - 1] = 9.9792015476736E+291 * x[k - 1];
+          for (int b_k{ix0}; b_k <= b_tmp; b_k++) {
+            x[b_k - 1] = 9.9792015476736E+291 * x[b_k - 1];
           }
           xnorm *= 9.9792015476736E+291;
           alpha1 *= 9.9792015476736E+291;
@@ -94,10 +95,19 @@ double xzlarfg(int n, double &alpha1, array<double, 2U> &x, int ix0)
         }
         tau = (xnorm - alpha1) / xnorm;
         alpha1 = 1.0 / (alpha1 - xnorm);
-        for (int k{ix0}; k <= b_tmp; k++) {
-          x[k - 1] = alpha1 * x[k - 1];
+        if (static_cast<int>((b_tmp - ix0) + 1 < 400)) {
+          for (int k{ix0}; k <= b_tmp; k++) {
+            x[k - 1] = alpha1 * x[k - 1];
+          }
+        } else {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4)
+
+          for (int k = ix0; k <= b_tmp; k++) {
+            x[k - 1] = alpha1 * x[k - 1];
+          }
         }
-        for (int k{0}; k < knt; k++) {
+        for (int b_k{0}; b_k < knt; b_k++) {
           xnorm *= 1.0020841800044864E-292;
         }
         alpha1 = xnorm;
@@ -109,8 +119,17 @@ double xzlarfg(int n, double &alpha1, array<double, 2U> &x, int ix0)
         if ((ix0 <= knt) && (knt > 2147483646)) {
           check_forloop_overflow_error();
         }
-        for (int k{ix0}; k <= knt; k++) {
-          x[k - 1] = alpha1 * x[k - 1];
+        if (static_cast<int>((knt - ix0) + 1 < 400)) {
+          for (int k{ix0}; k <= knt; k++) {
+            x[k - 1] = alpha1 * x[k - 1];
+          }
+        } else {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4)
+
+          for (int k = ix0; k <= knt; k++) {
+            x[k - 1] = alpha1 * x[k - 1];
+          }
         }
         alpha1 = xnorm;
       }

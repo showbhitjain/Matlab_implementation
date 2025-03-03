@@ -5,7 +5,7 @@
 // File: inverseKinematicsOAModified_rtwutil.h
 //
 // MATLAB Coder version            : 23.2
-// C/C++ source code generated on  : 04-Feb-2025 04:50:11
+// C/C++ source code generated on  : 01-Mar-2025 01:36:28
 //
 
 #ifndef INVERSEKINEMATICSOAMODIFIED_RTWUTIL_H
@@ -19,9 +19,18 @@
 // Type Declarations
 struct rtBoundsCheckInfo;
 
+struct rtEqualityCheckInfo;
+
 // Function Declarations
 extern void d_rtErrorWithMessageID(const char *r, const char *aFcnName,
                                    int aLineNum);
+
+extern void emlrtDimSizeImpxCheckR2021b(const int aDim1, const int aDim2,
+                                        const rtEqualityCheckInfo &aInfo);
+
+extern void g_rtErrorWithMessageID(const char *aFcnName, int aLineNum);
+
+extern void h_rtErrorWithMessageID(const char *aFcnName, int aLineNum);
 
 extern void m_rtErrorWithMessageID(const char *aFcnName, int aLineNum);
 

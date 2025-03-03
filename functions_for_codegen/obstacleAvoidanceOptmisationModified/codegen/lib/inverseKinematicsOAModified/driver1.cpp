@@ -5,7 +5,7 @@
 // File: driver1.cpp
 //
 // MATLAB Coder version            : 23.2
-// C/C++ source code generated on  : 04-Feb-2025 04:50:11
+// C/C++ source code generated on  : 03-Mar-2025 15:44:26
 //
 
 // Include Files
@@ -23,6 +23,9 @@
 #include "rt_nonfinite.h"
 #include "setProblemType.h"
 #include "coder_array.h"
+#include "omp.h"
+#include <cstdio>
+#include <cstdlib>
 #include <cstring>
 #include <sstream>
 #include <stdexcept>
@@ -42,11 +45,18 @@ static void e_rtErrorWithMessageID(const char *r, const char *aFcnName,
 static void e_rtErrorWithMessageID(const char *r, const char *aFcnName,
                                    int aLineNum)
 {
+  std::string errMsg;
   std::stringstream outStream;
   ((outStream << "Expected ") << r) << " to be a square matrix.";
   outStream << "\n";
   ((((outStream << "Error in ") << aFcnName) << " (line ") << aLineNum) << ")";
-  throw std::runtime_error(outStream.str());
+  if (omp_in_parallel()) {
+    errMsg = outStream.str();
+    std::fprintf(stderr, "%s", errMsg.c_str());
+    std::abort();
+  } else {
+    throw std::runtime_error(outStream.str());
+  }
 }
 
 //
@@ -94,23 +104,23 @@ void driver(const array<double, 2U> &H, const array<double, 1U> &f,
       "phaseone.p", // pName
       0             // checkKind
   };
-  static rtRunTimeErrorInfo c_emlrtRTEI{
+  static rtRunTimeErrorInfo e_emlrtRTEI{
       13,              // lineNo
       "validatesquare" // fName
   };
   int b;
   int i;
   int i1;
-  int nVar_tmp_tmp;
+  int nVar;
   boolean_T guard1;
   if (H.size(0) != H.size(1)) {
-    e_rtErrorWithMessageID("input", c_emlrtRTEI.fName, c_emlrtRTEI.lineNo);
+    e_rtErrorWithMessageID("input", e_emlrtRTEI.fName, e_emlrtRTEI.lineNo);
   }
   if ((H.size(0) == 0) || (H.size(1) == 0)) {
-    d_rtErrorWithMessageID("input", emlrtRTEI.fName, emlrtRTEI.lineNo);
+    d_rtErrorWithMessageID("input", c_emlrtRTEI.fName, c_emlrtRTEI.lineNo);
   }
   solution.iterations = 0;
-  nVar_tmp_tmp = workingset.nVar;
+  nVar = workingset.nVar;
   guard1 = false;
   if (workingset.probType == 3) {
     b = workingset.sizes[0];
@@ -340,7 +350,7 @@ void driver(const array<double, 2U> &H, const array<double, 1U> &f,
       }
       startIdx = workingset.nActiveConstr;
       mEqFixed = workingset.sizes[0] + workingset.sizes[1];
-      while ((startIdx > mEqFixed) && (startIdx > nVar_tmp_tmp)) {
+      while ((startIdx > mEqFixed) && (startIdx > nVar)) {
         int TYPE_tmp;
         i = workingset.Wid.size(0);
         if ((startIdx < 1) || (startIdx > i)) {
@@ -433,8 +443,17 @@ void driver(const array<double, 2U> &H, const array<double, 1U> &f,
           if (workingset.mConstrMax > 2147483646) {
             check_forloop_overflow_error();
           }
-          for (mEqFixed = 0; mEqFixed < startIdx; mEqFixed++) {
-            solution.lambda[mEqFixed] = 0.0;
+          if (static_cast<int>(startIdx < 400)) {
+            for (int k{0}; k < startIdx; k++) {
+              solution.lambda[k] = 0.0;
+            }
+          } else {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4)
+
+            for (int k = 0; k < startIdx; k++) {
+              solution.lambda[k] = 0.0;
+            }
           }
           solution.fstar = Objective::computeFval(
               objective, memspace.workspace_double, H, f, solution.xstar);
@@ -442,11 +461,21 @@ void driver(const array<double, 2U> &H, const array<double, 1U> &f,
         } else {
           if (solution.maxConstr > 0.0) {
             double maxConstr_new;
-            if (nVar_tmp_tmp > 2147483646) {
+            if (nVar > 2147483646) {
               check_forloop_overflow_error();
             }
-            for (mEqFixed = 0; mEqFixed < nVar_tmp_tmp; mEqFixed++) {
-              solution.searchDir[mEqFixed] = solution.xstar[mEqFixed];
+            i = (nVar < 400);
+            if (i) {
+              for (int k{0}; k < nVar; k++) {
+                solution.searchDir[k] = solution.xstar[k];
+              }
+            } else {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4)
+
+              for (int k = 0; k < nVar; k++) {
+                solution.searchDir[k] = solution.xstar[k];
+              }
             }
             initialize::PresolveWorkingSet(solution, memspace, workingset,
                                            qrmanager);
@@ -454,8 +483,17 @@ void driver(const array<double, 2U> &H, const array<double, 1U> &f,
                 WorkingSet::maxConstraintViolation(workingset, solution.xstar);
             if (maxConstr_new >= solution.maxConstr) {
               solution.maxConstr = maxConstr_new;
-              for (mEqFixed = 0; mEqFixed < nVar_tmp_tmp; mEqFixed++) {
-                solution.xstar[mEqFixed] = solution.searchDir[mEqFixed];
+              if (i) {
+                for (int k{0}; k < nVar; k++) {
+                  solution.xstar[k] = solution.searchDir[k];
+                }
+              } else {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4)
+
+                for (int k = 0; k < nVar; k++) {
+                  solution.xstar[k] = solution.searchDir[k];
+                }
               }
             }
           }

@@ -5,13 +5,16 @@
 // File: eml_int_forloop_overflow_check.cpp
 //
 // MATLAB Coder version            : 23.2
-// C/C++ source code generated on  : 04-Feb-2025 04:50:11
+// C/C++ source code generated on  : 03-Mar-2025 15:44:26
 //
 
 // Include Files
 #include "eml_int_forloop_overflow_check.h"
 #include "inverseKinematicsOAModified_types.h"
 #include "rt_nonfinite.h"
+#include "omp.h"
+#include <cstdio>
+#include <cstdlib>
 #include <cstring>
 #include <sstream>
 #include <stdexcept>
@@ -31,13 +34,20 @@ static void c_rtErrorWithMessageID(const char *r, const char *aFcnName,
 static void c_rtErrorWithMessageID(const char *r, const char *aFcnName,
                                    int aLineNum)
 {
+  std::string errMsg;
   std::stringstream outStream;
   ((outStream << "The loop variable of class ") << r)
       << " might overflow on the last iteration of the for loop. This could "
          "lead to an infinite loop.";
   outStream << "\n";
   ((((outStream << "Error in ") << aFcnName) << " (line ") << aLineNum) << ")";
-  throw std::runtime_error(outStream.str());
+  if (omp_in_parallel()) {
+    errMsg = outStream.str();
+    std::fprintf(stderr, "%s", errMsg.c_str());
+    std::abort();
+  } else {
+    throw std::runtime_error(outStream.str());
+  }
 }
 
 //
@@ -47,11 +57,11 @@ static void c_rtErrorWithMessageID(const char *r, const char *aFcnName,
 namespace coder {
 void check_forloop_overflow_error()
 {
-  static rtRunTimeErrorInfo c_emlrtRTEI{
+  static rtRunTimeErrorInfo e_emlrtRTEI{
       87,                            // lineNo
       "check_forloop_overflow_error" // fName
   };
-  c_rtErrorWithMessageID("int32", c_emlrtRTEI.fName, c_emlrtRTEI.lineNo);
+  c_rtErrorWithMessageID("int32", e_emlrtRTEI.fName, e_emlrtRTEI.lineNo);
 }
 
 } // namespace coder

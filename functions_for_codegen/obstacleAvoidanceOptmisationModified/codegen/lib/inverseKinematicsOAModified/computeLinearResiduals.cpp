@@ -5,7 +5,7 @@
 // File: computeLinearResiduals.cpp
 //
 // MATLAB Coder version            : 23.2
-// C/C++ source code generated on  : 04-Feb-2025 04:50:11
+// C/C++ source code generated on  : 03-Mar-2025 15:44:26
 //
 
 // Include Files
@@ -14,6 +14,7 @@
 #include "rt_nonfinite.h"
 #include "xgemv.h"
 #include "coder_array.h"
+#include "omp.h"
 #include <cstring>
 
 // Function Definitions
@@ -47,33 +48,60 @@ void computeLinearResiduals(const array<double, 1U> &x, int nVar,
                             const double beq_data[], int ldAe)
 {
   array<double, 1U> y;
-  int k;
   if (mLinIneq > 0) {
     if (mLinIneq > 2147483646) {
       check_forloop_overflow_error();
     }
-    for (k = 0; k < mLinIneq; k++) {
-      workspaceIneq[k] = bineq[k];
+    if (static_cast<int>(mLinIneq < 400)) {
+      for (int k{0}; k < mLinIneq; k++) {
+        workspaceIneq[k] = bineq[k];
+      }
+    } else {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4)
+
+      for (int k = 0; k < mLinIneq; k++) {
+        workspaceIneq[k] = bineq[k];
+      }
     }
     ::coder::internal::blas::xgemv(nVar, mLinIneq, AineqT, ldAi, x,
                                    workspaceIneq);
   }
   if (mLinEq > 0) {
+    int loop_ub;
     y.set_size(workspaceEq_size);
-    for (int i{0}; i < workspaceEq_size; i++) {
-      y[i] = workspaceEq_data[i];
+    for (loop_ub = 0; loop_ub < workspaceEq_size; loop_ub++) {
+      y[loop_ub] = workspaceEq_data[loop_ub];
     }
     if (mLinEq > 2147483646) {
       check_forloop_overflow_error();
     }
-    for (k = 0; k < mLinEq; k++) {
-      y[k] = beq_data[k];
+    if (static_cast<int>(mLinEq < 400)) {
+      for (int k{0}; k < mLinEq; k++) {
+        y[k] = beq_data[k];
+      }
+    } else {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4)
+
+      for (int k = 0; k < mLinEq; k++) {
+        y[k] = beq_data[k];
+      }
     }
     ::coder::internal::blas::xgemv(nVar, mLinEq, AeqT, ldAe, x, y);
     workspaceEq_size = y.size(0);
-    k = y.size(0);
-    for (int i{0}; i < k; i++) {
-      workspaceEq_data[i] = y[i];
+    loop_ub = y.size(0);
+    if (static_cast<int>(y.size(0) < 400)) {
+      for (int k{0}; k < loop_ub; k++) {
+        workspaceEq_data[k] = y[k];
+      }
+    } else {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4)
+
+      for (int k = 0; k < loop_ub; k++) {
+        workspaceEq_data[k] = y[k];
+      }
     }
   }
 }

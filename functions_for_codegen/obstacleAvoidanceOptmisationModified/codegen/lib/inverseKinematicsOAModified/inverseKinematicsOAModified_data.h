@@ -5,7 +5,7 @@
 // File: inverseKinematicsOAModified_data.h
 //
 // MATLAB Coder version            : 23.2
-// C/C++ source code generated on  : 04-Feb-2025 04:50:11
+// C/C++ source code generated on  : 03-Mar-2025 15:44:26
 //
 
 #ifndef INVERSEKINEMATICSOAMODIFIED_DATA_H
@@ -14,13 +14,17 @@
 // Include Files
 #include "inverseKinematicsOAModified_types.h"
 #include "rtwtypes.h"
+#include "omp.h"
 #include <cstddef>
 #include <cstdlib>
 
 // Variable Declarations
-extern rtBoundsCheckInfo b_emlrtBCI;
+extern omp_nest_lock_t inverseKinematicsOAModified_nestLockGlobal;
 extern rtRunTimeErrorInfo emlrtRTEI;
 extern rtRunTimeErrorInfo b_emlrtRTEI;
+extern rtBoundsCheckInfo b_emlrtBCI;
+extern rtRunTimeErrorInfo c_emlrtRTEI;
+extern rtRunTimeErrorInfo d_emlrtRTEI;
 extern rtBoundsCheckInfo d_emlrtBCI;
 extern rtBoundsCheckInfo g_emlrtBCI;
 extern rtBoundsCheckInfo h_emlrtBCI;

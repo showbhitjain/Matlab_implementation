@@ -5,7 +5,7 @@
 // File: xgemv.cpp
 //
 // MATLAB Coder version            : 23.2
-// C/C++ source code generated on  : 04-Feb-2025 04:50:11
+// C/C++ source code generated on  : 03-Mar-2025 15:44:26
 //
 
 // Include Files
@@ -16,6 +16,7 @@
 #include "inverseKinematicsOAModified_types.h"
 #include "rt_nonfinite.h"
 #include "coder_array.h"
+#include "omp.h"
 #include <cstring>
 
 // Function Definitions
@@ -49,7 +50,7 @@ void b_xgemv(int m, int n, const array<double, 1U> &A, int lda,
       overflow = (b_tmp < MIN_int32_T - lda);
     }
     if (lda == 0) {
-      m_rtErrorWithMessageID(b_emlrtRTEI.fName, b_emlrtRTEI.lineNo);
+      m_rtErrorWithMessageID(d_emlrtRTEI.fName, d_emlrtRTEI.lineNo);
     }
     if (overflow) {
       check_forloop_overflow_error();
@@ -90,8 +91,17 @@ void xgemv(int m, int n, const array<double, 2U> &A, int ia0, int lda,
     if (m > 2147483646) {
       check_forloop_overflow_error();
     }
-    for (ix = 0; ix < m; ix++) {
-      y[ix] = 0.0;
+    if (static_cast<int>(m < 400)) {
+      for (int iy{0}; iy < m; iy++) {
+        y[iy] = 0.0;
+      }
+    } else {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4)
+
+      for (int iy = 0; iy < m; iy++) {
+        y[iy] = 0.0;
+      }
     }
     ix = 0;
     b = ia0 + lda * (n - 1);
@@ -127,16 +137,25 @@ void xgemv(int m, int n, const array<double, 1U> &A, int lda,
            const array<double, 1U> &x, array<double, 2U> &y)
 {
   if ((m != 0) && (n != 0)) {
+    int b_iy;
     int b_tmp;
-    int iy;
     boolean_T overflow;
     if (n > 2147483646) {
       check_forloop_overflow_error();
     }
-    for (iy = 0; iy < n; iy++) {
-      y[iy] = -y[iy];
+    if (static_cast<int>(n < 400)) {
+      for (int iy{0}; iy < n; iy++) {
+        y[iy] = -y[iy];
+      }
+    } else {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4)
+
+      for (int iy = 0; iy < n; iy++) {
+        y[iy] = -y[iy];
+      }
     }
-    iy = 0;
+    b_iy = 0;
     b_tmp = lda * (n - 1) + 1;
     if ((lda == 0) || ((lda > 0) && (b_tmp < 1)) ||
         ((lda < 0) && (b_tmp > 1))) {
@@ -147,7 +166,7 @@ void xgemv(int m, int n, const array<double, 1U> &A, int lda,
       overflow = (b_tmp < MIN_int32_T - lda);
     }
     if (lda == 0) {
-      m_rtErrorWithMessageID(b_emlrtRTEI.fName, b_emlrtRTEI.lineNo);
+      m_rtErrorWithMessageID(d_emlrtRTEI.fName, d_emlrtRTEI.lineNo);
     }
     if (overflow) {
       check_forloop_overflow_error();
@@ -163,8 +182,8 @@ void xgemv(int m, int n, const array<double, 1U> &A, int lda,
       for (int ia{iac}; ia <= b; ia++) {
         c += A[ia - 1] * x[ia - iac];
       }
-      y[iy] = y[iy] + c;
-      iy++;
+      y[b_iy] = y[b_iy] + c;
+      b_iy++;
     }
   }
 }
@@ -188,8 +207,17 @@ void xgemv(int m, int n, const array<double, 2U> &A, int lda,
     if (m > 2147483646) {
       check_forloop_overflow_error();
     }
-    for (ix = 0; ix < m; ix++) {
-      y[ix] = 0.0;
+    if (static_cast<int>(m < 400)) {
+      for (int iy{0}; iy < m; iy++) {
+        y[iy] = 0.0;
+      }
+    } else {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4)
+
+      for (int iy = 0; iy < m; iy++) {
+        y[iy] = 0.0;
+      }
     }
     ix = 0;
     b_tmp = lda * (n - 1) + 1;
@@ -202,7 +230,7 @@ void xgemv(int m, int n, const array<double, 2U> &A, int lda,
       overflow = (b_tmp < MIN_int32_T - lda);
     }
     if (lda == 0) {
-      m_rtErrorWithMessageID(b_emlrtRTEI.fName, b_emlrtRTEI.lineNo);
+      m_rtErrorWithMessageID(d_emlrtRTEI.fName, d_emlrtRTEI.lineNo);
     }
     if (overflow) {
       check_forloop_overflow_error();
@@ -236,16 +264,25 @@ void xgemv(int m, int n, const array<double, 1U> &A, int lda,
            const array<double, 2U> &x, array<double, 1U> &y)
 {
   if ((m != 0) && (n != 0)) {
+    int b_iy;
     int b_tmp;
-    int iy;
     boolean_T overflow;
     if (n > 2147483646) {
       check_forloop_overflow_error();
     }
-    for (iy = 0; iy < n; iy++) {
-      y[iy] = -y[iy];
+    if (static_cast<int>(n < 400)) {
+      for (int iy{0}; iy < n; iy++) {
+        y[iy] = -y[iy];
+      }
+    } else {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4)
+
+      for (int iy = 0; iy < n; iy++) {
+        y[iy] = -y[iy];
+      }
     }
-    iy = 0;
+    b_iy = 0;
     b_tmp = lda * (n - 1) + 1;
     if ((lda == 0) || ((lda > 0) && (b_tmp < 1)) ||
         ((lda < 0) && (b_tmp > 1))) {
@@ -256,7 +293,7 @@ void xgemv(int m, int n, const array<double, 1U> &A, int lda,
       overflow = (b_tmp < MIN_int32_T - lda);
     }
     if (lda == 0) {
-      m_rtErrorWithMessageID(b_emlrtRTEI.fName, b_emlrtRTEI.lineNo);
+      m_rtErrorWithMessageID(d_emlrtRTEI.fName, d_emlrtRTEI.lineNo);
     }
     if (overflow) {
       check_forloop_overflow_error();
@@ -272,8 +309,8 @@ void xgemv(int m, int n, const array<double, 1U> &A, int lda,
       for (int ia{iac}; ia <= b; ia++) {
         c += A[ia - 1] * x[ia - iac];
       }
-      y[iy] = y[iy] + c;
-      iy++;
+      y[b_iy] = y[b_iy] + c;
+      b_iy++;
     }
   }
 }
@@ -292,16 +329,25 @@ void xgemv(int m, int n, const array<double, 1U> &A, int lda,
            const array<double, 2U> &x, int ix0, array<double, 1U> &y)
 {
   if ((m != 0) && (n != 0)) {
+    int b_iy;
     int b_tmp;
-    int iy;
     boolean_T overflow;
     if (n > 2147483646) {
       check_forloop_overflow_error();
     }
-    for (iy = 0; iy < n; iy++) {
-      y[iy] = -y[iy];
+    if (static_cast<int>(n < 400)) {
+      for (int iy{0}; iy < n; iy++) {
+        y[iy] = -y[iy];
+      }
+    } else {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4)
+
+      for (int iy = 0; iy < n; iy++) {
+        y[iy] = -y[iy];
+      }
     }
-    iy = 0;
+    b_iy = 0;
     b_tmp = lda * (n - 1) + 1;
     if ((lda == 0) || ((lda > 0) && (b_tmp < 1)) ||
         ((lda < 0) && (b_tmp > 1))) {
@@ -312,7 +358,7 @@ void xgemv(int m, int n, const array<double, 1U> &A, int lda,
       overflow = (b_tmp < MIN_int32_T - lda);
     }
     if (lda == 0) {
-      m_rtErrorWithMessageID(b_emlrtRTEI.fName, b_emlrtRTEI.lineNo);
+      m_rtErrorWithMessageID(d_emlrtRTEI.fName, d_emlrtRTEI.lineNo);
     }
     if (overflow) {
       check_forloop_overflow_error();
@@ -328,8 +374,8 @@ void xgemv(int m, int n, const array<double, 1U> &A, int lda,
       for (int ia{iac}; ia <= b; ia++) {
         c += A[ia - 1] * x[((ix0 + ia) - iac) - 1];
       }
-      y[iy] = y[iy] + c;
-      iy++;
+      y[b_iy] = y[b_iy] + c;
+      b_iy++;
     }
   }
 }
@@ -347,16 +393,25 @@ void xgemv(int m, int n, const array<double, 1U> &A, int lda,
            const array<double, 1U> &x, array<double, 1U> &y)
 {
   if ((m != 0) && (n != 0)) {
+    int b_iy;
     int b_tmp;
-    int iy;
     boolean_T overflow;
     if (n > 2147483646) {
       check_forloop_overflow_error();
     }
-    for (iy = 0; iy < n; iy++) {
-      y[iy] = -y[iy];
+    if (static_cast<int>(n < 400)) {
+      for (int iy{0}; iy < n; iy++) {
+        y[iy] = -y[iy];
+      }
+    } else {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4)
+
+      for (int iy = 0; iy < n; iy++) {
+        y[iy] = -y[iy];
+      }
     }
-    iy = 0;
+    b_iy = 0;
     b_tmp = lda * (n - 1) + 1;
     if ((lda == 0) || ((lda > 0) && (b_tmp < 1)) ||
         ((lda < 0) && (b_tmp > 1))) {
@@ -367,7 +422,7 @@ void xgemv(int m, int n, const array<double, 1U> &A, int lda,
       overflow = (b_tmp < MIN_int32_T - lda);
     }
     if (lda == 0) {
-      m_rtErrorWithMessageID(b_emlrtRTEI.fName, b_emlrtRTEI.lineNo);
+      m_rtErrorWithMessageID(d_emlrtRTEI.fName, d_emlrtRTEI.lineNo);
     }
     if (overflow) {
       check_forloop_overflow_error();
@@ -383,8 +438,8 @@ void xgemv(int m, int n, const array<double, 1U> &A, int lda,
       for (int ia{iac}; ia <= b; ia++) {
         c += A[ia - 1] * x[ia - iac];
       }
-      y[iy] = y[iy] + c;
-      iy++;
+      y[b_iy] = y[b_iy] + c;
+      b_iy++;
     }
   }
 }
@@ -417,7 +472,7 @@ void xgemv(int m, int n, const array<double, 1U> &A, int lda,
       overflow = (b_tmp < MIN_int32_T - lda);
     }
     if (lda == 0) {
-      m_rtErrorWithMessageID(b_emlrtRTEI.fName, b_emlrtRTEI.lineNo);
+      m_rtErrorWithMessageID(d_emlrtRTEI.fName, d_emlrtRTEI.lineNo);
     }
     if (overflow) {
       check_forloop_overflow_error();
@@ -454,14 +509,23 @@ void xgemv(int m, int n, const array<double, 2U> &A, int ia0, int lda,
 {
   if (n != 0) {
     int b;
-    int iy;
+    int b_iy;
     if (n > 2147483646) {
       check_forloop_overflow_error();
     }
-    for (iy = 0; iy < n; iy++) {
-      y[iy] = 0.0;
+    if (static_cast<int>(n < 400)) {
+      for (int iy{0}; iy < n; iy++) {
+        y[iy] = 0.0;
+      }
+    } else {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4)
+
+      for (int iy = 0; iy < n; iy++) {
+        y[iy] = 0.0;
+      }
     }
-    iy = 0;
+    b_iy = 0;
     b = ia0 + lda * (n - 1);
     if ((ia0 <= b) && (b > MAX_int32_T - lda)) {
       check_forloop_overflow_error();
@@ -477,8 +541,8 @@ void xgemv(int m, int n, const array<double, 2U> &A, int ia0, int lda,
       for (int ia{iac}; ia <= b_b; ia++) {
         c += A[ia - 1] * x[((ix0 + ia) - iac) - 1];
       }
-      y[iy] = y[iy] + c;
-      iy++;
+      y[b_iy] = y[b_iy] + c;
+      b_iy++;
     }
   }
 }
@@ -496,16 +560,25 @@ void xgemv(int m, int n, const array<double, 2U> &A, int lda,
            const array<double, 1U> &x, array<double, 2U> &y)
 {
   if ((m != 0) && (n != 0)) {
+    int b_iy;
     int b_tmp;
-    int iy;
     boolean_T overflow;
     if (n > 2147483646) {
       check_forloop_overflow_error();
     }
-    for (iy = 0; iy < n; iy++) {
-      y[iy] = 0.0;
+    if (static_cast<int>(n < 400)) {
+      for (int iy{0}; iy < n; iy++) {
+        y[iy] = 0.0;
+      }
+    } else {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4)
+
+      for (int iy = 0; iy < n; iy++) {
+        y[iy] = 0.0;
+      }
     }
-    iy = 0;
+    b_iy = 0;
     b_tmp = lda * (n - 1) + 1;
     if ((lda == 0) || ((lda > 0) && (b_tmp < 1)) ||
         ((lda < 0) && (b_tmp > 1))) {
@@ -516,7 +589,7 @@ void xgemv(int m, int n, const array<double, 2U> &A, int lda,
       overflow = (b_tmp < MIN_int32_T - lda);
     }
     if (lda == 0) {
-      m_rtErrorWithMessageID(b_emlrtRTEI.fName, b_emlrtRTEI.lineNo);
+      m_rtErrorWithMessageID(d_emlrtRTEI.fName, d_emlrtRTEI.lineNo);
     }
     if (overflow) {
       check_forloop_overflow_error();
@@ -532,8 +605,8 @@ void xgemv(int m, int n, const array<double, 2U> &A, int lda,
       for (int ia{iac}; ia <= b; ia++) {
         c += A[ia - 1] * x[ia - iac];
       }
-      y[iy] = y[iy] + c;
-      iy++;
+      y[b_iy] = y[b_iy] + c;
+      b_iy++;
     }
   }
 }
@@ -566,7 +639,7 @@ void xgemv(int m, int n, const array<double, 1U> &A, int lda,
       overflow = (b_tmp < MIN_int32_T - lda);
     }
     if (lda == 0) {
-      m_rtErrorWithMessageID(b_emlrtRTEI.fName, b_emlrtRTEI.lineNo);
+      m_rtErrorWithMessageID(d_emlrtRTEI.fName, d_emlrtRTEI.lineNo);
     }
     if (overflow) {
       check_forloop_overflow_error();

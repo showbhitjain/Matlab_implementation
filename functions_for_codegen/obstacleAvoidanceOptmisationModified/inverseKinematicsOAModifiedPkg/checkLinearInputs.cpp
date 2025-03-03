@@ -5,7 +5,7 @@
 // File: checkLinearInputs.cpp
 //
 // MATLAB Coder version            : 23.2
-// C/C++ source code generated on  : 04-Feb-2025 04:50:11
+// C/C++ source code generated on  : 01-Mar-2025 01:36:28
 //
 
 // Include Files
@@ -179,11 +179,11 @@ double checkLinearInputs(int nVar, const array<double, 2U> &Aineq,
       "+validate/checkBounds.p", // pName
       0                          // checkKind
   };
-  static rtRunTimeErrorInfo c_emlrtRTEI{
+  static rtRunTimeErrorInfo e_emlrtRTEI{
       1,                  // lineNo
       "checkLinearInputs" // fName
   };
-  static rtRunTimeErrorInfo d_emlrtRTEI{
+  static rtRunTimeErrorInfo f_emlrtRTEI{
       1,            // lineNo
       "checkBounds" // fName
   };
@@ -200,7 +200,7 @@ double checkLinearInputs(int nVar, const array<double, 2U> &Aineq,
       r[i] = ((!std::isinf(Aineq[i])) && (!std::isnan(Aineq[i])));
     }
     if (!all(r)) {
-      rtErrorWithMessageID("A", c_emlrtRTEI.fName, c_emlrtRTEI.lineNo);
+      rtErrorWithMessageID("A", e_emlrtRTEI.fName, e_emlrtRTEI.lineNo);
     }
   }
   if ((bineq.size(0) != 0) && (bineq.size(1) != 0)) {
@@ -210,7 +210,7 @@ double checkLinearInputs(int nVar, const array<double, 2U> &Aineq,
       r[i] = ((!std::isinf(bineq[i])) && (!std::isnan(bineq[i])));
     }
     if (!all(r)) {
-      rtErrorWithMessageID("B", c_emlrtRTEI.fName, c_emlrtRTEI.lineNo);
+      rtErrorWithMessageID("B", e_emlrtRTEI.fName, e_emlrtRTEI.lineNo);
     }
   }
   if ((Aeq.size(0) != 0) && (Aeq.size(1) != 0)) {
@@ -220,7 +220,7 @@ double checkLinearInputs(int nVar, const array<double, 2U> &Aineq,
       r[i] = ((!std::isinf(Aeq[i])) && (!std::isnan(Aeq[i])));
     }
     if (!all(r)) {
-      rtErrorWithMessageID("Aeq", c_emlrtRTEI.fName, c_emlrtRTEI.lineNo);
+      rtErrorWithMessageID("Aeq", e_emlrtRTEI.fName, e_emlrtRTEI.lineNo);
     }
   }
   if ((beq_size[0] != 0) && (beq_size[1] != 0)) {
@@ -232,25 +232,25 @@ double checkLinearInputs(int nVar, const array<double, 2U> &Aineq,
       r[i] = ((!std::isinf(d)) && (!std::isnan(d)));
     }
     if (!all(r)) {
-      rtErrorWithMessageID("Beq", c_emlrtRTEI.fName, c_emlrtRTEI.lineNo);
+      rtErrorWithMessageID("Beq", e_emlrtRTEI.fName, e_emlrtRTEI.lineNo);
     }
   }
   y = ((Aineq.size(0) != 0) && (Aineq.size(1) != 0));
   if (y && (Aineq.size(1) != nVar)) {
-    rtErrorWithMessageID(nVar, c_emlrtRTEI.fName, c_emlrtRTEI.lineNo);
+    rtErrorWithMessageID(nVar, e_emlrtRTEI.fName, e_emlrtRTEI.lineNo);
   }
   if (y && (Aineq.size(0) != bineq.size(0) * bineq.size(1))) {
-    c_rtErrorWithMessageID(c_emlrtRTEI.fName, c_emlrtRTEI.lineNo);
+    c_rtErrorWithMessageID(e_emlrtRTEI.fName, e_emlrtRTEI.lineNo);
   }
   y = ((Aeq.size(0) != 0) && (Aeq.size(1) != 0));
   if (y && (Aeq.size(1) != nVar)) {
-    b_rtErrorWithMessageID(nVar, c_emlrtRTEI.fName, c_emlrtRTEI.lineNo);
+    b_rtErrorWithMessageID(nVar, e_emlrtRTEI.fName, e_emlrtRTEI.lineNo);
   }
   if (y && (Aeq.size(0) != beq_size[0] * beq_size[1])) {
-    d_rtErrorWithMessageID(c_emlrtRTEI.fName, c_emlrtRTEI.lineNo);
+    d_rtErrorWithMessageID(e_emlrtRTEI.fName, e_emlrtRTEI.lineNo);
   }
   if ((lb.size(0) != 0) && (lb.size(0) != nVar)) {
-    rtErrorWithMessageID("lb", nVar, d_emlrtRTEI.fName, d_emlrtRTEI.lineNo);
+    rtErrorWithMessageID("lb", nVar, f_emlrtRTEI.fName, f_emlrtRTEI.lineNo);
   }
   b_lb.set_size(lb.size(0), 1);
   Aineq_idx_0 = lb.size(0);
@@ -272,7 +272,7 @@ double checkLinearInputs(int nVar, const array<double, 2U> &Aineq,
     }
   }
   if (y) {
-    e_rtErrorWithMessageID(d_emlrtRTEI.fName, d_emlrtRTEI.lineNo);
+    e_rtErrorWithMessageID(f_emlrtRTEI.fName, f_emlrtRTEI.lineNo);
   } else {
     b_lb.set_size(lb.size(0), 1);
     Aineq_idx_0 = lb.size(0);
@@ -294,11 +294,11 @@ double checkLinearInputs(int nVar, const array<double, 2U> &Aineq,
       }
     }
     if (y) {
-      e_rtErrorWithMessageID(d_emlrtRTEI.fName, d_emlrtRTEI.lineNo);
+      e_rtErrorWithMessageID(f_emlrtRTEI.fName, f_emlrtRTEI.lineNo);
     }
   }
   if ((ub.size(0) != 0) && (ub.size(0) != nVar)) {
-    rtErrorWithMessageID("ub", nVar, d_emlrtRTEI.fName, d_emlrtRTEI.lineNo);
+    rtErrorWithMessageID("ub", nVar, f_emlrtRTEI.fName, f_emlrtRTEI.lineNo);
   }
   b_lb.set_size(ub.size(0), 1);
   Aineq_idx_0 = ub.size(0);
@@ -320,7 +320,7 @@ double checkLinearInputs(int nVar, const array<double, 2U> &Aineq,
     }
   }
   if (y) {
-    f_rtErrorWithMessageID(d_emlrtRTEI.fName, d_emlrtRTEI.lineNo);
+    f_rtErrorWithMessageID(f_emlrtRTEI.fName, f_emlrtRTEI.lineNo);
   } else {
     b_lb.set_size(ub.size(0), 1);
     Aineq_idx_0 = ub.size(0);
@@ -342,7 +342,7 @@ double checkLinearInputs(int nVar, const array<double, 2U> &Aineq,
       }
     }
     if (y) {
-      f_rtErrorWithMessageID(d_emlrtRTEI.fName, d_emlrtRTEI.lineNo);
+      f_rtErrorWithMessageID(f_emlrtRTEI.fName, f_emlrtRTEI.lineNo);
     }
   }
   exitflag = rtInf;

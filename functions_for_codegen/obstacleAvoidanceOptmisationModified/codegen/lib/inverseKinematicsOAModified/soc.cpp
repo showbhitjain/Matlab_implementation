@@ -5,7 +5,7 @@
 // File: soc.cpp
 //
 // MATLAB Coder version            : 23.2
-// C/C++ source code generated on  : 04-Feb-2025 04:50:11
+// C/C++ source code generated on  : 03-Mar-2025 15:44:26
 //
 
 // Include Files
@@ -25,6 +25,7 @@
 #include "xnrm2.h"
 #include "coder_array.h"
 #include "coder_bounded_array.h"
+#include "omp.h"
 #include <cstring>
 
 // Function Definitions
@@ -85,11 +86,14 @@ boolean_T soc(const array<double, 2U> &Hessian, const array<double, 1U> &grad,
       0                           // checkKind
   };
   array<double, 1U> r;
+  k_struct_T b_qpoptions;
   double lenSOC;
   int b;
   int i;
   int i1;
   int i2;
+  int i3;
+  int i4;
   int idxIneqOffset;
   int idx_Aineq;
   int idx_Partition;
@@ -110,28 +114,48 @@ boolean_T soc(const array<double, 2U> &Hessian, const array<double, 1U> &grad,
   if (WorkingSet.nVar > 2147483646) {
     check_forloop_overflow_error();
   }
-  for (idx_Aineq = 0; idx_Aineq < nVar; idx_Aineq++) {
-    b_TrialState.xstarsqp[idx_Aineq] = b_TrialState.xstarsqp_old[idx_Aineq];
+  i = (nVar < 400);
+  if (i) {
+    for (int k{0}; k < nVar; k++) {
+      b_TrialState.xstarsqp[k] = b_TrialState.xstarsqp_old[k];
+    }
+  } else {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4)
+
+    for (int k = 0; k < nVar; k++) {
+      b_TrialState.xstarsqp[k] = b_TrialState.xstarsqp_old[k];
+    }
   }
   if (WorkingSet.nVar > 2147483646) {
     check_forloop_overflow_error();
   }
   for (idx_Aineq = 0; idx_Aineq < nVar; idx_Aineq++) {
-    i = b_TrialState.xstar.size(0);
-    if ((idx_Aineq + 1 < 1) || (idx_Aineq + 1 > i)) {
-      rtDynamicBoundsError(idx_Aineq + 1, 1, i, w_emlrtBCI);
+    i1 = b_TrialState.xstar.size(0);
+    if ((idx_Aineq + 1 < 1) || (idx_Aineq + 1 > i1)) {
+      rtDynamicBoundsError(idx_Aineq + 1, 1, i1, w_emlrtBCI);
     }
-    i = b_TrialState.socDirection.size(0);
-    if (idx_Aineq + 1 > i) {
-      rtDynamicBoundsError(idx_Aineq + 1, 1, i, w_emlrtBCI);
+    i1 = b_TrialState.socDirection.size(0);
+    if (idx_Aineq + 1 > i1) {
+      rtDynamicBoundsError(idx_Aineq + 1, 1, i1, w_emlrtBCI);
     }
     b_TrialState.socDirection[idx_Aineq] = b_TrialState.xstar[idx_Aineq];
   }
   if (WorkingSet.mConstrMax > 2147483646) {
     check_forloop_overflow_error();
   }
-  for (idx_Aineq = 0; idx_Aineq < mConstrMax; idx_Aineq++) {
-    b_TrialState.lambdaStopTest[idx_Aineq] = b_TrialState.lambda[idx_Aineq];
+  i1 = (mConstrMax < 400);
+  if (i1) {
+    for (int k{0}; k < mConstrMax; k++) {
+      b_TrialState.lambdaStopTest[k] = b_TrialState.lambda[k];
+    }
+  } else {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4)
+
+    for (int k = 0; k < mConstrMax; k++) {
+      b_TrialState.lambdaStopTest[k] = b_TrialState.lambda[k];
+    }
   }
   mIneq = WorkingSet.sizes[2];
   idxIneqOffset = WorkingSet.isActiveIdx[2];
@@ -139,35 +163,45 @@ boolean_T soc(const array<double, 2U> &Hessian, const array<double, 1U> &grad,
     if (WorkingSet.sizes[1] > 2147483646) {
       check_forloop_overflow_error();
     }
-    i = static_cast<unsigned char>(WorkingSet.sizes[1]);
-    i1 = b_TrialState.cEq.size[0];
-    for (int idx{0}; idx < i; idx++) {
-      if (idx + 1 > i1) {
-        rtDynamicBoundsError(idx + 1, 1, i1, x_emlrtBCI);
+    i2 = static_cast<unsigned char>(WorkingSet.sizes[1]);
+    i3 = b_TrialState.cEq.size[0];
+    for (int idx{0}; idx < i2; idx++) {
+      if (idx + 1 > i3) {
+        rtDynamicBoundsError(idx + 1, 1, i3, x_emlrtBCI);
       }
-      i2 = WorkingSet.beq.size[0];
-      if (idx + 1 > i2) {
-        rtDynamicBoundsError(idx + 1, 1, i2, x_emlrtBCI);
+      i4 = WorkingSet.beq.size[0];
+      if (idx + 1 > i4) {
+        rtDynamicBoundsError(idx + 1, 1, i4, x_emlrtBCI);
       }
       WorkingSet.beq.data[idx] = -b_TrialState.cEq.data[idx];
     }
     r.set_size(WorkingSet.beq.size[0]);
     idx_Aineq = WorkingSet.beq.size[0];
-    for (i1 = 0; i1 < idx_Aineq; i1++) {
-      r[i1] = WorkingSet.beq.data[i1];
+    for (i2 = 0; i2 < idx_Aineq; i2++) {
+      r[i2] = WorkingSet.beq.data[i2];
     }
     ::coder::internal::blas::b_xgemv(WorkingSet.nVar, WorkingSet.sizes[1],
                                      WorkingSet.Aeq, WorkingSet.ldA,
                                      b_TrialState.searchDir, r);
     WorkingSet.beq.size[0] = r.size(0);
     idx_Aineq = r.size(0);
-    for (i1 = 0; i1 < idx_Aineq; i1++) {
-      WorkingSet.beq.data[i1] = r[i1];
+    if (static_cast<int>(r.size(0) < 400)) {
+      for (int k{0}; k < idx_Aineq; k++) {
+        WorkingSet.beq.data[k] = r[k];
+      }
+    } else {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4)
+
+      for (int k = 0; k < idx_Aineq; k++) {
+        WorkingSet.beq.data[k] = r[k];
+      }
     }
     if (WorkingSet.sizes[1] > 2147483646) {
       check_forloop_overflow_error();
     }
-    for (idx_Aineq = 0; idx_Aineq < i; idx_Aineq++) {
+    i2 = static_cast<unsigned char>(WorkingSet.sizes[1]);
+    for (idx_Aineq = 0; idx_Aineq < i2; idx_Aineq++) {
       WorkingSet.bwset[WorkingSet.sizes[0] + idx_Aineq] =
           WorkingSet.beq.data[idx_Aineq];
     }
@@ -176,14 +210,14 @@ boolean_T soc(const array<double, 2U> &Hessian, const array<double, 1U> &grad,
     if (WorkingSet.sizes[2] > 2147483646) {
       check_forloop_overflow_error();
     }
-    i = b_TrialState.cIneq.size(0);
+    i2 = b_TrialState.cIneq.size(0);
     for (int idx{0}; idx < mIneq; idx++) {
-      if ((idx + 1 < 1) || (idx + 1 > i)) {
-        rtDynamicBoundsError(idx + 1, 1, i, x_emlrtBCI);
+      if ((idx + 1 < 1) || (idx + 1 > i2)) {
+        rtDynamicBoundsError(idx + 1, 1, i2, x_emlrtBCI);
       }
-      i1 = WorkingSet.bineq.size(0);
-      if (idx + 1 > i1) {
-        rtDynamicBoundsError(idx + 1, 1, i1, x_emlrtBCI);
+      i3 = WorkingSet.bineq.size(0);
+      if (idx + 1 > i3) {
+        rtDynamicBoundsError(idx + 1, 1, i3, x_emlrtBCI);
       }
       WorkingSet.bineq[idx] = -b_TrialState.cIneq[idx];
     }
@@ -199,28 +233,29 @@ boolean_T soc(const array<double, 2U> &Hessian, const array<double, 1U> &grad,
       check_forloop_overflow_error();
     }
     for (int idx{idxIneqOffset}; idx <= b; idx++) {
-      i = WorkingSet.Wid.size(0);
-      if ((idx < 1) || (idx > i)) {
-        rtDynamicBoundsError(idx, 1, i, x_emlrtBCI);
+      i2 = WorkingSet.Wid.size(0);
+      if ((idx < 1) || (idx > i2)) {
+        rtDynamicBoundsError(idx, 1, i2, x_emlrtBCI);
       }
-      i = WorkingSet.Wlocalidx.size(0);
-      if (idx > i) {
-        rtDynamicBoundsError(idx, 1, i, x_emlrtBCI);
+      i2 = WorkingSet.Wlocalidx.size(0);
+      if (idx > i2) {
+        rtDynamicBoundsError(idx, 1, i2, x_emlrtBCI);
       }
       switch (WorkingSet.Wid[idx - 1]) {
       case 3:
         idx_Partition = idx_Aineq;
         idx_Aineq++;
-        i = WorkingSet.bineq.size(0);
-        i1 = WorkingSet.Wlocalidx[idx - 1];
-        if ((i1 < 1) || (i1 > i)) {
-          rtDynamicBoundsError(WorkingSet.Wlocalidx[idx - 1], 1, i, x_emlrtBCI);
+        i2 = WorkingSet.bineq.size(0);
+        i3 = WorkingSet.Wlocalidx[idx - 1];
+        if ((i3 < 1) || (i3 > i2)) {
+          rtDynamicBoundsError(WorkingSet.Wlocalidx[idx - 1], 1, i2,
+                               x_emlrtBCI);
         }
-        i = WorkingSet.bwset.size(0);
-        if (idx > i) {
-          rtDynamicBoundsError(idx, 1, i, x_emlrtBCI);
+        i2 = WorkingSet.bwset.size(0);
+        if (idx > i2) {
+          rtDynamicBoundsError(idx, 1, i2, x_emlrtBCI);
         }
-        WorkingSet.bwset[idx - 1] = WorkingSet.bineq[i1 - 1];
+        WorkingSet.bwset[idx - 1] = WorkingSet.bineq[i3 - 1];
         break;
       case 4:
         idx_Partition = idx_lower;
@@ -231,9 +266,9 @@ boolean_T soc(const array<double, 2U> &Hessian, const array<double, 1U> &grad,
         idx_upper++;
         break;
       }
-      i = b_TrialState.workingset_old.size(0);
-      if ((idx_Partition < 1) || (idx_Partition > i)) {
-        rtDynamicBoundsError(idx_Partition, 1, i, x_emlrtBCI);
+      i2 = b_TrialState.workingset_old.size(0);
+      if ((idx_Partition < 1) || (idx_Partition > i2)) {
+        rtDynamicBoundsError(idx_Partition, 1, i2, x_emlrtBCI);
       }
       b_TrialState.workingset_old[idx_Partition - 1] =
           WorkingSet.Wlocalidx[idx - 1];
@@ -242,10 +277,18 @@ boolean_T soc(const array<double, 2U> &Hessian, const array<double, 1U> &grad,
   if (WorkingSet.nVar > 2147483646) {
     check_forloop_overflow_error();
   }
-  for (idx_Aineq = 0; idx_Aineq < nVar; idx_Aineq++) {
-    b_TrialState.xstar[idx_Aineq] = b_TrialState.xstarsqp[idx_Aineq];
+  if (i) {
+    for (int k{0}; k < nVar; k++) {
+      b_TrialState.xstar[k] = b_TrialState.xstarsqp[k];
+    }
+  } else {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4)
+
+    for (int k = 0; k < nVar; k++) {
+      b_TrialState.xstar[k] = b_TrialState.xstarsqp[k];
+    }
   }
-  k_struct_T b_qpoptions;
   b_qpoptions = qpoptions;
   ::coder::optim::coder::qpactiveset::driver(
       Hessian, grad, b_TrialState, memspace, WorkingSet, b_QRManager,
@@ -302,20 +345,20 @@ boolean_T soc(const array<double, 2U> &Hessian, const array<double, 1U> &grad,
   lenQPNormal = ::coder::internal::blas::xnrm2(nVar, b_TrialState.xstar);
   success = (lenSOC <= 2.0 * lenQPNormal);
   mIneq = WorkingSet.sizes[2] + 1;
-  idxIneqOffset = WorkingSet.sizes[3];
+  idx_Partition = WorkingSet.sizes[3];
   if (WorkingSet.sizes[1] > 0) {
     if (WorkingSet.sizes[1] > 2147483646) {
       check_forloop_overflow_error();
     }
     i = static_cast<unsigned char>(WorkingSet.sizes[1]);
-    i1 = b_TrialState.cEq.size[0];
+    i2 = b_TrialState.cEq.size[0];
     for (int idx{0}; idx < i; idx++) {
-      if (idx + 1 > i1) {
-        rtDynamicBoundsError(idx + 1, 1, i1, y_emlrtBCI);
-      }
-      i2 = WorkingSet.beq.size[0];
       if (idx + 1 > i2) {
         rtDynamicBoundsError(idx + 1, 1, i2, y_emlrtBCI);
+      }
+      i3 = WorkingSet.beq.size[0];
+      if (idx + 1 > i3) {
+        rtDynamicBoundsError(idx + 1, 1, i3, y_emlrtBCI);
       }
       WorkingSet.beq.data[idx] = -b_TrialState.cEq.data[idx];
     }
@@ -336,9 +379,9 @@ boolean_T soc(const array<double, 2U> &Hessian, const array<double, 1U> &grad,
       if ((idx + 1 < 1) || (idx + 1 > i)) {
         rtDynamicBoundsError(idx + 1, 1, i, y_emlrtBCI);
       }
-      i1 = WorkingSet.bineq.size(0);
-      if (idx + 1 > i1) {
-        rtDynamicBoundsError(idx + 1, 1, i1, y_emlrtBCI);
+      i2 = WorkingSet.bineq.size(0);
+      if (idx + 1 > i2) {
+        rtDynamicBoundsError(idx + 1, 1, i2, y_emlrtBCI);
       }
       WorkingSet.bineq[idx] = -b_TrialState.cIneq[idx];
     }
@@ -355,11 +398,11 @@ boolean_T soc(const array<double, 2U> &Hessian, const array<double, 1U> &grad,
         idx_Aineq = b_TrialState.workingset_old[idx];
         WorkingSet.nWConstr[2]++;
         i = WorkingSet.isActiveConstr.size(0);
-        i1 = (WorkingSet.isActiveIdx[2] + idx_Aineq) - 1;
-        if ((i1 < 1) || (i1 > i)) {
-          rtDynamicBoundsError(i1, 1, i, q_emlrtBCI);
+        i2 = (WorkingSet.isActiveIdx[2] + idx_Aineq) - 1;
+        if ((i2 < 1) || (i2 > i)) {
+          rtDynamicBoundsError(i2, 1, i, q_emlrtBCI);
         }
-        WorkingSet.isActiveConstr[i1 - 1] = true;
+        WorkingSet.isActiveConstr[i2 - 1] = true;
         WorkingSet.nActiveConstr++;
         i = WorkingSet.Wid.size(0);
         if ((WorkingSet.nActiveConstr < 1) || (WorkingSet.nActiveConstr > i)) {
@@ -367,34 +410,34 @@ boolean_T soc(const array<double, 2U> &Hessian, const array<double, 1U> &grad,
         }
         i = WorkingSet.nActiveConstr - 1;
         WorkingSet.Wid[i] = 3;
-        i1 = WorkingSet.Wlocalidx.size(0);
-        if ((WorkingSet.nActiveConstr < 1) || (WorkingSet.nActiveConstr > i1)) {
-          rtDynamicBoundsError(WorkingSet.nActiveConstr, 1, i1, q_emlrtBCI);
+        i2 = WorkingSet.Wlocalidx.size(0);
+        if ((WorkingSet.nActiveConstr < 1) || (WorkingSet.nActiveConstr > i2)) {
+          rtDynamicBoundsError(WorkingSet.nActiveConstr, 1, i2, q_emlrtBCI);
         }
         WorkingSet.Wlocalidx[i] = idx_Aineq;
         idx_lower = WorkingSet.ldA * (idx_Aineq - 1) + 1;
         idx_upper = WorkingSet.ldA * i + 1;
-        i1 = WorkingSet.nVar - 1;
-        for (nVar = 0; nVar <= i1; nVar++) {
-          i2 = WorkingSet.Aineq.size(0);
-          b = idx_lower + nVar;
-          if ((b < 1) || (b > i2)) {
-            rtDynamicBoundsError(b, 1, i2, r_emlrtBCI);
+        i2 = WorkingSet.nVar - 1;
+        for (idxIneqOffset = 0; idxIneqOffset <= i2; idxIneqOffset++) {
+          i3 = WorkingSet.Aineq.size(0);
+          i4 = idx_lower + idxIneqOffset;
+          if ((i4 < 1) || (i4 > i3)) {
+            rtDynamicBoundsError(i4, 1, i3, r_emlrtBCI);
           }
-          i2 = WorkingSet.ATwset.size(0);
-          idx_Partition = idx_upper + nVar;
-          if ((idx_Partition < 1) || (idx_Partition > i2)) {
-            rtDynamicBoundsError(idx_Partition, 1, i2, r_emlrtBCI);
+          i3 = WorkingSet.ATwset.size(0);
+          b = idx_upper + idxIneqOffset;
+          if ((b < 1) || (b > i3)) {
+            rtDynamicBoundsError(b, 1, i3, r_emlrtBCI);
           }
-          WorkingSet.ATwset[idx_Partition - 1] = WorkingSet.Aineq[b - 1];
+          WorkingSet.ATwset[b - 1] = WorkingSet.Aineq[i4 - 1];
         }
-        i1 = WorkingSet.bineq.size(0);
-        if ((idx_Aineq < 1) || (idx_Aineq > i1)) {
-          rtDynamicBoundsError(idx_Aineq, 1, i1, r_emlrtBCI);
+        i2 = WorkingSet.bineq.size(0);
+        if ((idx_Aineq < 1) || (idx_Aineq > i2)) {
+          rtDynamicBoundsError(idx_Aineq, 1, i2, r_emlrtBCI);
         }
-        i1 = WorkingSet.bwset.size(0);
-        if ((WorkingSet.nActiveConstr < 1) || (WorkingSet.nActiveConstr > i1)) {
-          rtDynamicBoundsError(WorkingSet.nActiveConstr, 1, i1, r_emlrtBCI);
+        i2 = WorkingSet.bwset.size(0);
+        if ((WorkingSet.nActiveConstr < 1) || (WorkingSet.nActiveConstr > i2)) {
+          rtDynamicBoundsError(WorkingSet.nActiveConstr, 1, i2, r_emlrtBCI);
         }
         WorkingSet.bwset[i] = WorkingSet.bineq[idx_Aineq - 1];
       }
@@ -403,24 +446,24 @@ boolean_T soc(const array<double, 2U> &Hessian, const array<double, 1U> &grad,
       }
       for (int idx{0}; idx < nWLower_old; idx++) {
         i = b_TrialState.workingset_old.size(0);
-        i1 = idx + mIneq;
-        if ((i1 < 1) || (i1 > i)) {
-          rtDynamicBoundsError(i1, 1, i, y_emlrtBCI);
+        i2 = idx + mIneq;
+        if ((i2 < 1) || (i2 > i)) {
+          rtDynamicBoundsError(i2, 1, i, y_emlrtBCI);
         }
         qpactiveset::WorkingSet::addBoundToActiveSetMatrix_(
-            WorkingSet, b_TrialState.workingset_old[i1 - 1]);
+            WorkingSet, b_TrialState.workingset_old[i2 - 1]);
       }
       if (nWUpper_old > 2147483646) {
         check_forloop_overflow_error();
       }
       for (int idx{0}; idx < nWUpper_old; idx++) {
         i = b_TrialState.workingset_old.size(0);
-        i1 = (idx + mIneq) + idxIneqOffset;
-        if ((i1 < 1) || (i1 > i)) {
-          rtDynamicBoundsError(i1, 1, i, y_emlrtBCI);
+        i2 = (idx + mIneq) + idx_Partition;
+        if ((i2 < 1) || (i2 > i)) {
+          rtDynamicBoundsError(i2, 1, i, y_emlrtBCI);
         }
         qpactiveset::WorkingSet::b_addBoundToActiveSetMatrix_(
-            WorkingSet, b_TrialState.workingset_old[i1 - 1]);
+            WorkingSet, b_TrialState.workingset_old[i2 - 1]);
       }
     }
   }
@@ -428,8 +471,17 @@ boolean_T soc(const array<double, 2U> &Hessian, const array<double, 1U> &grad,
     if (mConstrMax > 2147483646) {
       check_forloop_overflow_error();
     }
-    for (idx_Aineq = 0; idx_Aineq < mConstrMax; idx_Aineq++) {
-      b_TrialState.lambda[idx_Aineq] = b_TrialState.lambdaStopTest[idx_Aineq];
+    if (i1) {
+      for (int k{0}; k < mConstrMax; k++) {
+        b_TrialState.lambda[k] = b_TrialState.lambdaStopTest[k];
+      }
+    } else {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4)
+
+      for (int k = 0; k < mConstrMax; k++) {
+        b_TrialState.lambda[k] = b_TrialState.lambdaStopTest[k];
+      }
     }
   } else {
     qpactiveset::parseoutput::sortLambdaQP(

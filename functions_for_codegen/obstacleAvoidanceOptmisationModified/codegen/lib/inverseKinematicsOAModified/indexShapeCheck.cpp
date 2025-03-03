@@ -5,13 +5,16 @@
 // File: indexShapeCheck.cpp
 //
 // MATLAB Coder version            : 23.2
-// C/C++ source code generated on  : 04-Feb-2025 04:50:11
+// C/C++ source code generated on  : 03-Mar-2025 15:44:26
 //
 
 // Include Files
 #include "indexShapeCheck.h"
 #include "inverseKinematicsOAModified_types.h"
 #include "rt_nonfinite.h"
+#include "omp.h"
+#include <cstdio>
+#include <cstdlib>
 #include <cstring>
 #include <sstream>
 #include <stdexcept>
@@ -28,6 +31,7 @@ static void i_rtErrorWithMessageID(const char *aFcnName, int aLineNum);
 //
 static void i_rtErrorWithMessageID(const char *aFcnName, int aLineNum)
 {
+  std::string errMsg;
   std::stringstream outStream;
   outStream
       << "Compile-time size assumption violated. At run-time, a vector indexes "
@@ -35,7 +39,13 @@ static void i_rtErrorWithMessageID(const char *aFcnName, int aLineNum)
          "r is indexed by a vector of the same size.";
   outStream << "\n";
   ((((outStream << "Error in ") << aFcnName) << " (line ") << aLineNum) << ")";
-  throw std::runtime_error(outStream.str());
+  if (omp_in_parallel()) {
+    errMsg = outStream.str();
+    std::fprintf(stderr, "%s", errMsg.c_str());
+    std::abort();
+  } else {
+    throw std::runtime_error(outStream.str());
+  }
 }
 
 //
@@ -47,12 +57,12 @@ namespace coder {
 namespace internal {
 void indexShapeCheck(int matrixSize, const int indexSize[2])
 {
-  static rtRunTimeErrorInfo c_emlrtRTEI{
+  static rtRunTimeErrorInfo e_emlrtRTEI{
       122,          // lineNo
       "errOrWarnIf" // fName
   };
   if ((matrixSize == 1) && (indexSize[1] != 1)) {
-    i_rtErrorWithMessageID(c_emlrtRTEI.fName, c_emlrtRTEI.lineNo);
+    i_rtErrorWithMessageID(e_emlrtRTEI.fName, e_emlrtRTEI.lineNo);
   }
 }
 

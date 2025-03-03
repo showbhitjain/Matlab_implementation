@@ -5,7 +5,7 @@
 // File: computeGrad_StoreHx.cpp
 //
 // MATLAB Coder version            : 23.2
-// C/C++ source code generated on  : 04-Feb-2025 04:50:11
+// C/C++ source code generated on  : 03-Mar-2025 15:44:26
 //
 
 // Include Files
@@ -17,6 +17,7 @@
 #include "rt_nonfinite.h"
 #include "xgemv.h"
 #include "coder_array.h"
+#include "omp.h"
 #include <cstring>
 
 // Function Definitions
@@ -46,6 +47,7 @@ void computeGrad_StoreHx(g_struct_T &obj, const array<double, 2U> &H,
       "+Objective/computeGrad_StoreHx.p", // pName
       0                                   // checkKind
   };
+  int i1;
   switch (obj.objtype) {
   case 5: {
     int i;
@@ -88,8 +90,17 @@ void computeGrad_StoreHx(g_struct_T &obj, const array<double, 2U> &H,
     }
     if (obj.hasLinear && (obj.nvar >= 1)) {
       ixlast = obj.nvar - 1;
-      for (int idx{0}; idx <= ixlast; idx++) {
-        obj.grad[idx] = obj.grad[idx] + f[idx];
+      if (static_cast<int>(ixlast + 1 < 400)) {
+        for (int k{0}; k <= ixlast; k++) {
+          obj.grad[k] = obj.grad[k] + f[k];
+        }
+      } else {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4)
+
+        for (int k = 0; k <= ixlast; k++) {
+          obj.grad[k] = obj.grad[k] + f[k];
+        }
       }
     }
   } break;
@@ -126,17 +137,36 @@ void computeGrad_StoreHx(g_struct_T &obj, const array<double, 2U> &H,
     }
     if (obj.hasLinear && (obj.nvar >= 1)) {
       ixlast = obj.nvar - 1;
-      for (int idx{0}; idx <= ixlast; idx++) {
-        obj.grad[idx] = obj.grad[idx] + f[idx];
+      if (static_cast<int>(ixlast + 1 < 400)) {
+        for (int k{0}; k <= ixlast; k++) {
+          obj.grad[k] = obj.grad[k] + f[k];
+        }
+      } else {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4)
+
+        for (int k = 0; k <= ixlast; k++) {
+          obj.grad[k] = obj.grad[k] + f[k];
+        }
       }
     }
     ixlast = (obj.maxVar - obj.nvar) - 1;
     if (ixlast >= 1) {
       iy = obj.nvar;
       i = ixlast - 1;
-      for (int idx{0}; idx <= i; idx++) {
-        ixlast = iy + idx;
-        obj.grad[ixlast] = obj.grad[ixlast] + obj.rho;
+      if (static_cast<int>(ixlast < 400)) {
+        for (int k{0}; k <= i; k++) {
+          ixlast = iy + k;
+          obj.grad[ixlast] = obj.grad[ixlast] + obj.rho;
+        }
+      } else {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4) private(i1)
+
+        for (int k = 0; k <= i; k++) {
+          i1 = iy + k;
+          obj.grad[i1] = obj.grad[i1] + obj.rho;
+        }
       }
     }
   } break;

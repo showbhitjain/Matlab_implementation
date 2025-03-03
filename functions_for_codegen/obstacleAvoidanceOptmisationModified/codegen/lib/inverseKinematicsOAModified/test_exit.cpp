@@ -5,7 +5,7 @@
 // File: test_exit.cpp
 //
 // MATLAB Coder version            : 23.2
-// C/C++ source code generated on  : 04-Feb-2025 04:50:11
+// C/C++ source code generated on  : 03-Mar-2025 15:44:26
 //
 
 // Include Files
@@ -26,6 +26,7 @@
 #include "xgeqp3.h"
 #include "coder_array.h"
 #include "coder_bounded_array.h"
+#include "omp.h"
 #include <cmath>
 #include <cstring>
 
@@ -82,21 +83,33 @@ void b_test_exit(b_struct_T &Flags, h_struct_T &memspace,
   double optimRelativeFactor;
   double s;
   double smax;
-  int fullRank_R;
+  int b_k;
+  int i;
   int idx_max;
-  int k;
+  int jjA;
   int mLambda;
-  int mLambda_tmp;
+  int nVar;
   boolean_T isFeasible;
-  fullRank_R = WorkingSet.nVar;
-  mLambda_tmp = WorkingSet.sizes[0] + WorkingSet.sizes[1];
-  mLambda = ((mLambda_tmp + WorkingSet.sizes[2]) + WorkingSet.sizes[3]) +
-            WorkingSet.sizes[4];
+  nVar = WorkingSet.nVar;
+  mLambda =
+      (((WorkingSet.sizes[0] + WorkingSet.sizes[1]) + WorkingSet.sizes[2]) +
+       WorkingSet.sizes[3]) +
+      WorkingSet.sizes[4];
   if (mLambda > 2147483646) {
     check_forloop_overflow_error();
   }
-  for (k = 0; k < mLambda; k++) {
-    b_TrialState.lambdaStopTest[k] = b_TrialState.lambdasqp[k];
+  i = (mLambda < 400);
+  if (i) {
+    for (int k{0}; k < mLambda; k++) {
+      b_TrialState.lambdaStopTest[k] = b_TrialState.lambdasqp[k];
+    }
+  } else {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4)
+
+    for (int k = 0; k < mLambda; k++) {
+      b_TrialState.lambdaStopTest[k] = b_TrialState.lambdasqp[k];
+    }
   }
   stopping::computeGradLag(
       b_TrialState.gradLag, WorkingSet.ldA, WorkingSet.nVar, b_TrialState.grad,
@@ -104,27 +117,28 @@ void b_test_exit(b_struct_T &Flags, h_struct_T &memspace,
       WorkingSet.Aeq, WorkingSet.indexFixed, WorkingSet.sizes[0],
       WorkingSet.indexLB, WorkingSet.sizes[3], WorkingSet.indexUB,
       WorkingSet.sizes[4], b_TrialState.lambdaStopTest);
-  if (fullRank_R < 1) {
+  jjA = WorkingSet.nVar;
+  if (jjA < 1) {
     idx_max = 0;
   } else {
     idx_max = 1;
-    if (fullRank_R > 1) {
+    if (jjA > 1) {
       smax = std::abs(b_TrialState.grad[0]);
-      if (fullRank_R > 2147483646) {
+      if (jjA > 2147483646) {
         check_forloop_overflow_error();
       }
-      for (k = 2; k <= fullRank_R; k++) {
-        s = std::abs(b_TrialState.grad[k - 1]);
+      for (b_k = 2; b_k <= jjA; b_k++) {
+        s = std::abs(b_TrialState.grad[b_k - 1]);
         if (s > smax) {
-          idx_max = k;
+          idx_max = b_k;
           smax = s;
         }
       }
     }
   }
-  k = b_TrialState.grad.size(0);
-  if ((idx_max < 1) || (idx_max > k)) {
-    rtDynamicBoundsError(idx_max, 1, k, e_emlrtBCI);
+  b_k = b_TrialState.grad.size(0);
+  if ((idx_max < 1) || (idx_max > b_k)) {
+    rtDynamicBoundsError(idx_max, 1, b_k, e_emlrtBCI);
   }
   optimRelativeFactor =
       std::fmax(1.0, std::abs(b_TrialState.grad[idx_max - 1]));
@@ -184,16 +198,39 @@ void b_test_exit(b_struct_T &Flags, h_struct_T &memspace,
         b_MeritFunction.nlpDualFeasError = s;
         b_MeritFunction.nlpComplError = nlpComplErrorTmp;
         b_MeritFunction.firstOrderOpt = d;
-        for (k = 0; k < mLambda; k++) {
-          b_TrialState.lambdaStopTest[k] = b_TrialState.lambdaStopTestPrev[k];
+        if (i) {
+          for (int k{0}; k < mLambda; k++) {
+            b_TrialState.lambdaStopTest[k] = b_TrialState.lambdaStopTestPrev[k];
+          }
+        } else {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4)
+
+          for (int k = 0; k < mLambda; k++) {
+            b_TrialState.lambdaStopTest[k] = b_TrialState.lambdaStopTestPrev[k];
+          }
+        }
+      } else if (i) {
+        for (int k{0}; k < mLambda; k++) {
+          b_TrialState.lambdaStopTestPrev[k] = b_TrialState.lambdaStopTest[k];
         }
       } else {
-        for (k = 0; k < mLambda; k++) {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4)
+
+        for (int k = 0; k < mLambda; k++) {
           b_TrialState.lambdaStopTestPrev[k] = b_TrialState.lambdaStopTest[k];
         }
       }
+    } else if (i) {
+      for (int k{0}; k < mLambda; k++) {
+        b_TrialState.lambdaStopTestPrev[k] = b_TrialState.lambdaStopTest[k];
+      }
     } else {
-      for (k = 0; k < mLambda; k++) {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4)
+
+      for (int k = 0; k < mLambda; k++) {
         b_TrialState.lambdaStopTestPrev[k] = b_TrialState.lambdaStopTest[k];
       }
     }
@@ -229,31 +266,43 @@ void b_test_exit(b_struct_T &Flags, h_struct_T &memspace,
               int nActiveConstr;
               nActiveConstr = WorkingSet.nActiveConstr - 1;
               if (WorkingSet.nActiveConstr > 0) {
-                int iQR_diag;
                 boolean_T exitg1;
                 boolean_T guard2;
                 if (WorkingSet.nActiveConstr > 2147483646) {
                   check_forloop_overflow_error();
                 }
-                for (k = 0; k <= nActiveConstr; k++) {
-                  b_TrialState.lambda[k] = 0.0;
+                if (static_cast<int>(nActiveConstr + 1 < 400)) {
+                  for (int k{0}; k <= nActiveConstr; k++) {
+                    b_TrialState.lambda[k] = 0.0;
+                  }
+                } else {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4)
+
+                  for (int k = 0; k <= nActiveConstr; k++) {
+                    b_TrialState.lambda[k] = 0.0;
+                  }
                 }
-                k = WorkingSet.nVar * WorkingSet.nActiveConstr;
+                b_k = WorkingSet.nVar * WorkingSet.nActiveConstr;
                 guard2 = false;
-                if (k > 0) {
+                if (b_k > 0) {
                   if (WorkingSet.nActiveConstr > 2147483646) {
                     check_forloop_overflow_error();
                   }
+                  dxTooSmall = (nVar > 2147483646);
                   for (int idx{0}; idx <= nActiveConstr; idx++) {
-                    idx_max = WorkingSet.ldA * idx;
-                    iQR_diag = b_QRManager.ldq * idx;
-                    for (k = 0; k < fullRank_R; k++) {
-                      b_QRManager.QR[iQR_diag + k] =
-                          WorkingSet.ATwset[idx_max + k];
+                    jjA = WorkingSet.ldA * idx;
+                    idx_max = b_QRManager.ldq * idx;
+                    if (dxTooSmall) {
+                      check_forloop_overflow_error();
+                    }
+                    for (b_k = 0; b_k < nVar; b_k++) {
+                      b_QRManager.QR[idx_max + b_k] =
+                          WorkingSet.ATwset[jjA + b_k];
                     }
                   }
                   guard2 = true;
-                } else if (k == 0) {
+                } else if (b_k == 0) {
                   b_QRManager.mrows = WorkingSet.nVar;
                   b_QRManager.ncols = WorkingSet.nActiveConstr;
                   b_QRManager.minRowCol = 0;
@@ -264,12 +313,12 @@ void b_test_exit(b_struct_T &Flags, h_struct_T &memspace,
                   b_QRManager.usedPivoting = true;
                   b_QRManager.mrows = WorkingSet.nVar;
                   b_QRManager.ncols = WorkingSet.nActiveConstr;
-                  iQR_diag = WorkingSet.nVar;
-                  idx_max = WorkingSet.nActiveConstr;
-                  if (iQR_diag <= idx_max) {
-                    idx_max = iQR_diag;
+                  idx_max = WorkingSet.nVar;
+                  jjA = WorkingSet.nActiveConstr;
+                  if (idx_max <= jjA) {
+                    jjA = idx_max;
                   }
-                  b_QRManager.minRowCol = idx_max;
+                  b_QRManager.minRowCol = jjA;
                   ::coder::internal::lapack::xgeqp3(
                       b_QRManager.QR, WorkingSet.nVar, WorkingSet.nActiveConstr,
                       b_QRManager.jpvt, b_QRManager.tau);
@@ -279,88 +328,88 @@ void b_test_exit(b_struct_T &Flags, h_struct_T &memspace,
                                                b_QRManager.Q, b_QRManager.ldq,
                                                b_TrialState.grad,
                                                memspace.workspace_double);
-                iQR_diag = WorkingSet.nVar;
-                idx_max = WorkingSet.nActiveConstr;
-                if (iQR_diag >= idx_max) {
-                  idx_max = iQR_diag;
+                idx_max = WorkingSet.nVar;
+                jjA = WorkingSet.nActiveConstr;
+                if (idx_max >= jjA) {
+                  jjA = idx_max;
                 }
                 smax = std::abs(b_QRManager.QR[0]) *
                        std::fmin(1.4901161193847656E-8,
-                                 static_cast<double>(idx_max) *
+                                 static_cast<double>(jjA) *
                                      2.2204460492503131E-16);
-                iQR_diag = WorkingSet.nVar;
-                fullRank_R = WorkingSet.nActiveConstr;
-                if (iQR_diag <= fullRank_R) {
-                  fullRank_R = iQR_diag;
+                idx_max = WorkingSet.nVar;
+                nVar = WorkingSet.nActiveConstr;
+                if (idx_max <= nVar) {
+                  nVar = idx_max;
                 }
                 nActiveConstr = 0;
-                iQR_diag = 1;
+                idx_max = 1;
                 exitg1 = false;
-                while ((!exitg1) && (nActiveConstr < fullRank_R)) {
-                  k = b_QRManager.QR.size(0) * b_QRManager.QR.size(1);
-                  if ((iQR_diag < 1) || (iQR_diag > k)) {
-                    rtDynamicBoundsError(iQR_diag, 1, k, w_emlrtBCI);
+                while ((!exitg1) && (nActiveConstr < nVar)) {
+                  b_k = b_QRManager.QR.size(0) * b_QRManager.QR.size(1);
+                  if ((idx_max < 1) || (idx_max > b_k)) {
+                    rtDynamicBoundsError(idx_max, 1, b_k, w_emlrtBCI);
                   }
-                  if (std::abs(b_QRManager.QR[iQR_diag - 1]) > smax) {
+                  if (std::abs(b_QRManager.QR[idx_max - 1]) > smax) {
                     nActiveConstr++;
-                    iQR_diag = (iQR_diag + b_QRManager.ldq) + 1;
+                    idx_max = (idx_max + b_QRManager.ldq) + 1;
                   } else {
                     exitg1 = true;
                   }
                 }
                 if (nActiveConstr != 0) {
-                  for (k = nActiveConstr; k >= 1; k--) {
-                    idx_max = (k + (k - 1) * b_QRManager.ldq) - 1;
-                    memspace.workspace_double[k - 1] =
-                        memspace.workspace_double[k - 1] /
-                        b_QRManager.QR[idx_max];
-                    for (int idx{0}; idx <= k - 2; idx++) {
-                      iQR_diag = (k - idx) - 2;
-                      memspace.workspace_double[iQR_diag] =
-                          memspace.workspace_double[iQR_diag] -
-                          memspace.workspace_double[k - 1] *
-                              b_QRManager.QR[(idx_max - idx) - 1];
+                  for (b_k = nActiveConstr; b_k >= 1; b_k--) {
+                    jjA = (b_k + (b_k - 1) * b_QRManager.ldq) - 1;
+                    memspace.workspace_double[b_k - 1] =
+                        memspace.workspace_double[b_k - 1] /
+                        b_QRManager.QR[jjA];
+                    for (int idx{0}; idx <= b_k - 2; idx++) {
+                      idx_max = (b_k - idx) - 2;
+                      memspace.workspace_double[idx_max] =
+                          memspace.workspace_double[idx_max] -
+                          memspace.workspace_double[b_k - 1] *
+                              b_QRManager.QR[(jjA - idx) - 1];
                     }
                   }
                 }
-                iQR_diag = WorkingSet.nActiveConstr;
-                if (iQR_diag <= fullRank_R) {
-                  fullRank_R = iQR_diag;
+                idx_max = WorkingSet.nActiveConstr;
+                if (idx_max <= nVar) {
+                  nVar = idx_max;
                 }
-                if (fullRank_R > 2147483646) {
+                if (nVar > 2147483646) {
                   check_forloop_overflow_error();
                 }
-                for (int idx{0}; idx < fullRank_R; idx++) {
-                  k = b_QRManager.jpvt.size(0);
-                  if ((idx + 1 < 1) || (idx + 1 > k)) {
-                    rtDynamicBoundsError(idx + 1, 1, k, w_emlrtBCI);
+                for (int idx{0}; idx < nVar; idx++) {
+                  b_k = b_QRManager.jpvt.size(0);
+                  if ((idx + 1 < 1) || (idx + 1 > b_k)) {
+                    rtDynamicBoundsError(idx + 1, 1, b_k, w_emlrtBCI);
                   }
-                  k = memspace.workspace_double.size(0) *
-                      memspace.workspace_double.size(1);
-                  if ((idx + 1 < 1) || (idx + 1 > k)) {
-                    rtDynamicBoundsError(idx + 1, 1, k, w_emlrtBCI);
+                  b_k = memspace.workspace_double.size(0) *
+                        memspace.workspace_double.size(1);
+                  if ((idx + 1 < 1) || (idx + 1 > b_k)) {
+                    rtDynamicBoundsError(idx + 1, 1, b_k, w_emlrtBCI);
                   }
-                  k = b_TrialState.lambda.size(0);
-                  idx_max = b_QRManager.jpvt[idx];
-                  if ((idx_max < 1) || (idx_max > k)) {
-                    rtDynamicBoundsError(idx_max, 1, k, w_emlrtBCI);
+                  b_k = b_TrialState.lambda.size(0);
+                  jjA = b_QRManager.jpvt[idx];
+                  if ((jjA < 1) || (jjA > b_k)) {
+                    rtDynamicBoundsError(jjA, 1, b_k, w_emlrtBCI);
                   }
-                  b_TrialState.lambda[idx_max - 1] =
-                      memspace.workspace_double[idx];
+                  b_TrialState.lambda[jjA - 1] = memspace.workspace_double[idx];
                 }
-                idx_max = WorkingSet.sizes[0] + 1;
-                if ((WorkingSet.sizes[0] + 1 <= mLambda_tmp) &&
-                    (mLambda_tmp > 2147483646)) {
+                jjA = WorkingSet.sizes[0] + 1;
+                idx_max = WorkingSet.sizes[0] + WorkingSet.sizes[1];
+                if ((WorkingSet.sizes[0] + 1 <= idx_max) &&
+                    (idx_max > 2147483646)) {
                   check_forloop_overflow_error();
                 }
-                for (int idx{idx_max}; idx <= mLambda_tmp; idx++) {
-                  k = b_TrialState.lambda.size(0);
-                  if ((idx < 1) || (idx > k)) {
-                    rtDynamicBoundsError(idx, 1, k, e_emlrtBCI);
+                for (int idx{jjA}; idx <= idx_max; idx++) {
+                  b_k = b_TrialState.lambda.size(0);
+                  if ((idx < 1) || (idx > b_k)) {
+                    rtDynamicBoundsError(idx, 1, b_k, e_emlrtBCI);
                   }
-                  k = b_TrialState.lambda.size(0);
-                  if (idx > k) {
-                    rtDynamicBoundsError(idx, 1, k, e_emlrtBCI);
+                  b_k = b_TrialState.lambda.size(0);
+                  if (idx > b_k) {
+                    rtDynamicBoundsError(idx, 1, b_k, e_emlrtBCI);
                   }
                   b_TrialState.lambda[idx - 1] = -b_TrialState.lambda[idx - 1];
                 }
@@ -388,8 +437,17 @@ void b_test_exit(b_struct_T &Flags, h_struct_T &memspace,
                   b_MeritFunction.nlpDualFeasError = smax;
                   b_MeritFunction.nlpComplError = s;
                   b_MeritFunction.firstOrderOpt = std::fmax(smax, s);
-                  for (k = 0; k < mLambda; k++) {
-                    b_TrialState.lambdaStopTest[k] = b_TrialState.lambda[k];
+                  if (i) {
+                    for (int k{0}; k < mLambda; k++) {
+                      b_TrialState.lambdaStopTest[k] = b_TrialState.lambda[k];
+                    }
+                  } else {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4)
+
+                    for (int k = 0; k < mLambda; k++) {
+                      b_TrialState.lambdaStopTest[k] = b_TrialState.lambda[k];
+                    }
                   }
                   Flags.done = true;
                   b_TrialState.sqpExitFlag = 1;
@@ -448,6 +506,7 @@ boolean_T test_exit(struct_T &b_MeritFunction,
                     boolean_T &Flags_failedLineSearch, int &Flags_stepType)
 {
   double smax;
+  int i;
   int idx_max;
   int mLambda;
   int n;
@@ -465,8 +524,18 @@ boolean_T test_exit(struct_T &b_MeritFunction,
   if (mLambda > 2147483646) {
     check_forloop_overflow_error();
   }
-  for (int k{0}; k < mLambda; k++) {
-    b_TrialState.lambdaStopTest[k] = b_TrialState.lambdasqp[k];
+  i = (mLambda < 400);
+  if (i) {
+    for (int k{0}; k < mLambda; k++) {
+      b_TrialState.lambdaStopTest[k] = b_TrialState.lambdasqp[k];
+    }
+  } else {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4)
+
+    for (int k = 0; k < mLambda; k++) {
+      b_TrialState.lambdaStopTest[k] = b_TrialState.lambdasqp[k];
+    }
   }
   stopping::computeGradLag(
       b_TrialState.gradLag, WorkingSet.ldA, WorkingSet.nVar, b_TrialState.grad,
@@ -484,11 +553,11 @@ boolean_T test_exit(struct_T &b_MeritFunction,
       if (n > 2147483646) {
         check_forloop_overflow_error();
       }
-      for (int k{2}; k <= n; k++) {
+      for (int b_k{2}; b_k <= n; b_k++) {
         double s;
-        s = std::abs(b_TrialState.grad[k - 1]);
+        s = std::abs(b_TrialState.grad[b_k - 1]);
         if (s > smax) {
-          idx_max = k;
+          idx_max = b_k;
           smax = s;
         }
       }
@@ -530,8 +599,17 @@ boolean_T test_exit(struct_T &b_MeritFunction,
     b_MeritFunction.nlpComplError = 0.0;
     b_MeritFunction.firstOrderOpt =
         std::fmax(b_MeritFunction.nlpDualFeasError, 0.0);
-    for (int k{0}; k < mLambda; k++) {
-      b_TrialState.lambdaStopTestPrev[k] = b_TrialState.lambdaStopTest[k];
+    if (i) {
+      for (int k{0}; k < mLambda; k++) {
+        b_TrialState.lambdaStopTestPrev[k] = b_TrialState.lambdaStopTest[k];
+      }
+    } else {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4)
+
+      for (int k = 0; k < mLambda; k++) {
+        b_TrialState.lambdaStopTestPrev[k] = b_TrialState.lambdaStopTest[k];
+      }
     }
     if (isFeasible && (b_MeritFunction.nlpDualFeasError <= 1.0E-6 * smax)) {
       Flags_done = true;

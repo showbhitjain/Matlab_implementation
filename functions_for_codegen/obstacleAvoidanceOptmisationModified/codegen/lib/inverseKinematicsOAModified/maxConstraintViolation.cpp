@@ -5,7 +5,7 @@
 // File: maxConstraintViolation.cpp
 //
 // MATLAB Coder version            : 23.2
-// C/C++ source code generated on  : 04-Feb-2025 04:50:11
+// C/C++ source code generated on  : 03-Mar-2025 15:44:26
 //
 
 // Include Files
@@ -18,6 +18,7 @@
 #include "xgemv.h"
 #include "coder_array.h"
 #include "coder_bounded_array.h"
+#include "omp.h"
 #include <cmath>
 #include <cstring>
 
@@ -76,15 +77,14 @@ double maxConstraintViolation(d_struct_T &obj, const array<double, 2U> &x)
   int i1;
   int i2;
   int mFixed;
+  int mIneq;
   int mLB;
   int mUB;
-  int offsetEq1;
   mLB = obj.sizes[3];
   mUB = obj.sizes[4];
   mFixed = obj.sizes[0];
   if (obj.probType == 2) {
     int mEq;
-    int mIneq;
     v = 0.0;
     mIneq = obj.sizes[2] - 1;
     mEq = obj.sizes[1] - 1;
@@ -92,8 +92,17 @@ double maxConstraintViolation(d_struct_T &obj, const array<double, 2U> &x)
       if (obj.sizes[2] > 2147483646) {
         check_forloop_overflow_error();
       }
-      for (offsetEq1 = 0; offsetEq1 <= mIneq; offsetEq1++) {
-        obj.maxConstrWorkspace[offsetEq1] = obj.bineq[offsetEq1];
+      if (static_cast<int>(mIneq + 1 < 400)) {
+        for (int k{0}; k <= mIneq; k++) {
+          obj.maxConstrWorkspace[k] = obj.bineq[k];
+        }
+      } else {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4)
+
+        for (int k = 0; k <= mIneq; k++) {
+          obj.maxConstrWorkspace[k] = obj.bineq[k];
+        }
       }
       internal::blas::xgemv(obj.nVarOrig, obj.sizes[2], obj.Aineq, obj.ldA, x,
                             obj.maxConstrWorkspace);
@@ -123,16 +132,17 @@ double maxConstraintViolation(d_struct_T &obj, const array<double, 2U> &x)
       }
     }
     if (obj.Aeq.size(0) != 0) {
+      int offsetEq2;
       if (obj.sizes[1] > 2147483646) {
         check_forloop_overflow_error();
       }
-      for (offsetEq1 = 0; offsetEq1 <= mEq; offsetEq1++) {
-        obj.maxConstrWorkspace[offsetEq1] = obj.beq.data[offsetEq1];
+      for (mIneq = 0; mIneq <= mEq; mIneq++) {
+        obj.maxConstrWorkspace[mIneq] = obj.beq.data[mIneq];
       }
       internal::blas::xgemv(obj.nVarOrig, obj.sizes[1], obj.Aeq, obj.ldA, x,
                             obj.maxConstrWorkspace);
-      offsetEq1 = obj.nVarOrig + obj.sizes[2];
-      mIneq = offsetEq1 + obj.sizes[1];
+      mIneq = obj.nVarOrig + obj.sizes[2];
+      offsetEq2 = mIneq + obj.sizes[1];
       if (obj.sizes[1] > 2147483646) {
         check_forloop_overflow_error();
       }
@@ -142,11 +152,11 @@ double maxConstraintViolation(d_struct_T &obj, const array<double, 2U> &x)
           rtDynamicBoundsError(idx + 1, 1, i, n_emlrtBCI);
         }
         i = x.size(0) * x.size(1);
-        i1 = (offsetEq1 + idx) + 1;
+        i1 = (mIneq + idx) + 1;
         if ((i1 < 1) || (i1 > i)) {
           rtDynamicBoundsError(i1, 1, i, n_emlrtBCI);
         }
-        i2 = (mIneq + idx) + 1;
+        i2 = (offsetEq2 + idx) + 1;
         if ((i2 < 1) || (i2 > i)) {
           rtDynamicBoundsError(i2, 1, i, n_emlrtBCI);
         }
@@ -165,7 +175,6 @@ double maxConstraintViolation(d_struct_T &obj, const array<double, 2U> &x)
     }
   } else {
     int mEq;
-    int mIneq;
     v = 0.0;
     mIneq = obj.sizes[2] - 1;
     mEq = obj.sizes[1] - 1;
@@ -173,8 +182,17 @@ double maxConstraintViolation(d_struct_T &obj, const array<double, 2U> &x)
       if (obj.sizes[2] > 2147483646) {
         check_forloop_overflow_error();
       }
-      for (offsetEq1 = 0; offsetEq1 <= mIneq; offsetEq1++) {
-        obj.maxConstrWorkspace[offsetEq1] = obj.bineq[offsetEq1];
+      if (static_cast<int>(mIneq + 1 < 400)) {
+        for (int k{0}; k <= mIneq; k++) {
+          obj.maxConstrWorkspace[k] = obj.bineq[k];
+        }
+      } else {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4)
+
+        for (int k = 0; k <= mIneq; k++) {
+          obj.maxConstrWorkspace[k] = obj.bineq[k];
+        }
       }
       internal::blas::xgemv(obj.nVar, obj.sizes[2], obj.Aineq, obj.ldA, x,
                             obj.maxConstrWorkspace);
@@ -193,8 +211,8 @@ double maxConstraintViolation(d_struct_T &obj, const array<double, 2U> &x)
       if (obj.sizes[1] > 2147483646) {
         check_forloop_overflow_error();
       }
-      for (offsetEq1 = 0; offsetEq1 <= mEq; offsetEq1++) {
-        obj.maxConstrWorkspace[offsetEq1] = obj.beq.data[offsetEq1];
+      for (mIneq = 0; mIneq <= mEq; mIneq++) {
+        obj.maxConstrWorkspace[mIneq] = obj.beq.data[mIneq];
       }
       internal::blas::xgemv(obj.nVar, obj.sizes[1], obj.Aeq, obj.ldA, x,
                             obj.maxConstrWorkspace);
@@ -221,14 +239,14 @@ double maxConstraintViolation(d_struct_T &obj, const array<double, 2U> &x)
       if ((idx + 1 < 1) || (idx + 1 > i1)) {
         rtDynamicBoundsError(idx + 1, 1, i1, p_emlrtBCI);
       }
-      offsetEq1 = obj.indexLB[idx] - 1;
+      mIneq = obj.indexLB[idx] - 1;
       if ((obj.indexLB[idx] < 1) || (obj.indexLB[idx] > i)) {
         rtDynamicBoundsError(obj.indexLB[idx], 1, i, p_emlrtBCI);
       }
       if ((obj.indexLB[idx] < 1) || (obj.indexLB[idx] > i2)) {
         rtDynamicBoundsError(obj.indexLB[idx], 1, i2, p_emlrtBCI);
       }
-      v = std::fmax(v, -x[offsetEq1] - obj.lb[offsetEq1]);
+      v = std::fmax(v, -x[mIneq] - obj.lb[mIneq]);
     }
   }
   if (obj.sizes[4] > 0) {
@@ -242,14 +260,14 @@ double maxConstraintViolation(d_struct_T &obj, const array<double, 2U> &x)
       if ((idx + 1 < 1) || (idx + 1 > i1)) {
         rtDynamicBoundsError(idx + 1, 1, i1, p_emlrtBCI);
       }
-      offsetEq1 = obj.indexUB[idx] - 1;
+      mIneq = obj.indexUB[idx] - 1;
       if ((obj.indexUB[idx] < 1) || (obj.indexUB[idx] > i)) {
         rtDynamicBoundsError(obj.indexUB[idx], 1, i, p_emlrtBCI);
       }
       if ((obj.indexUB[idx] < 1) || (obj.indexUB[idx] > i2)) {
         rtDynamicBoundsError(obj.indexUB[idx], 1, i2, p_emlrtBCI);
       }
-      v = std::fmax(v, x[offsetEq1] - obj.ub[offsetEq1]);
+      v = std::fmax(v, x[mIneq] - obj.ub[mIneq]);
     }
   }
   if (obj.sizes[0] > 0) {
@@ -290,15 +308,14 @@ double maxConstraintViolation(d_struct_T &obj, const array<double, 2U> &x,
   int i1;
   int i2;
   int mFixed;
+  int mIneq;
   int mLB;
   int mUB;
-  int offsetEq1;
   mLB = obj.sizes[3];
   mUB = obj.sizes[4];
   mFixed = obj.sizes[0];
   if (obj.probType == 2) {
     int mEq;
-    int mIneq;
     v = 0.0;
     mIneq = obj.sizes[2] - 1;
     mEq = obj.sizes[1] - 1;
@@ -306,8 +323,17 @@ double maxConstraintViolation(d_struct_T &obj, const array<double, 2U> &x,
       if (obj.sizes[2] > 2147483646) {
         check_forloop_overflow_error();
       }
-      for (offsetEq1 = 0; offsetEq1 <= mIneq; offsetEq1++) {
-        obj.maxConstrWorkspace[offsetEq1] = obj.bineq[offsetEq1];
+      if (static_cast<int>(mIneq + 1 < 400)) {
+        for (int k{0}; k <= mIneq; k++) {
+          obj.maxConstrWorkspace[k] = obj.bineq[k];
+        }
+      } else {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4)
+
+        for (int k = 0; k <= mIneq; k++) {
+          obj.maxConstrWorkspace[k] = obj.bineq[k];
+        }
       }
       internal::blas::xgemv(obj.nVarOrig, obj.sizes[2], obj.Aineq, obj.ldA, x,
                             ix0, obj.maxConstrWorkspace);
@@ -337,16 +363,17 @@ double maxConstraintViolation(d_struct_T &obj, const array<double, 2U> &x,
       }
     }
     if (obj.Aeq.size(0) != 0) {
+      int offsetEq2;
       if (obj.sizes[1] > 2147483646) {
         check_forloop_overflow_error();
       }
-      for (offsetEq1 = 0; offsetEq1 <= mEq; offsetEq1++) {
-        obj.maxConstrWorkspace[offsetEq1] = obj.beq.data[offsetEq1];
+      for (mIneq = 0; mIneq <= mEq; mIneq++) {
+        obj.maxConstrWorkspace[mIneq] = obj.beq.data[mIneq];
       }
       internal::blas::xgemv(obj.nVarOrig, obj.sizes[1], obj.Aeq, obj.ldA, x,
                             ix0, obj.maxConstrWorkspace);
-      offsetEq1 = (obj.nVarOrig + obj.sizes[2]) - 1;
-      mIneq = offsetEq1 + obj.sizes[1];
+      mIneq = (obj.nVarOrig + obj.sizes[2]) - 1;
+      offsetEq2 = mIneq + obj.sizes[1];
       if (obj.sizes[1] > 2147483646) {
         check_forloop_overflow_error();
       }
@@ -356,11 +383,11 @@ double maxConstraintViolation(d_struct_T &obj, const array<double, 2U> &x,
           rtDynamicBoundsError(idx + 1, 1, i, n_emlrtBCI);
         }
         i = x.size(0) * x.size(1);
-        i1 = ((ix0 + offsetEq1) + idx) + 1;
+        i1 = ((ix0 + mIneq) + idx) + 1;
         if ((i1 < 1) || (i1 > i)) {
           rtDynamicBoundsError(i1, 1, i, n_emlrtBCI);
         }
-        i2 = ((ix0 + mIneq) + idx) + 1;
+        i2 = ((ix0 + offsetEq2) + idx) + 1;
         if ((i2 < 1) || (i2 > i)) {
           rtDynamicBoundsError(i2, 1, i, n_emlrtBCI);
         }
@@ -379,7 +406,6 @@ double maxConstraintViolation(d_struct_T &obj, const array<double, 2U> &x,
     }
   } else {
     int mEq;
-    int mIneq;
     v = 0.0;
     mIneq = obj.sizes[2] - 1;
     mEq = obj.sizes[1] - 1;
@@ -387,8 +413,17 @@ double maxConstraintViolation(d_struct_T &obj, const array<double, 2U> &x,
       if (obj.sizes[2] > 2147483646) {
         check_forloop_overflow_error();
       }
-      for (offsetEq1 = 0; offsetEq1 <= mIneq; offsetEq1++) {
-        obj.maxConstrWorkspace[offsetEq1] = obj.bineq[offsetEq1];
+      if (static_cast<int>(mIneq + 1 < 400)) {
+        for (int k{0}; k <= mIneq; k++) {
+          obj.maxConstrWorkspace[k] = obj.bineq[k];
+        }
+      } else {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4)
+
+        for (int k = 0; k <= mIneq; k++) {
+          obj.maxConstrWorkspace[k] = obj.bineq[k];
+        }
       }
       internal::blas::xgemv(obj.nVar, obj.sizes[2], obj.Aineq, obj.ldA, x, ix0,
                             obj.maxConstrWorkspace);
@@ -407,8 +442,8 @@ double maxConstraintViolation(d_struct_T &obj, const array<double, 2U> &x,
       if (obj.sizes[1] > 2147483646) {
         check_forloop_overflow_error();
       }
-      for (offsetEq1 = 0; offsetEq1 <= mEq; offsetEq1++) {
-        obj.maxConstrWorkspace[offsetEq1] = obj.beq.data[offsetEq1];
+      for (mIneq = 0; mIneq <= mEq; mIneq++) {
+        obj.maxConstrWorkspace[mIneq] = obj.beq.data[mIneq];
       }
       internal::blas::xgemv(obj.nVar, obj.sizes[1], obj.Aeq, obj.ldA, x, ix0,
                             obj.maxConstrWorkspace);
@@ -435,14 +470,14 @@ double maxConstraintViolation(d_struct_T &obj, const array<double, 2U> &x,
       if ((idx + 1 < 1) || (idx + 1 > i)) {
         rtDynamicBoundsError(idx + 1, 1, i, p_emlrtBCI);
       }
-      offsetEq1 = (ix0 + obj.indexLB[idx]) - 1;
-      if ((offsetEq1 < 1) || (offsetEq1 > i1)) {
-        rtDynamicBoundsError(offsetEq1, 1, i1, p_emlrtBCI);
+      mIneq = (ix0 + obj.indexLB[idx]) - 1;
+      if ((mIneq < 1) || (mIneq > i1)) {
+        rtDynamicBoundsError(mIneq, 1, i1, p_emlrtBCI);
       }
       if ((obj.indexLB[idx] < 1) || (obj.indexLB[idx] > i2)) {
         rtDynamicBoundsError(obj.indexLB[idx], 1, i2, p_emlrtBCI);
       }
-      v = std::fmax(v, -x[offsetEq1 - 1] - obj.lb[obj.indexLB[idx] - 1]);
+      v = std::fmax(v, -x[mIneq - 1] - obj.lb[obj.indexLB[idx] - 1]);
     }
   }
   if (obj.sizes[4] > 0) {
@@ -456,14 +491,14 @@ double maxConstraintViolation(d_struct_T &obj, const array<double, 2U> &x,
       if ((idx + 1 < 1) || (idx + 1 > i)) {
         rtDynamicBoundsError(idx + 1, 1, i, p_emlrtBCI);
       }
-      offsetEq1 = (ix0 + obj.indexUB[idx]) - 1;
-      if ((offsetEq1 < 1) || (offsetEq1 > i1)) {
-        rtDynamicBoundsError(offsetEq1, 1, i1, p_emlrtBCI);
+      mIneq = (ix0 + obj.indexUB[idx]) - 1;
+      if ((mIneq < 1) || (mIneq > i1)) {
+        rtDynamicBoundsError(mIneq, 1, i1, p_emlrtBCI);
       }
       if ((obj.indexUB[idx] < 1) || (obj.indexUB[idx] > i2)) {
         rtDynamicBoundsError(obj.indexUB[idx], 1, i2, p_emlrtBCI);
       }
-      v = std::fmax(v, x[offsetEq1 - 1] - obj.ub[obj.indexUB[idx] - 1]);
+      v = std::fmax(v, x[mIneq - 1] - obj.ub[obj.indexUB[idx] - 1]);
     }
   }
   if (obj.sizes[0] > 0) {
@@ -477,15 +512,15 @@ double maxConstraintViolation(d_struct_T &obj, const array<double, 2U> &x,
       if ((idx + 1 < 1) || (idx + 1 > i)) {
         rtDynamicBoundsError(idx + 1, 1, i, p_emlrtBCI);
       }
-      offsetEq1 = (ix0 + obj.indexFixed[idx]) - 1;
-      if ((offsetEq1 < 1) || (offsetEq1 > i1)) {
-        rtDynamicBoundsError(offsetEq1, 1, i1, p_emlrtBCI);
+      mIneq = (ix0 + obj.indexFixed[idx]) - 1;
+      if ((mIneq < 1) || (mIneq > i1)) {
+        rtDynamicBoundsError(mIneq, 1, i1, p_emlrtBCI);
       }
       if ((obj.indexFixed[idx] < 1) || (obj.indexFixed[idx] > i2)) {
         rtDynamicBoundsError(obj.indexFixed[idx], 1, i2, p_emlrtBCI);
       }
-      v = std::fmax(
-          v, std::abs(x[offsetEq1 - 1] - obj.ub[obj.indexFixed[idx] - 1]));
+      v = std::fmax(v,
+                    std::abs(x[mIneq - 1] - obj.ub[obj.indexFixed[idx] - 1]));
     }
   }
   return v;
@@ -502,15 +537,14 @@ double maxConstraintViolation(d_struct_T &obj, const array<double, 1U> &x)
   int i;
   int i1;
   int mFixed;
+  int mIneq;
   int mLB;
   int mUB;
-  int offsetEq1;
   mLB = obj.sizes[3];
   mUB = obj.sizes[4];
   mFixed = obj.sizes[0];
   if (obj.probType == 2) {
     int mEq;
-    int mIneq;
     v = 0.0;
     mIneq = obj.sizes[2] - 1;
     mEq = obj.sizes[1] - 1;
@@ -518,8 +552,17 @@ double maxConstraintViolation(d_struct_T &obj, const array<double, 1U> &x)
       if (obj.sizes[2] > 2147483646) {
         check_forloop_overflow_error();
       }
-      for (offsetEq1 = 0; offsetEq1 <= mIneq; offsetEq1++) {
-        obj.maxConstrWorkspace[offsetEq1] = obj.bineq[offsetEq1];
+      if (static_cast<int>(mIneq + 1 < 400)) {
+        for (int k{0}; k <= mIneq; k++) {
+          obj.maxConstrWorkspace[k] = obj.bineq[k];
+        }
+      } else {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4)
+
+        for (int k = 0; k <= mIneq; k++) {
+          obj.maxConstrWorkspace[k] = obj.bineq[k];
+        }
       }
       internal::blas::xgemv(obj.nVarOrig, obj.sizes[2], obj.Aineq, obj.ldA, x,
                             obj.maxConstrWorkspace);
@@ -548,16 +591,17 @@ double maxConstraintViolation(d_struct_T &obj, const array<double, 1U> &x)
       }
     }
     if (obj.Aeq.size(0) != 0) {
+      int offsetEq2;
       if (obj.sizes[1] > 2147483646) {
         check_forloop_overflow_error();
       }
-      for (offsetEq1 = 0; offsetEq1 <= mEq; offsetEq1++) {
-        obj.maxConstrWorkspace[offsetEq1] = obj.beq.data[offsetEq1];
+      for (mIneq = 0; mIneq <= mEq; mIneq++) {
+        obj.maxConstrWorkspace[mIneq] = obj.beq.data[mIneq];
       }
       internal::blas::xgemv(obj.nVarOrig, obj.sizes[1], obj.Aeq, obj.ldA, x,
                             obj.maxConstrWorkspace);
-      offsetEq1 = obj.nVarOrig + obj.sizes[2];
-      mIneq = offsetEq1 + obj.sizes[1];
+      mIneq = obj.nVarOrig + obj.sizes[2];
+      offsetEq2 = mIneq + obj.sizes[1];
       if (obj.sizes[1] > 2147483646) {
         check_forloop_overflow_error();
       }
@@ -567,11 +611,11 @@ double maxConstraintViolation(d_struct_T &obj, const array<double, 1U> &x)
         if ((idx + 1 < 1) || (idx + 1 > i)) {
           rtDynamicBoundsError(idx + 1, 1, i, n_emlrtBCI);
         }
-        i = (offsetEq1 + idx) + 1;
+        i = (mIneq + idx) + 1;
         if ((i < 1) || (i > x.size(0))) {
           rtDynamicBoundsError(i, 1, x.size(0), n_emlrtBCI);
         }
-        i1 = (mIneq + idx) + 1;
+        i1 = (offsetEq2 + idx) + 1;
         if ((i1 < 1) || (i1 > x.size(0))) {
           rtDynamicBoundsError(i1, 1, x.size(0), n_emlrtBCI);
         }
@@ -590,7 +634,6 @@ double maxConstraintViolation(d_struct_T &obj, const array<double, 1U> &x)
     }
   } else {
     int mEq;
-    int mIneq;
     v = 0.0;
     mIneq = obj.sizes[2] - 1;
     mEq = obj.sizes[1] - 1;
@@ -598,8 +641,17 @@ double maxConstraintViolation(d_struct_T &obj, const array<double, 1U> &x)
       if (obj.sizes[2] > 2147483646) {
         check_forloop_overflow_error();
       }
-      for (offsetEq1 = 0; offsetEq1 <= mIneq; offsetEq1++) {
-        obj.maxConstrWorkspace[offsetEq1] = obj.bineq[offsetEq1];
+      if (static_cast<int>(mIneq + 1 < 400)) {
+        for (int k{0}; k <= mIneq; k++) {
+          obj.maxConstrWorkspace[k] = obj.bineq[k];
+        }
+      } else {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4)
+
+        for (int k = 0; k <= mIneq; k++) {
+          obj.maxConstrWorkspace[k] = obj.bineq[k];
+        }
       }
       internal::blas::xgemv(obj.nVar, obj.sizes[2], obj.Aineq, obj.ldA, x,
                             obj.maxConstrWorkspace);
@@ -618,8 +670,8 @@ double maxConstraintViolation(d_struct_T &obj, const array<double, 1U> &x)
       if (obj.sizes[1] > 2147483646) {
         check_forloop_overflow_error();
       }
-      for (offsetEq1 = 0; offsetEq1 <= mEq; offsetEq1++) {
-        obj.maxConstrWorkspace[offsetEq1] = obj.beq.data[offsetEq1];
+      for (mIneq = 0; mIneq <= mEq; mIneq++) {
+        obj.maxConstrWorkspace[mIneq] = obj.beq.data[mIneq];
       }
       internal::blas::xgemv(obj.nVar, obj.sizes[1], obj.Aeq, obj.ldA, x,
                             obj.maxConstrWorkspace);
@@ -645,14 +697,14 @@ double maxConstraintViolation(d_struct_T &obj, const array<double, 1U> &x)
       if ((idx + 1 < 1) || (idx + 1 > i)) {
         rtDynamicBoundsError(idx + 1, 1, i, p_emlrtBCI);
       }
-      offsetEq1 = obj.indexLB[idx] - 1;
+      mIneq = obj.indexLB[idx] - 1;
       if ((obj.indexLB[idx] < 1) || (obj.indexLB[idx] > x.size(0))) {
         rtDynamicBoundsError(obj.indexLB[idx], 1, x.size(0), p_emlrtBCI);
       }
       if ((obj.indexLB[idx] < 1) || (obj.indexLB[idx] > i1)) {
         rtDynamicBoundsError(obj.indexLB[idx], 1, i1, p_emlrtBCI);
       }
-      v = std::fmax(v, -x[offsetEq1] - obj.lb[offsetEq1]);
+      v = std::fmax(v, -x[mIneq] - obj.lb[mIneq]);
     }
   }
   if (obj.sizes[4] > 0) {
@@ -665,14 +717,14 @@ double maxConstraintViolation(d_struct_T &obj, const array<double, 1U> &x)
       if ((idx + 1 < 1) || (idx + 1 > i)) {
         rtDynamicBoundsError(idx + 1, 1, i, p_emlrtBCI);
       }
-      offsetEq1 = obj.indexUB[idx] - 1;
+      mIneq = obj.indexUB[idx] - 1;
       if ((obj.indexUB[idx] < 1) || (obj.indexUB[idx] > x.size(0))) {
         rtDynamicBoundsError(obj.indexUB[idx], 1, x.size(0), p_emlrtBCI);
       }
       if ((obj.indexUB[idx] < 1) || (obj.indexUB[idx] > i1)) {
         rtDynamicBoundsError(obj.indexUB[idx], 1, i1, p_emlrtBCI);
       }
-      v = std::fmax(v, x[offsetEq1] - obj.ub[offsetEq1]);
+      v = std::fmax(v, x[mIneq] - obj.ub[mIneq]);
     }
   }
   if (obj.sizes[0] > 0) {

@@ -5,7 +5,7 @@
 // File: driver1.cpp
 //
 // MATLAB Coder version            : 23.2
-// C/C++ source code generated on  : 04-Feb-2025 04:50:11
+// C/C++ source code generated on  : 01-Mar-2025 01:36:28
 //
 
 // Include Files
@@ -94,7 +94,7 @@ void driver(const array<double, 2U> &H, const array<double, 1U> &f,
       "phaseone.p", // pName
       0             // checkKind
   };
-  static rtRunTimeErrorInfo c_emlrtRTEI{
+  static rtRunTimeErrorInfo e_emlrtRTEI{
       13,              // lineNo
       "validatesquare" // fName
   };
@@ -104,10 +104,10 @@ void driver(const array<double, 2U> &H, const array<double, 1U> &f,
   int nVar_tmp_tmp;
   boolean_T guard1;
   if (H.size(0) != H.size(1)) {
-    e_rtErrorWithMessageID("input", c_emlrtRTEI.fName, c_emlrtRTEI.lineNo);
+    e_rtErrorWithMessageID("input", e_emlrtRTEI.fName, e_emlrtRTEI.lineNo);
   }
   if ((H.size(0) == 0) || (H.size(1) == 0)) {
-    d_rtErrorWithMessageID("input", emlrtRTEI.fName, emlrtRTEI.lineNo);
+    d_rtErrorWithMessageID("input", c_emlrtRTEI.fName, c_emlrtRTEI.lineNo);
   }
   solution.iterations = 0;
   nVar_tmp_tmp = workingset.nVar;

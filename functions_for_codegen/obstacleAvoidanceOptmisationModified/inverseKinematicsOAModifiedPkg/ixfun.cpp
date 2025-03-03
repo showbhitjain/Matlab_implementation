@@ -5,7 +5,7 @@
 // File: ixfun.cpp
 //
 // MATLAB Coder version            : 23.2
-// C/C++ source code generated on  : 04-Feb-2025 04:50:11
+// C/C++ source code generated on  : 01-Mar-2025 01:36:28
 //
 
 // Include Files
@@ -48,7 +48,7 @@ namespace internal {
 void expand_max(const array<double, 1U> &a, const array<double, 1U> &b,
                 array<double, 1U> &c)
 {
-  static rtRunTimeErrorInfo c_emlrtRTEI{
+  static rtRunTimeErrorInfo e_emlrtRTEI{
       225,         // lineNo
       "expand_max" // fName
   };
@@ -65,7 +65,7 @@ void expand_max(const array<double, 1U> &a, const array<double, 1U> &b,
       csz_idx_0 = u0;
     }
     if (a.size(0) != b.size(0)) {
-      b_rtErrorWithMessageID(c_emlrtRTEI.fName, c_emlrtRTEI.lineNo);
+      b_rtErrorWithMessageID(e_emlrtRTEI.fName, e_emlrtRTEI.lineNo);
     }
   }
   c.set_size(csz_idx_0);
@@ -90,7 +90,7 @@ void expand_max(const array<double, 1U> &a, const array<double, 1U> &b,
 void expand_min(const array<double, 1U> &a, const array<double, 1U> &b,
                 array<double, 1U> &c)
 {
-  static rtRunTimeErrorInfo c_emlrtRTEI{
+  static rtRunTimeErrorInfo e_emlrtRTEI{
       225,         // lineNo
       "expand_min" // fName
   };
@@ -107,7 +107,7 @@ void expand_min(const array<double, 1U> &a, const array<double, 1U> &b,
       csz_idx_0 = u0;
     }
     if (a.size(0) != b.size(0)) {
-      b_rtErrorWithMessageID(c_emlrtRTEI.fName, c_emlrtRTEI.lineNo);
+      b_rtErrorWithMessageID(e_emlrtRTEI.fName, e_emlrtRTEI.lineNo);
     }
   }
   c.set_size(csz_idx_0);

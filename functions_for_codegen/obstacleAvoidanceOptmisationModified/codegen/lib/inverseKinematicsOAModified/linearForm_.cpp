@@ -5,7 +5,7 @@
 // File: linearForm_.cpp
 //
 // MATLAB Coder version            : 23.2
-// C/C++ source code generated on  : 04-Feb-2025 04:50:11
+// C/C++ source code generated on  : 03-Mar-2025 15:44:26
 //
 
 // Include Files
@@ -16,6 +16,7 @@
 #include "inverseKinematicsOAModified_types.h"
 #include "rt_nonfinite.h"
 #include "coder_array.h"
+#include "omp.h"
 #include <cstring>
 
 // Function Definitions
@@ -73,8 +74,17 @@ void linearForm_(boolean_T obj_hasLinear, int obj_nvar,
       if (obj_nvar > 2147483646) {
         check_forloop_overflow_error();
       }
-      for (ix = 0; ix < obj_nvar; ix++) {
-        workspace[ix] = 0.0;
+      if (static_cast<int>(obj_nvar < 400)) {
+        for (int b_workspace{0}; b_workspace < obj_nvar; b_workspace++) {
+          workspace[b_workspace] = 0.0;
+        }
+      } else {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4)
+
+        for (int b_workspace = 0; b_workspace < obj_nvar; b_workspace++) {
+          workspace[b_workspace] = 0.0;
+        }
       }
     }
     ix = 0;
@@ -88,7 +98,7 @@ void linearForm_(boolean_T obj_hasLinear, int obj_nvar,
       overflow = (i < MIN_int32_T - obj_nvar);
     }
     if (obj_nvar == 0) {
-      m_rtErrorWithMessageID(b_emlrtRTEI.fName, b_emlrtRTEI.lineNo);
+      m_rtErrorWithMessageID(d_emlrtRTEI.fName, d_emlrtRTEI.lineNo);
     }
     if (overflow) {
       check_forloop_overflow_error();

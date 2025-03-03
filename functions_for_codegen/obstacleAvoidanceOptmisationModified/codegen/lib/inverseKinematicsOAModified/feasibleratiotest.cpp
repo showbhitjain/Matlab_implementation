@@ -5,7 +5,7 @@
 // File: feasibleratiotest.cpp
 //
 // MATLAB Coder version            : 23.2
-// C/C++ source code generated on  : 04-Feb-2025 04:50:11
+// C/C++ source code generated on  : 03-Mar-2025 15:44:26
 //
 
 // Include Files
@@ -18,6 +18,7 @@
 #include "xgemv.h"
 #include "xnrm2.h"
 #include "coder_array.h"
+#include "omp.h"
 #include <cmath>
 #include <cstring>
 
@@ -82,8 +83,9 @@ double feasibleratiotest(const array<double, 1U> &solution_xstar,
   double phaseOneCorrectionP;
   double phaseOneCorrectionX;
   double ratio;
+  int b;
+  int iy;
   int iyend;
-  int k;
   int totalIneq;
   int totalUB;
   boolean_T overflow;
@@ -100,80 +102,97 @@ double feasibleratiotest(const array<double, 1U> &solution_xstar,
     if (workingset_sizes[2] > 2147483646) {
       check_forloop_overflow_error();
     }
-    for (k = 0; k <= totalIneq; k++) {
-      workspace[k] = workingset_bineq[k];
+    if (static_cast<int>(workingset_sizes[2] < 400)) {
+      for (int k{0}; k <= totalIneq; k++) {
+        workspace[k] = workingset_bineq[k];
+      }
+    } else {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4)
+
+      for (int k = 0; k <= totalIneq; k++) {
+        workspace[k] = workingset_bineq[k];
+      }
     }
     internal::blas::xgemv(workingset_nVar, workingset_sizes[2],
                           workingset_Aineq, workingset_ldA, solution_xstar,
                           workspace);
     ldw = workspace.size(0);
-    k = workspace.size(0) + 1;
+    iy = workspace.size(0) + 1;
     if ((workingset_nVar != 0) && (workingset_sizes[2] != 0)) {
-      int iy;
       iyend = workspace.size(0) + workingset_sizes[2];
       if ((workspace.size(0) + 1 <= iyend) && (iyend > 2147483646)) {
         check_forloop_overflow_error();
       }
-      for (iy = k; iy <= iyend; iy++) {
-        workspace[iy - 1] = 0.0;
+      if (static_cast<int>((iyend - iy) + 1 < 400)) {
+        for (int k{iy}; k <= iyend; k++) {
+          workspace[k - 1] = 0.0;
+        }
+      } else {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4)
+
+        for (int k = iy; k <= iyend; k++) {
+          workspace[k - 1] = 0.0;
+        }
       }
       iy = workspace.size(0);
-      k = workingset_ldA * (workingset_sizes[2] - 1) + 1;
-      if ((workingset_ldA == 0) || ((workingset_ldA > 0) && (k < 1)) ||
-          ((workingset_ldA < 0) && (k > 1))) {
+      iyend = workingset_ldA * (workingset_sizes[2] - 1) + 1;
+      if ((workingset_ldA == 0) || ((workingset_ldA > 0) && (iyend < 1)) ||
+          ((workingset_ldA < 0) && (iyend > 1))) {
         overflow = false;
       } else if (workingset_ldA > 0) {
-        overflow = (k > MAX_int32_T - workingset_ldA);
+        overflow = (iyend > MAX_int32_T - workingset_ldA);
       } else {
-        overflow = (k < MIN_int32_T - workingset_ldA);
+        overflow = (iyend < MIN_int32_T - workingset_ldA);
       }
       if (workingset_ldA == 0) {
-        m_rtErrorWithMessageID(b_emlrtRTEI.fName, b_emlrtRTEI.lineNo);
+        m_rtErrorWithMessageID(d_emlrtRTEI.fName, d_emlrtRTEI.lineNo);
       }
       if (overflow) {
         check_forloop_overflow_error();
       }
-      for (int iac{1}; workingset_ldA < 0 ? iac >= k : iac <= k;
+      for (int iac{1}; workingset_ldA < 0 ? iac >= iyend : iac <= iyend;
            iac += workingset_ldA) {
         c = 0.0;
-        iyend = (iac + workingset_nVar) - 1;
-        if ((iac <= iyend) && (iyend > 2147483646)) {
+        b = (iac + workingset_nVar) - 1;
+        if ((iac <= b) && (b > 2147483646)) {
           check_forloop_overflow_error();
         }
-        for (int ia{iac}; ia <= iyend; ia++) {
+        for (int ia{iac}; ia <= b; ia++) {
           c += workingset_Aineq[ia - 1] * solution_searchDir[ia - iac];
         }
         workspace[iy] = workspace[iy] + c;
         iy++;
       }
     }
-    for (int iac{0}; iac <= totalIneq; iac++) {
-      k = workspace.size(0) * workspace.size(1);
-      iyend = (ldw + iac) + 1;
-      if ((iyend < 1) || (iyend > k)) {
-        rtDynamicBoundsError(iyend, 1, k, w_emlrtBCI);
+    for (b = 0; b <= totalIneq; b++) {
+      iy = workspace.size(0) * workspace.size(1);
+      iyend = (ldw + b) + 1;
+      if ((iyend < 1) || (iyend > iy)) {
+        rtDynamicBoundsError(iyend, 1, iy, w_emlrtBCI);
       }
       phaseOneCorrectionX = workspace[iyend - 1];
       if (phaseOneCorrectionX > denomTol) {
-        iyend = (workingset_isActiveIdx[2] + iac) + 1;
+        iyend = (workingset_isActiveIdx[2] + b) + 1;
         if ((iyend - 1 < 1) ||
             (iyend - 1 > workingset_isActiveConstr.size(0))) {
           rtDynamicBoundsError(iyend - 1, 1, workingset_isActiveConstr.size(0),
                                g_emlrtBCI);
         }
         if (!workingset_isActiveConstr[iyend - 2]) {
-          if ((iac + 1 < 1) || (iac + 1 > k)) {
-            rtDynamicBoundsError(iac + 1, 1, k, w_emlrtBCI);
+          if ((b + 1 < 1) || (b + 1 > iy)) {
+            rtDynamicBoundsError(b + 1, 1, iy, w_emlrtBCI);
           }
-          if (iac + 1 > k) {
-            rtDynamicBoundsError(iac + 1, 1, k, w_emlrtBCI);
+          if (b + 1 > iy) {
+            rtDynamicBoundsError(b + 1, 1, iy, w_emlrtBCI);
           }
-          c = workspace[iac];
+          c = workspace[b];
           c = std::fmin(std::abs(c), 1.0E-6 - c) / phaseOneCorrectionX;
           if (c < alpha) {
             alpha = c;
             constrType = 3;
-            constrIdx = iac + 1;
+            constrIdx = b + 1;
             newBlocking = true;
           }
         }
@@ -193,44 +212,42 @@ double feasibleratiotest(const array<double, 1U> &solution_xstar,
     }
     phaseOneCorrectionP = static_cast<double>(isPhaseOne) *
                           solution_searchDir[workingset_nVar - 1];
-    k = workingset_sizes[3];
-    for (int iac{0}; iac <= k - 2; iac++) {
-      if ((iac + 1 < 1) || (iac + 1 > workingset_indexLB.size(0))) {
-        rtDynamicBoundsError(iac + 1, 1, workingset_indexLB.size(0),
-                             w_emlrtBCI);
+    iy = workingset_sizes[3];
+    for (b = 0; b <= iy - 2; b++) {
+      if ((b + 1 < 1) || (b + 1 > workingset_indexLB.size(0))) {
+        rtDynamicBoundsError(b + 1, 1, workingset_indexLB.size(0), w_emlrtBCI);
       }
-      if ((workingset_indexLB[iac] < 1) ||
-          (workingset_indexLB[iac] > solution_searchDir.size(0))) {
-        rtDynamicBoundsError(workingset_indexLB[iac], 1,
+      if ((workingset_indexLB[b] < 1) ||
+          (workingset_indexLB[b] > solution_searchDir.size(0))) {
+        rtDynamicBoundsError(workingset_indexLB[b], 1,
                              solution_searchDir.size(0), w_emlrtBCI);
       }
-      c = -solution_searchDir[workingset_indexLB[iac] - 1] -
-          phaseOneCorrectionP;
+      c = -solution_searchDir[workingset_indexLB[b] - 1] - phaseOneCorrectionP;
       if (c > denomTol) {
-        iyend = workingset_isActiveIdx[3] + iac;
+        iyend = workingset_isActiveIdx[3] + b;
         if ((iyend < 1) || (iyend > workingset_isActiveConstr.size(0))) {
           rtDynamicBoundsError(iyend, 1, workingset_isActiveConstr.size(0),
                                g_emlrtBCI);
         }
         if (!workingset_isActiveConstr[iyend - 1]) {
-          if ((workingset_indexLB[iac] < 1) ||
-              (workingset_indexLB[iac] > solution_xstar.size(0))) {
-            rtDynamicBoundsError(workingset_indexLB[iac], 1,
+          if ((workingset_indexLB[b] < 1) ||
+              (workingset_indexLB[b] > solution_xstar.size(0))) {
+            rtDynamicBoundsError(workingset_indexLB[b], 1,
                                  solution_xstar.size(0), w_emlrtBCI);
           }
-          if ((workingset_indexLB[iac] < 1) ||
-              (workingset_indexLB[iac] > workingset_lb.size(0))) {
-            rtDynamicBoundsError(workingset_indexLB[iac], 1,
+          if ((workingset_indexLB[b] < 1) ||
+              (workingset_indexLB[b] > workingset_lb.size(0))) {
+            rtDynamicBoundsError(workingset_indexLB[b], 1,
                                  workingset_lb.size(0), w_emlrtBCI);
           }
-          ratio = (-solution_xstar[workingset_indexLB[iac] - 1] -
-                   workingset_lb[workingset_indexLB[iac] - 1]) -
+          ratio = (-solution_xstar[workingset_indexLB[b] - 1] -
+                   workingset_lb[workingset_indexLB[b] - 1]) -
                   phaseOneCorrectionX;
           c = std::fmin(std::abs(ratio), 1.0E-6 - ratio) / c;
           if (c < alpha) {
             alpha = c;
             constrType = 4;
-            constrIdx = iac + 1;
+            constrIdx = b + 1;
             newBlocking = true;
           }
         }
@@ -241,12 +258,12 @@ double feasibleratiotest(const array<double, 1U> &solution_xstar,
       rtDynamicBoundsError(workingset_sizes[3], 1, workingset_indexLB.size(0),
                            w_emlrtBCI);
     }
-    k = workingset_indexLB[workingset_sizes[3] - 1];
-    overflow = ((k < 1) || (k > solution_searchDir.size(0)));
+    iy = workingset_indexLB[workingset_sizes[3] - 1];
+    overflow = ((iy < 1) || (iy > solution_searchDir.size(0)));
     if (overflow) {
-      rtDynamicBoundsError(k, 1, solution_searchDir.size(0), w_emlrtBCI);
+      rtDynamicBoundsError(iy, 1, solution_searchDir.size(0), w_emlrtBCI);
     }
-    phaseOneCorrectionX = -solution_searchDir[k - 1];
+    phaseOneCorrectionX = -solution_searchDir[iy - 1];
     if (phaseOneCorrectionX > denomTol) {
       iyend = workingset_isActiveIdx[3] + workingset_sizes[3];
       if ((iyend - 1 < 1) || (iyend - 1 > workingset_isActiveConstr.size(0))) {
@@ -254,13 +271,13 @@ double feasibleratiotest(const array<double, 1U> &solution_xstar,
                              g_emlrtBCI);
       }
       if (!workingset_isActiveConstr[iyend - 2]) {
-        if ((k < 1) || (k > solution_xstar.size(0))) {
-          rtDynamicBoundsError(k, 1, solution_xstar.size(0), w_emlrtBCI);
+        if ((iy < 1) || (iy > solution_xstar.size(0))) {
+          rtDynamicBoundsError(iy, 1, solution_xstar.size(0), w_emlrtBCI);
         }
-        if (k > workingset_lb.size(0)) {
-          rtDynamicBoundsError(k, 1, workingset_lb.size(0), w_emlrtBCI);
+        if (iy > workingset_lb.size(0)) {
+          rtDynamicBoundsError(iy, 1, workingset_lb.size(0), w_emlrtBCI);
         }
-        ratio = -solution_xstar[k - 1] - workingset_lb[k - 1];
+        ratio = -solution_xstar[iy - 1] - workingset_lb[iy - 1];
         c = std::fmin(std::abs(ratio), 1.0E-6 - ratio) / phaseOneCorrectionX;
         if (c < alpha) {
           alpha = c;
@@ -287,42 +304,41 @@ double feasibleratiotest(const array<double, 1U> &solution_xstar,
     if (workingset_sizes[4] > 2147483646) {
       check_forloop_overflow_error();
     }
-    for (int iac{0}; iac < totalUB; iac++) {
-      if ((iac + 1 < 1) || (iac + 1 > workingset_indexUB.size(0))) {
-        rtDynamicBoundsError(iac + 1, 1, workingset_indexUB.size(0),
-                             w_emlrtBCI);
+    for (b = 0; b < totalUB; b++) {
+      if ((b + 1 < 1) || (b + 1 > workingset_indexUB.size(0))) {
+        rtDynamicBoundsError(b + 1, 1, workingset_indexUB.size(0), w_emlrtBCI);
       }
-      if ((workingset_indexUB[iac] < 1) ||
-          (workingset_indexUB[iac] > solution_searchDir.size(0))) {
-        rtDynamicBoundsError(workingset_indexUB[iac], 1,
+      if ((workingset_indexUB[b] < 1) ||
+          (workingset_indexUB[b] > solution_searchDir.size(0))) {
+        rtDynamicBoundsError(workingset_indexUB[b], 1,
                              solution_searchDir.size(0), w_emlrtBCI);
       }
-      c = solution_searchDir[workingset_indexUB[iac] - 1] - phaseOneCorrectionP;
+      c = solution_searchDir[workingset_indexUB[b] - 1] - phaseOneCorrectionP;
       if (c > denomTol) {
-        k = workingset_isActiveIdx[4] + iac;
-        if ((k < 1) || (k > workingset_isActiveConstr.size(0))) {
-          rtDynamicBoundsError(k, 1, workingset_isActiveConstr.size(0),
+        iy = workingset_isActiveIdx[4] + b;
+        if ((iy < 1) || (iy > workingset_isActiveConstr.size(0))) {
+          rtDynamicBoundsError(iy, 1, workingset_isActiveConstr.size(0),
                                g_emlrtBCI);
         }
-        if (!workingset_isActiveConstr[k - 1]) {
-          if ((workingset_indexUB[iac] < 1) ||
-              (workingset_indexUB[iac] > solution_xstar.size(0))) {
-            rtDynamicBoundsError(workingset_indexUB[iac], 1,
+        if (!workingset_isActiveConstr[iy - 1]) {
+          if ((workingset_indexUB[b] < 1) ||
+              (workingset_indexUB[b] > solution_xstar.size(0))) {
+            rtDynamicBoundsError(workingset_indexUB[b], 1,
                                  solution_xstar.size(0), w_emlrtBCI);
           }
-          if ((workingset_indexUB[iac] < 1) ||
-              (workingset_indexUB[iac] > workingset_ub.size(0))) {
-            rtDynamicBoundsError(workingset_indexUB[iac], 1,
+          if ((workingset_indexUB[b] < 1) ||
+              (workingset_indexUB[b] > workingset_ub.size(0))) {
+            rtDynamicBoundsError(workingset_indexUB[b], 1,
                                  workingset_ub.size(0), w_emlrtBCI);
           }
-          ratio = (solution_xstar[workingset_indexUB[iac] - 1] -
-                   workingset_ub[workingset_indexUB[iac] - 1]) -
+          ratio = (solution_xstar[workingset_indexUB[b] - 1] -
+                   workingset_ub[workingset_indexUB[b] - 1]) -
                   phaseOneCorrectionX;
           c = std::fmin(std::abs(ratio), 1.0E-6 - ratio) / c;
           if (c < alpha) {
             alpha = c;
             constrType = 5;
-            constrIdx = iac + 1;
+            constrIdx = b + 1;
             newBlocking = true;
           }
         }

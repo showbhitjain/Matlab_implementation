@@ -5,7 +5,7 @@
 // File: ixfun.cpp
 //
 // MATLAB Coder version            : 23.2
-// C/C++ source code generated on  : 04-Feb-2025 04:50:11
+// C/C++ source code generated on  : 03-Mar-2025 15:44:26
 //
 
 // Include Files
@@ -13,7 +13,10 @@
 #include "inverseKinematicsOAModified_types.h"
 #include "rt_nonfinite.h"
 #include "coder_array.h"
+#include "omp.h"
 #include <cmath>
+#include <cstdio>
+#include <cstdlib>
 #include <cstring>
 #include <sstream>
 #include <stdexcept>
@@ -30,11 +33,18 @@ static void b_rtErrorWithMessageID(const char *aFcnName, int aLineNum);
 //
 static void b_rtErrorWithMessageID(const char *aFcnName, int aLineNum)
 {
+  std::string errMsg;
   std::stringstream outStream;
   outStream << "Arrays have incompatible sizes for this operation.";
   outStream << "\n";
   ((((outStream << "Error in ") << aFcnName) << " (line ") << aLineNum) << ")";
-  throw std::runtime_error(outStream.str());
+  if (omp_in_parallel()) {
+    errMsg = outStream.str();
+    std::fprintf(stderr, "%s", errMsg.c_str());
+    std::abort();
+  } else {
+    throw std::runtime_error(outStream.str());
+  }
 }
 
 //
@@ -48,7 +58,7 @@ namespace internal {
 void expand_max(const array<double, 1U> &a, const array<double, 1U> &b,
                 array<double, 1U> &c)
 {
-  static rtRunTimeErrorInfo c_emlrtRTEI{
+  static rtRunTimeErrorInfo e_emlrtRTEI{
       225,         // lineNo
       "expand_max" // fName
   };
@@ -65,7 +75,7 @@ void expand_max(const array<double, 1U> &a, const array<double, 1U> &b,
       csz_idx_0 = u0;
     }
     if (a.size(0) != b.size(0)) {
-      b_rtErrorWithMessageID(c_emlrtRTEI.fName, c_emlrtRTEI.lineNo);
+      b_rtErrorWithMessageID(e_emlrtRTEI.fName, e_emlrtRTEI.lineNo);
     }
   }
   c.set_size(csz_idx_0);
@@ -75,8 +85,17 @@ void expand_max(const array<double, 1U> &a, const array<double, 1U> &b,
     b_b = (a.size(0) != 1);
     b1 = (b.size(0) != 1);
     u0 = csz_idx_0 - 1;
-    for (csz_idx_0 = 0; csz_idx_0 <= u0; csz_idx_0++) {
-      c[csz_idx_0] = std::fmax(a[b_b * csz_idx_0], b[b1 * csz_idx_0]);
+    if (static_cast<int>(csz_idx_0 < 400)) {
+      for (int k{0}; k <= u0; k++) {
+        c[k] = std::fmax(a[b_b * k], b[b1 * k]);
+      }
+    } else {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4)
+
+      for (int k = 0; k <= u0; k++) {
+        c[k] = std::fmax(a[b_b * k], b[b1 * k]);
+      }
     }
   }
 }
@@ -90,7 +109,7 @@ void expand_max(const array<double, 1U> &a, const array<double, 1U> &b,
 void expand_min(const array<double, 1U> &a, const array<double, 1U> &b,
                 array<double, 1U> &c)
 {
-  static rtRunTimeErrorInfo c_emlrtRTEI{
+  static rtRunTimeErrorInfo e_emlrtRTEI{
       225,         // lineNo
       "expand_min" // fName
   };
@@ -107,7 +126,7 @@ void expand_min(const array<double, 1U> &a, const array<double, 1U> &b,
       csz_idx_0 = u0;
     }
     if (a.size(0) != b.size(0)) {
-      b_rtErrorWithMessageID(c_emlrtRTEI.fName, c_emlrtRTEI.lineNo);
+      b_rtErrorWithMessageID(e_emlrtRTEI.fName, e_emlrtRTEI.lineNo);
     }
   }
   c.set_size(csz_idx_0);
@@ -117,8 +136,17 @@ void expand_min(const array<double, 1U> &a, const array<double, 1U> &b,
     b_b = (a.size(0) != 1);
     b1 = (b.size(0) != 1);
     u0 = csz_idx_0 - 1;
-    for (csz_idx_0 = 0; csz_idx_0 <= u0; csz_idx_0++) {
-      c[csz_idx_0] = std::fmin(a[b_b * csz_idx_0], b[b1 * csz_idx_0]);
+    if (static_cast<int>(csz_idx_0 < 400)) {
+      for (int k{0}; k <= u0; k++) {
+        c[k] = std::fmin(a[b_b * k], b[b1 * k]);
+      }
+    } else {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4)
+
+      for (int k = 0; k <= u0; k++) {
+        c[k] = std::fmin(a[b_b * k], b[b1 * k]);
+      }
     }
   }
 }

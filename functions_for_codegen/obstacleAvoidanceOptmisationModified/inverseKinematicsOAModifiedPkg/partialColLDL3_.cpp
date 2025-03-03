@@ -5,7 +5,7 @@
 // File: partialColLDL3_.cpp
 //
 // MATLAB Coder version            : 23.2
-// C/C++ source code generated on  : 04-Feb-2025 04:50:11
+// C/C++ source code generated on  : 01-Mar-2025 01:36:28
 //
 
 // Include Files
@@ -123,7 +123,7 @@ void partialColLDL3_(f_struct_T &obj, int LD_offset, int NColsRemain)
         overflow = (b_tmp < MIN_int32_T - obj.ldm);
       }
       if (obj.ldm == 0) {
-        m_rtErrorWithMessageID(b_emlrtRTEI.fName, b_emlrtRTEI.lineNo);
+        m_rtErrorWithMessageID(d_emlrtRTEI.fName, d_emlrtRTEI.lineNo);
       }
       if (overflow) {
         check_forloop_overflow_error();

@@ -5,7 +5,7 @@
 // File: assignResidualsToXSlack.cpp
 //
 // MATLAB Coder version            : 23.2
-// C/C++ source code generated on  : 04-Feb-2025 04:50:11
+// C/C++ source code generated on  : 03-Mar-2025 15:44:26
 //
 
 // Include Files
@@ -19,6 +19,7 @@
 #include "xgemv.h"
 #include "coder_array.h"
 #include "coder_bounded_array.h"
+#include "omp.h"
 #include <cstring>
 
 // Function Definitions
@@ -51,7 +52,7 @@ void assignResidualsToXSlack(int nVarOrig, d_struct_T &WorkingSet,
   };
   double d;
   int i;
-  int k;
+  int i1;
   int mEq;
   int mIneq;
   int mLBOrig;
@@ -62,8 +63,17 @@ void assignResidualsToXSlack(int nVarOrig, d_struct_T &WorkingSet,
   if (WorkingSet.sizes[2] > 2147483646) {
     check_forloop_overflow_error();
   }
-  for (k = 0; k <= mIneq; k++) {
-    memspace.workspace_double[k] = WorkingSet.bineq[k];
+  if (static_cast<int>(mIneq + 1 < 400)) {
+    for (int k{0}; k <= mIneq; k++) {
+      memspace.workspace_double[k] = WorkingSet.bineq[k];
+    }
+  } else {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4)
+
+    for (int k = 0; k <= mIneq; k++) {
+      memspace.workspace_double[k] = WorkingSet.bineq[k];
+    }
   }
   ::coder::internal::blas::xgemv(nVarOrig, WorkingSet.sizes[2],
                                  WorkingSet.Aineq, WorkingSet.ldA,
@@ -72,26 +82,35 @@ void assignResidualsToXSlack(int nVarOrig, d_struct_T &WorkingSet,
     check_forloop_overflow_error();
   }
   for (int idx{0}; idx <= mIneq; idx++) {
-    k = memspace.workspace_double.size(0) * memspace.workspace_double.size(1);
-    if ((idx + 1 < 1) || (idx + 1 > k)) {
-      rtDynamicBoundsError(idx + 1, 1, k, w_emlrtBCI);
+    i = memspace.workspace_double.size(0) * memspace.workspace_double.size(1);
+    if ((idx + 1 < 1) || (idx + 1 > i)) {
+      rtDynamicBoundsError(idx + 1, 1, i, w_emlrtBCI);
     }
-    if (idx + 1 > k) {
-      rtDynamicBoundsError(idx + 1, 1, k, w_emlrtBCI);
+    if (idx + 1 > i) {
+      rtDynamicBoundsError(idx + 1, 1, i, w_emlrtBCI);
     }
-    k = b_TrialState.xstar.size(0);
-    i = (nVarOrig + idx) + 1;
-    if ((i < 1) || (i > k)) {
-      rtDynamicBoundsError(i, 1, k, w_emlrtBCI);
+    i = b_TrialState.xstar.size(0);
+    i1 = (nVarOrig + idx) + 1;
+    if ((i1 < 1) || (i1 > i)) {
+      rtDynamicBoundsError(i1, 1, i, w_emlrtBCI);
     }
     d = memspace.workspace_double[idx];
-    b_TrialState.xstar[i - 1] = static_cast<double>(d > 0.0) * d;
+    b_TrialState.xstar[i1 - 1] = static_cast<double>(d > 0.0) * d;
   }
   if (WorkingSet.sizes[1] > 2147483646) {
     check_forloop_overflow_error();
   }
-  for (k = 0; k <= mEq; k++) {
-    memspace.workspace_double[k] = WorkingSet.beq.data[k];
+  if (static_cast<int>(mEq + 1 < 400)) {
+    for (int k{0}; k <= mEq; k++) {
+      memspace.workspace_double[k] = WorkingSet.beq.data[k];
+    }
+  } else {
+#pragma omp parallel for num_threads(                                          \
+    4 > omp_get_max_threads() ? omp_get_max_threads() : 4)
+
+    for (int k = 0; k <= mEq; k++) {
+      memspace.workspace_double[k] = WorkingSet.beq.data[k];
+    }
   }
   ::coder::internal::blas::xgemv(nVarOrig, WorkingSet.sizes[1], WorkingSet.Aeq,
                                  WorkingSet.ldA, b_TrialState.xstar,
@@ -104,58 +123,58 @@ void assignResidualsToXSlack(int nVarOrig, d_struct_T &WorkingSet,
     int idx_positive;
     idx_positive = (mIneq + idx) + 2;
     idx_negative = ((mIneq + mEq) + idx) + 3;
-    k = memspace.workspace_double.size(0) * memspace.workspace_double.size(1);
-    if ((idx + 1 < 1) || (idx + 1 > k)) {
-      rtDynamicBoundsError(idx + 1, 1, k, w_emlrtBCI);
+    i = memspace.workspace_double.size(0) * memspace.workspace_double.size(1);
+    if ((idx + 1 < 1) || (idx + 1 > i)) {
+      rtDynamicBoundsError(idx + 1, 1, i, w_emlrtBCI);
     }
     d = memspace.workspace_double[idx];
     if (d <= 0.0) {
-      int i1;
-      i = b_TrialState.xstar.size(0);
-      i1 = nVarOrig + idx_positive;
-      if ((i1 < 1) || (i1 > i)) {
-        rtDynamicBoundsError(i1, 1, i, w_emlrtBCI);
+      int i2;
+      i1 = b_TrialState.xstar.size(0);
+      i2 = nVarOrig + idx_positive;
+      if ((i2 < 1) || (i2 > i1)) {
+        rtDynamicBoundsError(i2, 1, i1, w_emlrtBCI);
       }
-      b_TrialState.xstar[i1 - 1] = 0.0;
-      if (idx + 1 > k) {
-        rtDynamicBoundsError(idx + 1, 1, k, w_emlrtBCI);
+      b_TrialState.xstar[i2 - 1] = 0.0;
+      if (idx + 1 > i) {
+        rtDynamicBoundsError(idx + 1, 1, i, w_emlrtBCI);
       }
-      i = b_TrialState.xstar.size(0);
-      i1 = nVarOrig + idx_negative;
-      if ((i1 < 1) || (i1 > i)) {
-        rtDynamicBoundsError(i1, 1, i, w_emlrtBCI);
+      i1 = b_TrialState.xstar.size(0);
+      i2 = nVarOrig + idx_negative;
+      if ((i2 < 1) || (i2 > i1)) {
+        rtDynamicBoundsError(i2, 1, i1, w_emlrtBCI);
       }
-      b_TrialState.xstar[i1 - 1] = -d;
+      b_TrialState.xstar[i2 - 1] = -d;
       qpactiveset::WorkingSet::addBoundToActiveSetMatrix_(
           WorkingSet, mLBOrig + idx_positive);
-      if (idx + 1 > k) {
-        rtDynamicBoundsError(idx + 1, 1, k, w_emlrtBCI);
+      if (idx + 1 > i) {
+        rtDynamicBoundsError(idx + 1, 1, i, w_emlrtBCI);
       }
       if (d >= -1.0E-6) {
         qpactiveset::WorkingSet::addBoundToActiveSetMatrix_(
             WorkingSet, mLBOrig + idx_negative);
       }
     } else {
-      int i1;
-      if (idx + 1 > k) {
-        rtDynamicBoundsError(idx + 1, 1, k, w_emlrtBCI);
+      int i2;
+      if (idx + 1 > i) {
+        rtDynamicBoundsError(idx + 1, 1, i, w_emlrtBCI);
       }
-      i = b_TrialState.xstar.size(0);
-      i1 = nVarOrig + idx_positive;
-      if ((i1 < 1) || (i1 > i)) {
-        rtDynamicBoundsError(i1, 1, i, w_emlrtBCI);
+      i1 = b_TrialState.xstar.size(0);
+      i2 = nVarOrig + idx_positive;
+      if ((i2 < 1) || (i2 > i1)) {
+        rtDynamicBoundsError(i2, 1, i1, w_emlrtBCI);
       }
-      b_TrialState.xstar[i1 - 1] = d;
-      i = b_TrialState.xstar.size(0);
-      i1 = nVarOrig + idx_negative;
-      if ((i1 < 1) || (i1 > i)) {
-        rtDynamicBoundsError(i1, 1, i, w_emlrtBCI);
+      b_TrialState.xstar[i2 - 1] = d;
+      i1 = b_TrialState.xstar.size(0);
+      i2 = nVarOrig + idx_negative;
+      if ((i2 < 1) || (i2 > i1)) {
+        rtDynamicBoundsError(i2, 1, i1, w_emlrtBCI);
       }
-      b_TrialState.xstar[i1 - 1] = 0.0;
+      b_TrialState.xstar[i2 - 1] = 0.0;
       qpactiveset::WorkingSet::addBoundToActiveSetMatrix_(
           WorkingSet, mLBOrig + idx_negative);
-      if (idx + 1 > k) {
-        rtDynamicBoundsError(idx + 1, 1, k, w_emlrtBCI);
+      if (idx + 1 > i) {
+        rtDynamicBoundsError(idx + 1, 1, i, w_emlrtBCI);
       }
       if (d <= 1.0E-6) {
         qpactiveset::WorkingSet::addBoundToActiveSetMatrix_(

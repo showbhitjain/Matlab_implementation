@@ -1,5 +1,5 @@
 <deployment-project plugin="plugin.coder" plugin-version="R2023a">
-  <configuration build-checksum="1431019434" file="/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/obstacleAvoidanceOptmisationModified/inverseKinematicsOAModified.prj" location="/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/obstacleAvoidanceOptmisationModified" name="inverseKinematicsOAModified" preferred-package-location="/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/obstacleAvoidanceOptmisationModified" preferred-package-type="package.type.zip.flat" target="target.unifiedcoder" target-name="MATLAB Coder">
+  <configuration build-checksum="3901483314" file="/home/shobhit/ShobhitRobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/obstacleAvoidanceOptmisationModified/inverseKinematicsOAModified.prj" location="/home/shobhit/ShobhitRobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/obstacleAvoidanceOptmisationModified" name="inverseKinematicsOAModified" preferred-package-location="/home/shobhit/ShobhitRobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/obstacleAvoidanceOptmisationModified" preferred-package-type="package.type.zip.flat" target="target.unifiedcoder" target-name="MATLAB Coder">
     <profile key="profile.mex">
       <param.BuiltInstrumentedMex />
       <param.RanInstrumentedMex>false</param.RanInstrumentedMex>
@@ -78,7 +78,7 @@
       <param.InitFltsAndDblsToZero>true</param.InitFltsAndDblsToZero>
       <param.DefaultVariableInitialization>option.DefaultVariableInitialization.None</param.DefaultVariableInitialization>
       <param.ConstantInputs />
-      <param.EnableCRICodeCoverage>true</param.EnableCRICodeCoverage>
+      <param.EnableCRICodeCoverage />
       <param.EnableAutoParallelizationReporting>true</param.EnableAutoParallelizationReporting>
       <param.CacheDynamicArrayDataPointer>true</param.CacheDynamicArrayDataPointer>
       <param.EnableJIT>false</param.EnableJIT>
@@ -189,8 +189,8 @@
       <param.PurelyIntegerCode>false</param.PurelyIntegerCode>
       <param.SupportNonFinite>true</param.SupportNonFinite>
       <param.LoopUnrollThreshold>5</param.LoopUnrollThreshold>
-      <param.EnableAutoParallelization>false</param.EnableAutoParallelization>
-      <param.NumberOfCpuThreads>0</param.NumberOfCpuThreads>
+      <param.EnableAutoParallelization>true</param.EnableAutoParallelization>
+      <param.NumberOfCpuThreads>4</param.NumberOfCpuThreads>
       <param.OptimizeReductions>false</param.OptimizeReductions>
       <param.EnableVariableSizing>true</param.EnableVariableSizing>
       <param.EnableDynamicMemoryAllocation>true</param.EnableDynamicMemoryAllocation>
@@ -405,8 +405,6 @@
         <param.PurelyIntegerCode />
         <param.SupportNonFinite />
         <param.LoopUnrollThreshold />
-        <param.EnableAutoParallelization />
-        <param.NumberOfCpuThreads />
         <param.OptimizeReductions />
         <param.EnableVariableSizing />
         <param.EnableDynamicMemoryAllocation />
@@ -598,8 +596,8 @@
     <param.outputfile>${PROJECT_ROOT}/codegen/lib/inverseKinematicsOAModified/inverseKinematicsOAModified.a</param.outputfile>
     <param.version>R2012a</param.version>
     <param.HasECoderFeatures>true</param.HasECoderFeatures>
-    <param.HasGpuCoder>true</param.HasGpuCoder>
-    <var.HasNeuralNetworkToolbox>true</var.HasNeuralNetworkToolbox>
+    <param.HasGpuCoder>false</param.HasGpuCoder>
+    <var.HasNeuralNetworkToolbox>false</var.HasNeuralNetworkToolbox>
     <param.mex.mainhtml />
     <param.grt.mainhtml />
     <param.CallGeneratedCodeFromTest>true</param.CallGeneratedCodeFromTest>
@@ -620,13 +618,13 @@
     <param.hdlParamStorage />
     <var.gc.lastOutputRoot>codegen/lib/inverseKinematicsOAModified</var.gc.lastOutputRoot>
     <var.gc.lastOutputType>STATIC_LIBRARY</var.gc.lastOutputType>
-    <var.gc.preBuildChecksum>1353929831</var.gc.preBuildChecksum>
+    <var.gc.preBuildChecksum>1566665641</var.gc.preBuildChecksum>
     <var.cfi.lastOutputRoot>codegen/mex/inverseKinematicsOAModified</var.cfi.lastOutputRoot>
-    <var.cfi.preBuildChecksum>3609505313</var.cfi.preBuildChecksum>
+    <var.cfi.preBuildChecksum>2828416453</var.cfi.preBuildChecksum>
     <var.lastCfiTestSnippet>IKscript.m</var.lastCfiTestSnippet>
     <var.outdatedOnRestore>false</var.outdatedOnRestore>
-    <var.lastUserSourceChecksum>&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;&lt;checksum&gt;&lt;includedFiles&gt;&lt;file&gt;/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/obstacleAvoidanceOptmisationModified/Hessian_final_link.m&lt;/file&gt;&lt;file&gt;/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/obstacleAvoidanceOptmisationModified/Jacobi_final_link.m&lt;/file&gt;&lt;file&gt;/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/obstacleAvoidanceOptmisationModified/computeManipulabilityJacobian.m&lt;/file&gt;&lt;file&gt;/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/obstacleAvoidanceOptmisationModified/configurableObjective.m&lt;/file&gt;&lt;file&gt;/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/obstacleAvoidanceOptmisationModified/inverseKinematicsOAModified.m&lt;/file&gt;&lt;file&gt;/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/obstacleAvoidanceOptmisationModified/objFun.m&lt;/file&gt;&lt;/includedFiles&gt;&lt;value&gt;1040845009&lt;/value&gt;&lt;/checksum&gt;</var.lastUserSourceChecksum>
-    <var.sourceSetState>&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;&lt;sourceModel&gt;&lt;primarySourceFiles&gt;&lt;file&gt;/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/obstacleAvoidanceOptmisationModified/Hessian_final_link.m&lt;/file&gt;&lt;file&gt;/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/obstacleAvoidanceOptmisationModified/Jacobi_final_link.m&lt;/file&gt;&lt;file&gt;/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/obstacleAvoidanceOptmisationModified/computeManipulabilityJacobian.m&lt;/file&gt;&lt;file&gt;/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/obstacleAvoidanceOptmisationModified/configurableObjective.m&lt;/file&gt;&lt;file&gt;/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/obstacleAvoidanceOptmisationModified/inverseKinematicsOAModified.m&lt;/file&gt;&lt;file&gt;/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/obstacleAvoidanceOptmisationModified/objFun.m&lt;/file&gt;&lt;/primarySourceFiles&gt;&lt;fixedPointSourceFiles/&gt;&lt;fixedPointSourceRegistered&gt;false&lt;/fixedPointSourceRegistered&gt;&lt;fixedPointSourceSelected&gt;false&lt;/fixedPointSourceSelected&gt;&lt;/sourceModel&gt;</var.sourceSetState>
+    <var.lastUserSourceChecksum>&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;&lt;checksum&gt;&lt;includedFiles&gt;&lt;file&gt;/home/shobhit/ShobhitRobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/obstacleAvoidanceOptmisationModified/Hessian_final_link.m&lt;/file&gt;&lt;file&gt;/home/shobhit/ShobhitRobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/obstacleAvoidanceOptmisationModified/Jacobi_final_link.m&lt;/file&gt;&lt;file&gt;/home/shobhit/ShobhitRobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/obstacleAvoidanceOptmisationModified/computeManipulabilityJacobian.m&lt;/file&gt;&lt;file&gt;/home/shobhit/ShobhitRobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/obstacleAvoidanceOptmisationModified/configurableObjective.m&lt;/file&gt;&lt;file&gt;/home/shobhit/ShobhitRobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/obstacleAvoidanceOptmisationModified/inverseKinematicsOAModified.m&lt;/file&gt;&lt;file&gt;/home/shobhit/ShobhitRobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/obstacleAvoidanceOptmisationModified/objFun.m&lt;/file&gt;&lt;/includedFiles&gt;&lt;value&gt;84501452&lt;/value&gt;&lt;/checksum&gt;</var.lastUserSourceChecksum>
+    <var.sourceSetState>&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;&lt;sourceModel&gt;&lt;primarySourceFiles&gt;&lt;file&gt;/home/shobhit/ShobhitRobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/obstacleAvoidanceOptmisationModified/Hessian_final_link.m&lt;/file&gt;&lt;file&gt;/home/shobhit/ShobhitRobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/obstacleAvoidanceOptmisationModified/Jacobi_final_link.m&lt;/file&gt;&lt;file&gt;/home/shobhit/ShobhitRobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/obstacleAvoidanceOptmisationModified/computeManipulabilityJacobian.m&lt;/file&gt;&lt;file&gt;/home/shobhit/ShobhitRobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/obstacleAvoidanceOptmisationModified/configurableObjective.m&lt;/file&gt;&lt;file&gt;/home/shobhit/ShobhitRobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/obstacleAvoidanceOptmisationModified/inverseKinematicsOAModified.m&lt;/file&gt;&lt;file&gt;/home/shobhit/ShobhitRobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/obstacleAvoidanceOptmisationModified/objFun.m&lt;/file&gt;&lt;/primarySourceFiles&gt;&lt;fixedPointSourceFiles/&gt;&lt;fixedPointSourceRegistered&gt;false&lt;/fixedPointSourceRegistered&gt;&lt;fixedPointSourceSelected&gt;false&lt;/fixedPointSourceSelected&gt;&lt;/sourceModel&gt;</var.sourceSetState>
     <param.forceMexBuild>false</param.forceMexBuild>
     <param.NoDefaultJIT>false</param.NoDefaultJIT>
     <param.configImportActive>false</param.configImportActive>
@@ -651,9 +649,9 @@
     <param.CppGenerateEnumClass>true</param.CppGenerateEnumClass>
     <param.gpu.Enabled>false</param.gpu.Enabled>
     <param.gpu.SelectCudaDevice>-1</param.gpu.SelectCudaDevice>
-    <param.gpu.ComputeCapability>3.5</param.gpu.ComputeCapability>
+    <param.gpu.ComputeCapability />
     <param.gpu.CustomComputeCapability />
-    <param.gpu.MallocMode>discrete</param.gpu.MallocMode>
+    <param.gpu.MallocMode />
     <param.gpu.MallocThreshold>200</param.gpu.MallocThreshold>
     <param.gpu.StackLimitPerThread>1024</param.gpu.StackLimitPerThread>
     <param.gpu.MaximumBlocksPerKernel>0</param.gpu.MaximumBlocksPerKernel>
@@ -661,16 +659,16 @@
     <param.gpu.SafeBuild>false</param.gpu.SafeBuild>
     <param.gpu.KernelNamePrefix />
     <param.gpu.CompilerFlags />
-    <param.gpu.EnableCUBLAS>true</param.gpu.EnableCUBLAS>
-    <param.gpu.EnableCUSOLVER>true</param.gpu.EnableCUSOLVER>
-    <param.gpu.EnableCUFFT>true</param.gpu.EnableCUFFT>
+    <param.gpu.EnableCUBLAS>false</param.gpu.EnableCUBLAS>
+    <param.gpu.EnableCUSOLVER>false</param.gpu.EnableCUSOLVER>
+    <param.gpu.EnableCUFFT>false</param.gpu.EnableCUFFT>
     <param.gpu.EnableMemoryManager>false</param.gpu.EnableMemoryManager>
     <param.gpu.BlockAlignment>256</param.gpu.BlockAlignment>
-    <param.gpu.FreeMode>Never</param.gpu.FreeMode>
+    <param.gpu.FreeMode />
     <param.gpu.MinPoolSize>8</param.gpu.MinPoolSize>
     <param.gpu.MaxPoolSize>2048</param.gpu.MaxPoolSize>
     <var.checkIssuesGpu>false</var.checkIssuesGpu>
-    <var.hasGpu>true</var.hasGpu>
+    <var.hasGpu>false</var.hasGpu>
     <var.isDeepLearningForMatlabCoderEnabled>true</var.isDeepLearningForMatlabCoderEnabled>
     <param.deeplearning.EnableDeepLearning>false</param.deeplearning.EnableDeepLearning>
     <param.deeplearning.DeepLearningCustomCallback />
@@ -1001,7 +999,7 @@
       </file>
     </fileset.inputtypes>
     <build-deliverables>
-      <file location="${PROJECT_ROOT}/codegen/lib/inverseKinematicsOAModified" name="inverseKinematicsOAModified.a" optional="false">/home/shobhit/Franka-emika-Obstacle-avoidance/RobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/obstacleAvoidanceOptmisationModified/codegen/lib/inverseKinematicsOAModified/inverseKinematicsOAModified.a</file>
+      <file location="${PROJECT_ROOT}/codegen/lib/inverseKinematicsOAModified" name="inverseKinematicsOAModified.a" optional="false">/home/shobhit/ShobhitRobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/obstacleAvoidanceOptmisationModified/codegen/lib/inverseKinematicsOAModified/inverseKinematicsOAModified.a</file>
     </build-deliverables>
     <workflow />
     <matlab>
@@ -1009,10 +1007,6 @@
       <toolboxes>
         <toolbox name="matlabcoder" />
         <toolbox name="embeddedcoder" />
-        <toolbox name="gpucoder" />
-        <toolbox name="fixedpoint" />
-        <toolbox name="matlabhdlcoder" />
-        <toolbox name="neuralnetwork" />
       </toolboxes>
       <toolbox>
         <matlabcoder>
@@ -1024,26 +1018,6 @@
           <enabled>true</enabled>
         </embeddedcoder>
       </toolbox>
-      <toolbox>
-        <gpucoder>
-          <enabled>true</enabled>
-        </gpucoder>
-      </toolbox>
-      <toolbox>
-        <fixedpoint>
-          <enabled>true</enabled>
-        </fixedpoint>
-      </toolbox>
-      <toolbox>
-        <matlabhdlcoder>
-          <enabled>true</enabled>
-        </matlabhdlcoder>
-      </toolbox>
-      <toolbox>
-        <neuralnetwork>
-          <enabled>true</enabled>
-        </neuralnetwork>
-      </toolbox>
     </matlab>
     <platform>
       <unix>true</unix>
@@ -1054,7 +1028,7 @@
       <vista>false</vista>
       <linux>true</linux>
       <solaris>false</solaris>
-      <osver>6.8.0-52-generic</osver>
+      <osver>5.15.44-rt46</osver>
       <os32>false</os32>
       <os64>true</os64>
       <arch>glnxa64</arch>
