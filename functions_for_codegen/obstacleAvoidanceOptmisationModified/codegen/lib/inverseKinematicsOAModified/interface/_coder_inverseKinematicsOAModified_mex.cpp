@@ -5,7 +5,7 @@
 // File: _coder_inverseKinematicsOAModified_mex.cpp
 //
 // MATLAB Coder version            : 23.2
-// C/C++ source code generated on  : 03-Mar-2025 23:23:36
+// C/C++ source code generated on  : 05-Mar-2025 16:53:20
 //
 
 // Include Files
@@ -15,14 +15,45 @@
 // Function Definitions
 //
 // Arguments    : int32_T nlhs
+//                mxArray *plhs[]
+//                int32_T nrhs
+//                const mxArray *prhs[]
+// Return Type  : void
+//
+void mexFunction(int32_T nlhs, mxArray *plhs[], int32_T nrhs,
+                 const mxArray *prhs[])
+{
+  mexAtExit(&inverseKinematicsOAModified_atexit);
+  // Module initialization.
+  inverseKinematicsOAModified_initialize();
+  // Dispatch the entry-point.
+  unsafe_inverseKinematicsOAModified_mexFunction(nlhs, plhs, nrhs, prhs);
+  // Module termination.
+  inverseKinematicsOAModified_terminate();
+}
+
+//
+// Arguments    : void
+// Return Type  : emlrtCTX
+//
+emlrtCTX mexFunctionCreateRootTLS()
+{
+  emlrtCreateRootTLSR2022a(&emlrtRootTLSGlobal, &emlrtContextGlobal, nullptr, 1,
+                           nullptr, "UTF-8", true);
+  return emlrtRootTLSGlobal;
+}
+
+//
+// Arguments    : int32_T nlhs
 //                mxArray *plhs[2]
 //                int32_T nrhs
 //                const mxArray *prhs[11]
 // Return Type  : void
 //
-void inverseKinematicsOAModified_mexFunction(int32_T nlhs, mxArray *plhs[2],
-                                             int32_T nrhs,
-                                             const mxArray *prhs[11])
+void unsafe_inverseKinematicsOAModified_mexFunction(int32_T nlhs,
+                                                    mxArray *plhs[2],
+                                                    int32_T nrhs,
+                                                    const mxArray *prhs[11])
 {
   emlrtStack st{
       nullptr, // site
@@ -54,36 +85,6 @@ void inverseKinematicsOAModified_mexFunction(int32_T nlhs, mxArray *plhs[2],
     i1 = nlhs;
   }
   emlrtReturnArrays(i1, &plhs[0], &outputs[0]);
-}
-
-//
-// Arguments    : int32_T nlhs
-//                mxArray *plhs[]
-//                int32_T nrhs
-//                const mxArray *prhs[]
-// Return Type  : void
-//
-void mexFunction(int32_T nlhs, mxArray *plhs[], int32_T nrhs,
-                 const mxArray *prhs[])
-{
-  mexAtExit(&inverseKinematicsOAModified_atexit);
-  // Module initialization.
-  inverseKinematicsOAModified_initialize();
-  // Dispatch the entry-point.
-  inverseKinematicsOAModified_mexFunction(nlhs, plhs, nrhs, prhs);
-  // Module termination.
-  inverseKinematicsOAModified_terminate();
-}
-
-//
-// Arguments    : void
-// Return Type  : emlrtCTX
-//
-emlrtCTX mexFunctionCreateRootTLS()
-{
-  emlrtCreateRootTLSR2022a(&emlrtRootTLSGlobal, &emlrtContextGlobal, nullptr, 1,
-                           nullptr, "UTF-8", true);
-  return emlrtRootTLSGlobal;
 }
 
 //

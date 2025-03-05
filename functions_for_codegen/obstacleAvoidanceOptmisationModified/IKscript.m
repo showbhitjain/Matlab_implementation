@@ -116,7 +116,7 @@ config.weightManipulability = 0.1;         % singularity avoidance and manipulab
 
 % Constraint configuration
 config.applyEqualityConstraints = true;    % Flag to apply equality constraints
-config.applyInequalityConstraints = false;  % Flag to apply inequality constraints
+config.applyInequalityConstraints = true;  % Flag to apply inequality constraints
 
 %Slack 
 config.applySlack = true;
@@ -153,6 +153,15 @@ config.applyVelocityDamper = true;
 config.jointLimitActivationDistance = 10; % in degrees
 config.jointLimitStopDistance = 3;
 config.jointLimitGain = 1;
+
+
+%fmincon Optimizer options that support code generation (default values)
+config.ConstraintTolerance = 1e-6;
+config.MaxIterations = 400;
+
+config.OptimalityTolerance = 1e-6;
+config.StepTolerance = 1e-6;
+
 
 joint_velocity = zeros(number_of_joints, numel(trajTimes));
 joint_vector = zeros(number_of_joints, numel(trajTimes));

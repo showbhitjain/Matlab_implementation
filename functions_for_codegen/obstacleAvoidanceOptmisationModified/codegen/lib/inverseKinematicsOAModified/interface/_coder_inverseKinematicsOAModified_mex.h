@@ -5,7 +5,7 @@
 // File: _coder_inverseKinematicsOAModified_mex.h
 //
 // MATLAB Coder version            : 23.2
-// C/C++ source code generated on  : 03-Mar-2025 23:23:36
+// C/C++ source code generated on  : 05-Mar-2025 16:53:20
 //
 
 #ifndef _CODER_INVERSEKINEMATICSOAMODIFIED_MEX_H
@@ -17,14 +17,15 @@
 #include "tmwtypes.h"
 
 // Function Declarations
-void inverseKinematicsOAModified_mexFunction(int32_T nlhs, mxArray *plhs[2],
-                                             int32_T nrhs,
-                                             const mxArray *prhs[11]);
-
 MEXFUNCTION_LINKAGE void mexFunction(int32_T nlhs, mxArray *plhs[],
                                      int32_T nrhs, const mxArray *prhs[]);
 
 emlrtCTX mexFunctionCreateRootTLS();
+
+void unsafe_inverseKinematicsOAModified_mexFunction(int32_T nlhs,
+                                                    mxArray *plhs[2],
+                                                    int32_T nrhs,
+                                                    const mxArray *prhs[11]);
 
 #endif
 //

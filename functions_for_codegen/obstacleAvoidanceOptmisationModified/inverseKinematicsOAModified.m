@@ -78,8 +78,8 @@ function [optimal_joint_velocity, Exit_Flag] = inverseKinematicsOAModified( ...
     beq = [];
     A   = [];
     b   = [];
-    lb  = [];
-    ub  = [];
+    % lb  = [];
+    % ub  = [];
     
     % Weight matrix for Jacobian in equality constraints
     JacobiWeightMatrix = diag([1,1,1,1,1,1]); 
@@ -180,18 +180,46 @@ function [optimal_joint_velocity, Exit_Flag] = inverseKinematicsOAModified( ...
     else
         q_vel_initial_guess = starting_joint_vel;
     end
-
+    
     %----------------------------------------------------------------------
     % 6. OPTIMIZATION OPTIONS
     %----------------------------------------------------------------------
     options = optimoptions('fmincon', ...
         'Algorithm',           'sqp', ...
         'Display',            'off', ...  % or 'iter' to see solver progress
-        'OptimalityTolerance', 1e-6, ...
-        'ConstraintTolerance', 1e-6, ...
-        'StepTolerance',       1e-6, ...
-        'MaxIterations',       1000);
+        'OptimalityTolerance', config.OptimalityTolerance, ...
+        'ConstraintTolerance', config.ConstraintTolerance, ...
+        'StepTolerance',     config.StepTolerance, ...
+        'MaxIterations',       config.MaxIterations);
 
+   
+    %  % Code generation supports these options:
+    % 
+    % Algorithm — Must be 'sqp' or 'sqp-legacy'
+    % 
+    % ConstraintTolerance: of interest
+    % 
+    % FiniteDifferenceStepSize not of interest
+    % 
+    % FiniteDifferenceType: not of interest
+    % 
+    % MaxFunctionEvaluations: not of interest
+    % 
+    % MaxIterations: of interest
+    % 
+    % ObjectiveLimit: of interest
+    % 
+    % OptimalityTolerance: of interest
+    % 
+    % ScaleProblem: not of interest
+    % 
+    % SpecifyConstraintGradient: not of interest
+    % 
+    % SpecifyObjectiveGradient: not of interest
+    % 
+    % StepTolerance: of interest
+    % 
+    % TypicalX: not of interest
     %----------------------------------------------------------------------
     % 7. CALL THE OPTIMIZER (fmincon)
     %----------------------------------------------------------------------

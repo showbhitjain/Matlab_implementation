@@ -1,5 +1,5 @@
 <deployment-project plugin="plugin.coder" plugin-version="R2023a">
-  <configuration build-checksum="1819095118" file="/home/shobhit/ShobhitRobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/obstacleAvoidanceOptmisationModified/inverseKinematicsOAModified.prj" location="/home/shobhit/ShobhitRobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/obstacleAvoidanceOptmisationModified" name="inverseKinematicsOAModified" preferred-package-location="/home/shobhit/ShobhitRobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/obstacleAvoidanceOptmisationModified" preferred-package-type="package.type.zip.flat" target="target.unifiedcoder" target-name="MATLAB Coder">
+  <configuration build-checksum="2360003443" file="/home/shobhit/ShobhitRobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/obstacleAvoidanceOptmisationModified/inverseKinematicsOAModified.prj" location="/home/shobhit/ShobhitRobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/obstacleAvoidanceOptmisationModified" name="inverseKinematicsOAModified" preferred-package-location="/home/shobhit/ShobhitRobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/obstacleAvoidanceOptmisationModified" preferred-package-type="package.type.zip.flat" target="target.unifiedcoder" target-name="MATLAB Coder">
     <profile key="profile.mex">
       <param.BuiltInstrumentedMex>false</param.BuiltInstrumentedMex>
       <param.RanInstrumentedMex>false</param.RanInstrumentedMex>
@@ -40,7 +40,7 @@
       <param.CppStyleConst>true</param.CppStyleConst>
       <param.EnableDebugging>false</param.EnableDebugging>
       <param.Verbosity>option.Verbosity.Info</param.Verbosity>
-      <param.ReportPotentialDifferences>false</param.ReportPotentialDifferences>
+      <param.ReportPotentialDifferences>true</param.ReportPotentialDifferences>
       <param.GenerateReport>true</param.GenerateReport>
       <param.HighlightImplicitExpansionIssues>true</param.HighlightImplicitExpansionIssues>
       <param.HighlightLoopControlIssues>true</param.HighlightLoopControlIssues>
@@ -49,7 +49,7 @@
       <param.DefaultTestFile />
       <param.MergeInstrumentationResults>false</param.MergeInstrumentationResults>
       <param.VerificationMode>option.VerificationMode.None</param.VerificationMode>
-      <param.VerificationStatus>option.VerificationStatus.Passed</param.VerificationStatus>
+      <param.VerificationStatus>option.VerificationStatus.FailedInference</param.VerificationStatus>
       <param.EnableMexProfiling>false</param.EnableMexProfiling>
       <var.BuiltWithMexProfiling>false</var.BuiltWithMexProfiling>
       <param.CustomSourceCode />
@@ -250,10 +250,10 @@
       <param.CustomSymbolStrEMXArrayFcn>emx$M$N</param.CustomSymbolStrEMXArrayFcn>
       <param.ReservedNameArray />
       <param.CppStyleConst>true</param.CppStyleConst>
-      <param.RuntimeChecks>true</param.RuntimeChecks>
+      <param.RuntimeChecks>false</param.RuntimeChecks>
       <param.Verbose>false</param.Verbose>
       <param.Verbosity>option.Verbosity.Info</param.Verbosity>
-      <param.ReportPotentialDifferences>false</param.ReportPotentialDifferences>
+      <param.ReportPotentialDifferences>true</param.ReportPotentialDifferences>
       <param.GenerateReport>true</param.GenerateReport>
       <param.GenerateCodeMetricsReport>false</param.GenerateCodeMetricsReport>
       <param.GenerateCodeReplacementReport>false</param.GenerateCodeReplacementReport>
@@ -462,6 +462,7 @@
         <param.CustomSymbolStrEMXArrayFcn />
         <param.ReservedNameArray />
         <param.CppStyleConst />
+        <param.RuntimeChecks />
         <param.Verbose />
         <param.Verbosity />
         <param.ReportPotentialDifferences />
@@ -588,7 +589,7 @@
       </unset>
     </profile>
     <param.objective>option.objective.c</param.objective>
-    <param.WorkflowStep>workflowSummary</param.WorkflowStep>
+    <param.WorkflowStep>verifyCompatibility</param.WorkflowStep>
     <param.TestSnippets>
       <item>IKscript.m</item>
     </param.TestSnippets>
@@ -619,13 +620,13 @@
     <param.hdlParamStorage />
     <var.gc.lastOutputRoot>codegen/lib/inverseKinematicsOAModified</var.gc.lastOutputRoot>
     <var.gc.lastOutputType>STATIC_LIBRARY</var.gc.lastOutputType>
-    <var.gc.preBuildChecksum>1819095118</var.gc.preBuildChecksum>
+    <var.gc.preBuildChecksum>791881796</var.gc.preBuildChecksum>
     <var.cfi.lastOutputRoot>codegen/mex/inverseKinematicsOAModified</var.cfi.lastOutputRoot>
-    <var.cfi.preBuildChecksum>2572833426</var.cfi.preBuildChecksum>
+    <var.cfi.preBuildChecksum>2204449741</var.cfi.preBuildChecksum>
     <var.lastCfiTestSnippet>IKscript.m</var.lastCfiTestSnippet>
     <var.outdatedOnRestore>false</var.outdatedOnRestore>
     <var.lastUserSourceChecksum>&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;&lt;checksum&gt;&lt;includedFiles&gt;&lt;file&gt;/home/shobhit/ShobhitRobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/obstacleAvoidanceOptmisationModified/Hessian_final_link.m&lt;/file&gt;&lt;file&gt;/home/shobhit/ShobhitRobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/obstacleAvoidanceOptmisationModified/Jacobi_final_link.m&lt;/file&gt;&lt;file&gt;/home/shobhit/ShobhitRobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/obstacleAvoidanceOptmisationModified/computeManipulabilityJacobian.m&lt;/file&gt;&lt;file&gt;/home/shobhit/ShobhitRobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/obstacleAvoidanceOptmisationModified/configurableObjective.m&lt;/file&gt;&lt;file&gt;/home/shobhit/ShobhitRobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/obstacleAvoidanceOptmisationModified/inverseKinematicsOAModified.m&lt;/file&gt;&lt;file&gt;/home/shobhit/ShobhitRobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/obstacleAvoidanceOptmisationModified/objFun.m&lt;/file&gt;&lt;/includedFiles&gt;&lt;value&gt;1042197843&lt;/value&gt;&lt;/checksum&gt;</var.lastUserSourceChecksum>
-    <var.sourceSetState>&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;&lt;sourceModel&gt;&lt;primarySourceFiles&gt;&lt;file&gt;/home/shobhit/ShobhitRobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/obstacleAvoidanceOptmisationModified/Hessian_final_link.m&lt;/file&gt;&lt;file&gt;/home/shobhit/ShobhitRobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/obstacleAvoidanceOptmisationModified/Jacobi_final_link.m&lt;/file&gt;&lt;file&gt;/home/shobhit/ShobhitRobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/obstacleAvoidanceOptmisationModified/computeManipulabilityJacobian.m&lt;/file&gt;&lt;file&gt;/home/shobhit/ShobhitRobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/obstacleAvoidanceOptmisationModified/configurableObjective.m&lt;/file&gt;&lt;file&gt;/home/shobhit/ShobhitRobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/obstacleAvoidanceOptmisationModified/inverseKinematicsOAModified.m&lt;/file&gt;&lt;file&gt;/home/shobhit/ShobhitRobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/obstacleAvoidanceOptmisationModified/objFun.m&lt;/file&gt;&lt;/primarySourceFiles&gt;&lt;fixedPointSourceFiles/&gt;&lt;fixedPointSourceRegistered&gt;false&lt;/fixedPointSourceRegistered&gt;&lt;fixedPointSourceSelected&gt;false&lt;/fixedPointSourceSelected&gt;&lt;/sourceModel&gt;</var.sourceSetState>
+    <var.sourceSetState>&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;&lt;sourceModel&gt;&lt;primarySourceFiles&gt;&lt;file&gt;/home/shobhit/ShobhitRobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/obstacleAvoidanceOptmisationModified/inverseKinematicsOAModified.m&lt;/file&gt;&lt;/primarySourceFiles&gt;&lt;fixedPointSourceFiles/&gt;&lt;fixedPointSourceRegistered&gt;false&lt;/fixedPointSourceRegistered&gt;&lt;fixedPointSourceSelected&gt;false&lt;/fixedPointSourceSelected&gt;&lt;/sourceModel&gt;</var.sourceSetState>
     <param.forceMexBuild>false</param.forceMexBuild>
     <param.NoDefaultJIT>false</param.NoDefaultJIT>
     <param.configImportActive>false</param.configImportActive>
@@ -657,7 +658,7 @@
     <param.gpu.StackLimitPerThread>1024</param.gpu.StackLimitPerThread>
     <param.gpu.MaximumBlocksPerKernel>0</param.gpu.MaximumBlocksPerKernel>
     <param.gpu.Benchmarking>false</param.gpu.Benchmarking>
-    <param.gpu.SafeBuild>false</param.gpu.SafeBuild>
+    <param.gpu.SafeBuild>true</param.gpu.SafeBuild>
     <param.gpu.KernelNamePrefix />
     <param.gpu.CompilerFlags />
     <param.gpu.EnableCUBLAS>false</param.gpu.EnableCUBLAS>
@@ -674,9 +675,9 @@
     <param.deeplearning.EnableDeepLearning>false</param.deeplearning.EnableDeepLearning>
     <param.deeplearning.DeepLearningCustomCallback />
     <param.deeplearning.TargetLib>option.deeplearning.targetlibrary.none</param.deeplearning.TargetLib>
-    <var.cfiTargetLibSuppression>false</var.cfiTargetLibSuppression>
-    <var.hasMatlabDeepLearningSupportPackage>false</var.hasMatlabDeepLearningSupportPackage>
-    <var.hasGpuDeepLearningSupportPackage>false</var.hasGpuDeepLearningSupportPackage>
+    <var.cfiTargetLibSuppression>true</var.cfiTargetLibSuppression>
+    <var.hasMatlabDeepLearningSupportPackage>true</var.hasMatlabDeepLearningSupportPackage>
+    <var.hasGpuDeepLearningSupportPackage>true</var.hasGpuDeepLearningSupportPackage>
     <param.tensorrt.DataType>option.tensorrt.datatype.fp32</param.tensorrt.DataType>
     <param.tensorrt.DataPath />
     <param.tensorrt.NumCalibrationBatches>0</param.tensorrt.NumCalibrationBatches>
@@ -811,7 +812,8 @@
       <param.deeplearning.EnableDeepLearning />
       <param.deeplearning.DeepLearningCustomCallback />
       <param.deeplearning.TargetLib />
-      <var.cfiTargetLibSuppression />
+      <var.hasMatlabDeepLearningSupportPackage />
+      <var.hasGpuDeepLearningSupportPackage />
       <param.tensorrt.DataType />
       <param.tensorrt.DataPath />
       <param.tensorrt.NumCalibrationBatches />
@@ -875,7 +877,7 @@
     </unset>
     <fileset.entrypoints>
       <file custom-data-expanded="false" value="${PROJECT_ROOT}/inverseKinematicsOAModified.m">
-        <Marker>1738640899140</Marker>
+        <Marker>1741216678783</Marker>
       </file>
     </fileset.entrypoints>
     <fileset.testbench>
@@ -920,6 +922,10 @@
             <Field Name="jointLimitActivationDistance" typeId="6" />
             <Field Name="jointLimitStopDistance" typeId="6" />
             <Field Name="jointLimitGain" typeId="6" />
+            <Field Name="ConstraintTolerance" typeId="8" />
+            <Field Name="MaxIterations" typeId="9" />
+            <Field Name="OptimalityTolerance" typeId="8" />
+            <Field Name="StepTolerance" typeId="8" />
           </Input>
           <idpTable>
             <type typeId="0">
@@ -963,7 +969,7 @@
               <Size>1 x 1</Size>
               <Value />
               <InitialValue />
-              <UserDefined>false</UserDefined>
+              <UserDefined>true</UserDefined>
               <TypeName />
               <Extern>false</Extern>
               <HeaderFile />
@@ -994,6 +1000,23 @@
               <UserDefined>false</UserDefined>
               <Complex>false</Complex>
               <Sparse>false</Sparse>
+            </type>
+            <type typeId="8">
+              <Class>double</Class>
+              <Size>1 x 1</Size>
+              <Value />
+              <InitialValue />
+              <UserDefined>true</UserDefined>
+              <Complex>false</Complex>
+              <Sparse>false</Sparse>
+            </type>
+            <type typeId="9">
+              <Class>int16</Class>
+              <Size>1 x 1</Size>
+              <Value />
+              <InitialValue />
+              <UserDefined>true</UserDefined>
+              <Complex>false</Complex>
             </type>
           </idpTable>
         </Inputs>

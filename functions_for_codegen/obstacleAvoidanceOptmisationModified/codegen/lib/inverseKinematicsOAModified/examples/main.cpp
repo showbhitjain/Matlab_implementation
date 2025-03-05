@@ -5,7 +5,7 @@
 // File: main.cpp
 //
 // MATLAB Coder version            : 23.2
-// C/C++ source code generated on  : 03-Mar-2025 23:23:36
+// C/C++ source code generated on  : 05-Mar-2025 16:53:20
 //
 
 /*************************************************************************/
@@ -40,9 +40,6 @@
 #include "rt_nonfinite.h"
 #include "coder_array.h"
 #include <cstring>
-#include <sstream>
-#include <stdexcept>
-#include <string>
 
 // Function Declarations
 static void argInit_6x1_real_T(double result[6]);
@@ -58,8 +55,6 @@ static boolean_T argInit_boolean_T();
 static double argInit_real_T();
 
 static void argInit_struct0_T(struct0_T &result);
-
-static void j_rtErrorWithMessageID(const char *aFcnName, int aLineNum);
 
 // Function Definitions
 //
@@ -197,35 +192,14 @@ static void argInit_struct0_T(struct0_T &result)
 }
 
 //
-// Arguments    : const char *aFcnName
-//                int aLineNum
-// Return Type  : void
-//
-static void j_rtErrorWithMessageID(const char *aFcnName, int aLineNum)
-{
-  std::stringstream outStream;
-  outStream << "Example main does not support command line arguments.";
-  outStream << "\n";
-  ((((outStream << "Error in ") << aFcnName) << " (line ") << aLineNum) << ")";
-  throw std::runtime_error(outStream.str());
-}
-
-//
 // Arguments    : int argc
 //                char **argv
 // Return Type  : int
 //
-int main(int argc, char **)
+int main(int, char **)
 {
-  static rtRunTimeErrorInfo e_emlrtRTEI{
-      1,                            // lineNo
-      "inverseKinematicsOAModified" // fName
-  };
   OptimizationBasedIKWithOAModified *classInstance;
   classInstance = new OptimizationBasedIKWithOAModified;
-  if (argc > 1) {
-    j_rtErrorWithMessageID(e_emlrtRTEI.fName, e_emlrtRTEI.lineNo);
-  }
   // Invoke the entry-point functions.
   // You can call entry-point functions multiple times.
   main_inverseKinematicsOAModified(classInstance);
