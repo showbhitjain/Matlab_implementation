@@ -70,8 +70,8 @@ quiver3(center(1), center(2), center(3), z_axis_global(1), z_axis_global(2), z_a
     'Color','b','LineWidth',2, 'MaxHeadSize', 0.5);
 
 % Add labels for the coordinate axes
-text(center(1)+x_axis_global(1), center(2)+x_axis_global(2), center(3)+x_axis_global(3), 'X','FontSize',12,'Color','r');
-text(center(1)+y_axis_global(1), center(2)+y_axis_global(2), center(3)+y_axis_global(3), 'Y','FontSize',12,'Color','g');
-text(center(1)+z_axis_global(1), center(2)+z_axis_global(2), center(3)+z_axis_global(3), 'Z','FontSize',12,'Color','b');
+text(center(1)+x_axis_global(1), center(2)+x_axis_global(2), center(3)+x_axis_global(3), 'X_{box}','FontSize',12,'Color','r');
+text(center(1)+y_axis_global(1), center(2)+y_axis_global(2), center(3)+y_axis_global(3), 'Y_{box}','FontSize',12,'Color','g');
+text(center(1)+z_axis_global(1), center(2)+z_axis_global(2), center(3)+z_axis_global(3), 'Z_{box}','FontSize',12,'Color','b');
 
 hold off;

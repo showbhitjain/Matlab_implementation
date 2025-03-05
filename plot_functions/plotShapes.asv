@@ -5,15 +5,15 @@ hold on;
 axis equal;
 grid on;
 xlabel('X'); ylabel('Y'); zlabel('Z');
-%title('Combined Plot: Cylinder, Box, and Plane');
+title('Combined Plot: Cylinder, Box, and Plane');
 view(3);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 1. Plot a Closed Cylinder
 % Cylinder parameters
+plane_center  = [10, 0, 1]
 
-cyl_center = [13, 2, 3]; 
-%cyl_center = [4, 2, 3];                  % Center of the cylinder
+cyl_center = [4, 2, 3];                  % Center of the cylinder
 cyl_axis   = [0.5774, 0.5774, 0.5774];    % Normalized axis
 cyl_radius = 1;                          % Cylinder radius
 cyl_height = 5;                          % Cylinder height
@@ -65,8 +65,8 @@ patch(botX, botY, botZ, 'cyan', 'FaceAlpha', 0.7);
 halfH = cyl_height/2;
 quiver3(cyl_center(1), cyl_center(2), cyl_center(3), ...
     cyl_axis(1)*cyl_height, cyl_axis(2)*cyl_height, cyl_axis(3)*cyl_height, ...
-    'Color','b','LineWidth',2, 'MaxHeadSize',0.5);
-text(cyl_center(1)+cyl_axis(1)*halfH, cyl_center(2)+cyl_axis(2)*halfH, cyl_center(3)+cyl_axis(3)*halfH, ' Axis_{cylinder}','FontSize',9,'Color','b');
+    'Color','k','LineWidth',2, 'MaxHeadSize',0.5);
+text(cyl_center(1)+cyl_axis(1)*halfH, cyl_center(2)+cyl_axis(2)*halfH, cyl_center(3)+cyl_axis(3)*halfH, ' Axis_{cylinder}','FontSize',9,'Color','k');
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 2. Plot an Oriented Box
@@ -123,8 +123,7 @@ text(box_center(1)+z_axis_global(1), box_center(2)+z_axis_global(2), box_center(
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 3. Plot a Plane with a Small Width in the -Normal Direction
 % Plane parameters
-plane_center  = [4, 2, 1];
-%plane_center  = [10, 0, 1];    % Center of the plane
+plane_center  = [10, 0, 1];    % Center of the plane
 plane_normal  = [0.2, 0.5, 0.84];  % Given normal (will be normalized)
 plane_normal  = plane_normal / norm(plane_normal);
 halfWidth     = 3;   % extent along first in-plane direction
@@ -166,7 +165,7 @@ normalLength = max(halfWidth, halfLength);
 quiver3(plane_center(1), plane_center(2), plane_center(3), ...
     plane_normal(1)*normalLength, plane_normal(2)*normalLength, plane_normal(3)*normalLength, ...
     'Color','r','LineWidth',2, 'MaxHeadSize',0.5);
-text(plane_center(1)+plane_normal(1)*normalLength, plane_center(2)+plane_normal(2)*normalLength, plane_center(3)+plane_normal(3)*normalLength, 'Axis_{plane}','FontSize',9,'Color','r');
+text(plane_center(1)+plane_normal(1)*normalLength, plane_center(2)+plane_normal(2)*normalLength, plane_center(3)+plane_normal(3)*normalLength, 'Normal_{plane}','FontSize',9,'Color','r');
 
 % Optionally, plot the in-plane axes
 quiver3(plane_center(1), plane_center(2), plane_center(3), inPlane1(1)*halfWidth, inPlane1(2)*halfWidth, inPlane1(3)*halfWidth, 'Color','g','LineWidth',2, 'MaxHeadSize',0.5);
@@ -181,5 +180,4 @@ plotSphere([18,0,1],1)
 axis equal
 view(3);
 camproj('orthographic');
- plotSmallCoordinateSystem(eye(4),2,1);
 hold off;

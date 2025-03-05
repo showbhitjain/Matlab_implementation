@@ -1,0 +1,29 @@
+ 
+linkSegmentsWithJoints = createLineSegmentsWithJoints(mdhparams,robot,[0.1,0.1,0.07,0.08,0.07,0,0.08],[0.1,0.1,0.06,0.04,0.05,0,0.08],Homejointpositions);
+
+av0 = linkSegmentsWithJoints(5).aSegmentV0;
+av1 = linkSegmentsWithJoints(5).aSegmentV1;
+dv0 = linkSegmentsWithJoints(5).dSegmentV0;
+dv1 = linkSegmentsWithJoints(5).dSegmentV1;
+radiusLink = linkSegmentsWithJoints(5).radius;
+radiusJoint = linkSegmentsWithJoints(5).radiusJoint;
+
+getTransform(robot,Homejointpositions,'robot_link7','base')
+
+hold on;
+plotCylinder(av0',av1',radiusLink,[0.9290 0.6940 0.1250],0.5)
+%show(frankarobot,Initalconfig,'Frames','off','PreservePlot',true);
+show(robot,Homejointpositions,'Frames','off','PreservePlot',true);
+
+plotSphere(av0,radiusJoint,[0.9290 0.6940 0.1250],0.3)
+plotline(av0,av1,'Color','k')
+
+
+plotCylinder(dv0',dv1',radiusLink,[0.4940 0.1840 0.5560],0.5);
+hold on;
+plotSphere(dv0,radiusJoint,[0.4940 0.1840 0.5560],0.3);
+plotline(dv0,dv1,'Color','k');
+xlim([-0.2, 0.7]);
+ylim([-0.6, 0.6]);
+zlim([-0.1,1])
+view(3)
