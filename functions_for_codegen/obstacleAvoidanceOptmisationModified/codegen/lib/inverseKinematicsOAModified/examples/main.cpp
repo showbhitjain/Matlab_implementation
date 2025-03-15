@@ -5,7 +5,7 @@
 // File: main.cpp
 //
 // MATLAB Coder version            : 23.2
-// C/C++ source code generated on  : 05-Mar-2025 16:53:20
+// C/C++ source code generated on  : 07-Mar-2025 21:34:16
 //
 
 /*************************************************************************/
@@ -39,6 +39,7 @@
 #include "inverseKinematicsOAModified_types.h"
 #include "rt_nonfinite.h"
 #include "coder_array.h"
+#include "omp.h"
 #include <cstring>
 
 // Function Declarations
@@ -78,15 +79,29 @@ static void argInit_6x1_real_T(double result[6])
 static coder::array<double, 2U> argInit_6xUnbounded_real_T()
 {
   coder::array<double, 2U> result;
+  int idx1;
   // Set the size of the array.
   // Change this size to the value that the application requires.
   result.set_size(6, 2);
   // Loop over the array to initialize each element.
-  for (int idx0{0}; idx0 < 6; idx0++) {
-    for (int idx1{0}; idx1 < result.size(1); idx1++) {
-      // Set the value of the array element.
-      // Change this value to the value that the application requires.
-      result[idx0 + 6 * idx1] = argInit_real_T();
+  if (static_cast<int>(6 * result.size(1) < 200)) {
+    for (int idx0{0}; idx0 < 6; idx0++) {
+      for (idx1 = 0; idx1 < result.size(1); idx1++) {
+        // Set the value of the array element.
+        // Change this value to the value that the application requires.
+        result[idx0 + 6 * idx1] = argInit_real_T();
+      }
+    }
+  } else {
+#pragma omp parallel for num_threads(                                          \
+    2 > omp_get_max_threads() ? omp_get_max_threads() : 2) private(idx1)
+
+    for (int idx0 = 0; idx0 < 6; idx0++) {
+      for (idx1 = 0; idx1 < result.size(1); idx1++) {
+        // Set the value of the array element.
+        // Change this value to the value that the application requires.
+        result[idx0 + 6 * idx1] = argInit_real_T();
+      }
     }
   }
   return result;
@@ -103,10 +118,21 @@ static coder::array<double, 1U> argInit_Unboundedx1_real_T()
   // Change this size to the value that the application requires.
   result.set_size(2);
   // Loop over the array to initialize each element.
-  for (int idx0{0}; idx0 < result.size(0); idx0++) {
-    // Set the value of the array element.
-    // Change this value to the value that the application requires.
-    result[idx0] = argInit_real_T();
+  if (static_cast<int>(result.size(0) < 200)) {
+    for (int idx0{0}; idx0 < result.size(0); idx0++) {
+      // Set the value of the array element.
+      // Change this value to the value that the application requires.
+      result[idx0] = argInit_real_T();
+    }
+  } else {
+#pragma omp parallel for num_threads(                                          \
+    2 > omp_get_max_threads() ? omp_get_max_threads() : 2)
+
+    for (int idx0 = 0; idx0 < result.size(0); idx0++) {
+      // Set the value of the array element.
+      // Change this value to the value that the application requires.
+      result[idx0] = argInit_real_T();
+    }
   }
   return result;
 }
@@ -118,15 +144,29 @@ static coder::array<double, 1U> argInit_Unboundedx1_real_T()
 static coder::array<double, 2U> argInit_UnboundedxUnbounded_real_T()
 {
   coder::array<double, 2U> result;
+  int idx1;
   // Set the size of the array.
   // Change this size to the value that the application requires.
   result.set_size(2, 2);
   // Loop over the array to initialize each element.
-  for (int idx0{0}; idx0 < result.size(0); idx0++) {
-    for (int idx1{0}; idx1 < result.size(1); idx1++) {
-      // Set the value of the array element.
-      // Change this value to the value that the application requires.
-      result[idx0 + result.size(0) * idx1] = argInit_real_T();
+  if (static_cast<int>(result.size(0) * result.size(1) < 200)) {
+    for (int idx0{0}; idx0 < result.size(0); idx0++) {
+      for (idx1 = 0; idx1 < result.size(1); idx1++) {
+        // Set the value of the array element.
+        // Change this value to the value that the application requires.
+        result[idx0 + result.size(0) * idx1] = argInit_real_T();
+      }
+    }
+  } else {
+#pragma omp parallel for num_threads(                                          \
+    2 > omp_get_max_threads() ? omp_get_max_threads() : 2) private(idx1)
+
+    for (int idx0 = 0; idx0 < result.size(0); idx0++) {
+      for (idx1 = 0; idx1 < result.size(1); idx1++) {
+        // Set the value of the array element.
+        // Change this value to the value that the application requires.
+        result[idx0 + result.size(0) * idx1] = argInit_real_T();
+      }
     }
   }
   return result;
@@ -186,9 +226,12 @@ static void argInit_struct0_T(struct0_T &result)
   result.useObjectiveNormInfinity = result_tmp;
   result.weightNormInfinity = b_result_tmp;
   argInit_6x1_real_T(result.SlackPenaltyWeight);
-  for (int i{0}; i < 6; i++) {
-    result.Slackupperbound[i] = result.Slacklowerbound[i];
-  }
+  result.Slackupperbound[0] = result.Slacklowerbound[0];
+  result.Slackupperbound[1] = result.Slacklowerbound[1];
+  result.Slackupperbound[2] = result.Slacklowerbound[2];
+  result.Slackupperbound[3] = result.Slacklowerbound[3];
+  result.Slackupperbound[4] = result.Slacklowerbound[4];
+  result.Slackupperbound[5] = result.Slacklowerbound[5];
 }
 
 //

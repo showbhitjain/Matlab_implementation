@@ -14,21 +14,19 @@ function [optimal_joint_velocity, Exit_Flag] = inverseKinematicsOAModified( ...
     %----------------------------------------------------------------------
     % 1. PERSISTENT VARIABLES
     %----------------------------------------------------------------------
-    persistent starting_joint_vel is_first_step 
+    persistent starting_joint_vel  starting_slack
     
     n_joints = length(joint_values);  % Number of joints
     n_slack  = 6;                     % One slack variable per end-effector velocity component (if used)
     
     % Initialize the persistent variables only on the first call
-    if isempty(is_first_step) || isempty(starting_joint_vel)
-        is_first_step = true;
-        starting_joint_vel = zeros(n_joints,1); % Default
+    if isempty(starting_joint_vel) && 
         
+        starting_joint_vel = zeros(n_joints,1); % Default
+        starting_slack = zeros(n_slack,1);
     end
     
-    if is_first_step
-        is_first_step = false;
-    end
+ 
 
     % Unpack config for convenience
     config = configInput;
@@ -45,6 +43,7 @@ function [optimal_joint_velocity, Exit_Flag] = inverseKinematicsOAModified( ...
     if config.dynamicSlack && config.obstacleAvoidanceScheme
         if isempty(J_g) || isempty(b_g)
             slackIsUsed = false;
+            starting_slack = zeros(n_slack,1);
         end
     end
 
@@ -78,8 +77,8 @@ function [optimal_joint_velocity, Exit_Flag] = inverseKinematicsOAModified( ...
     beq = [];
     A   = [];
     b   = [];
-    lb  = [];
-    ub  = [];
+    % lb  = [];
+    % ub  = [];
     
     % Weight matrix for Jacobian in equality constraints
     JacobiWeightMatrix = diag([1,1,1,1,1,1]); 
@@ -176,21 +175,21 @@ function [optimal_joint_velocity, Exit_Flag] = inverseKinematicsOAModified( ...
     % 5. INITIAL GUESS
     %----------------------------------------------------------------------
     if slackIsUsed
-        q_vel_initial_guess = [starting_joint_vel;zeros(n_slack,1)];
+        q_vel_initial_guess = [starting_joint_vel;starting_slack];
     else
         q_vel_initial_guess = starting_joint_vel;
     end
-
+    
     %----------------------------------------------------------------------
     % 6. OPTIMIZATION OPTIONS
     %----------------------------------------------------------------------
     options = optimoptions('fmincon', ...
         'Algorithm',           'sqp', ...
         'Display',            'off', ...  % or 'iter' to see solver progress
-        'OptimalityTolerance', con, ...
-        'ConstraintTolerance', 1e-6, ...
-        'StepTolerance',       1e-6, ...
-        'MaxIterations',       1000);
+        'OptimalityTolerance', 1e-3, ...
+        'ConstraintTolerance', 1.8967e-5, ...
+        'StepTolerance',       1e-4, ...
+        'MaxIterations',       400);
 
    
     %  % Code generation supports these options:
@@ -207,7 +206,7 @@ function [optimal_joint_velocity, Exit_Flag] = inverseKinematicsOAModified( ...
     % 
     % MaxIterations: of interest
     % 
-    % ObjectiveLimit: of interest
+    % ObjectiveLimit: of interest only for unbounded problems (i.e)
     % 
     % OptimalityTolerance: of interest
     % 
@@ -240,7 +239,7 @@ function [optimal_joint_velocity, Exit_Flag] = inverseKinematicsOAModified( ...
     %----------------------------------------------------------------------
     if slackIsUsed
         optimal_joint_velocity = q_vel_opt(1:n_joints);
-        
+        starting_slack = q_vel_opt(n_joints+1:end);
     else
         optimal_joint_velocity = q_vel_opt;
     end

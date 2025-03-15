@@ -11,24 +11,28 @@ function [optimal_joint_velocity, Exit_Flag] = inverseKinematicsOAModified( ...
     jointVelocityWeightMatrix, ...
     configInput)
 
+    
+
+    coder.varsize("optimal_joint_velocity",[Inf 1],[1 0]);
+
+   coder.varsize("Exit_Flag",[1 1],[0 0]);
+    
     %----------------------------------------------------------------------
     % 1. PERSISTENT VARIABLES
     %----------------------------------------------------------------------
-    persistent starting_joint_vel is_first_step 
+    persistent starting_joint_vel  
     
     n_joints = length(joint_values);  % Number of joints
     n_slack  = 6;                     % One slack variable per end-effector velocity component (if used)
     
     % Initialize the persistent variables only on the first call
-    if isempty(is_first_step) || isempty(starting_joint_vel)
-        is_first_step = true;
+    if isempty(starting_joint_vel)
+       
         starting_joint_vel = zeros(n_joints,1); % Default
         
     end
     
-    if is_first_step
-        is_first_step = false;
-    end
+ 
 
     % Unpack config for convenience
     config = configInput;
@@ -187,10 +191,11 @@ function [optimal_joint_velocity, Exit_Flag] = inverseKinematicsOAModified( ...
     options = optimoptions('fmincon', ...
         'Algorithm',           'sqp', ...
         'Display',            'off', ...  % or 'iter' to see solver progress
-        'OptimalityTolerance', config.OptimalityTolerance, ...
-        'ConstraintTolerance', config.ConstraintTolerance, ...
-        'StepTolerance',     config.StepTolerance, ...
-        'MaxIterations',       config.MaxIterations);
+        'OptimalityTolerance', 1.254e-3, ...
+        'ConstraintTolerance', 1.8967e-5, ...
+        'StepTolerance',       1.245e-4, ...
+        'MaxIterations',       550,...
+        'ObjectiveLimit',-1e6);
 
    
     %  % Code generation supports these options:
@@ -207,7 +212,7 @@ function [optimal_joint_velocity, Exit_Flag] = inverseKinematicsOAModified( ...
     % 
     % MaxIterations: of interest
     % 
-    % ObjectiveLimit: of interest
+    % ObjectiveLimit: of interest only for unbounded problems (i.e)
     % 
     % OptimalityTolerance: of interest
     % 
@@ -230,7 +235,7 @@ function [optimal_joint_velocity, Exit_Flag] = inverseKinematicsOAModified( ...
             starting_joint_vel, ...
             joint_values, ...
             jointVelocityWeightMatrix, ...
-            config, ...
+            config, .../usr/local/src/AndreiUtils
             slackIsUsed), ...
         q_vel_initial_guess, ...
         A, b, Aeq, beq, lb, ub, [], options);

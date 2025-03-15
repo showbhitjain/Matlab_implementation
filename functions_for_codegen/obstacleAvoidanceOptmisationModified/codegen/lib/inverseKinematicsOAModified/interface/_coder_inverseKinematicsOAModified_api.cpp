@@ -5,7 +5,7 @@
 // File: _coder_inverseKinematicsOAModified_api.cpp
 //
 // MATLAB Coder version            : 23.2
-// C/C++ source code generated on  : 05-Mar-2025 16:53:20
+// C/C++ source code generated on  : 07-Mar-2025 21:34:16
 //
 
 // Include Files
@@ -209,9 +209,12 @@ static void c_emlrt_marshallIn(const emlrtStack &sp, const mxArray *src,
   emlrtCheckBuiltInR2012b((emlrtConstCTX)&sp, msgId, src, "double", false, 1U,
                           (const void *)&dims);
   r = (real_T(*)[6])emlrtMxGetData(src);
-  for (int32_T i{0}; i < 6; i++) {
-    ret[i] = (*r)[i];
-  }
+  ret[0] = (*r)[0];
+  ret[1] = (*r)[1];
+  ret[2] = (*r)[2];
+  ret[3] = (*r)[3];
+  ret[4] = (*r)[4];
+  ret[5] = (*r)[5];
   emlrtDestroyArray(&src);
 }
 
@@ -267,9 +270,12 @@ static void d_emlrt_marshallIn(const emlrtStack &sp, const mxArray *src,
   emlrtCheckBuiltInR2012b((emlrtConstCTX)&sp, msgId, src, "double", false, 2U,
                           (const void *)&dims[0]);
   r = (real_T(*)[6])emlrtMxGetData(src);
-  for (int32_T i{0}; i < 6; i++) {
-    ret[i] = (*r)[i];
-  }
+  ret[0] = (*r)[0];
+  ret[1] = (*r)[1];
+  ret[2] = (*r)[2];
+  ret[3] = (*r)[3];
+  ret[4] = (*r)[4];
+  ret[5] = (*r)[5];
   emlrtDestroyArray(&src);
 }
 

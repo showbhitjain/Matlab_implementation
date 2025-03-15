@@ -156,11 +156,11 @@ config.jointLimitGain = 1;
 
 
 %fmincon Optimizer options that support code generation (default values)
-config.ConstraintTolerance = 1e-6;
-config.MaxIterations = 400;
-
-config.OptimalityTolerance = 1e-6;
-config.StepTolerance = 1e-6;
+% config.ConstraintTolerance = 1e-6;
+% config.MaxIterations = 400;
+% 
+% config.OptimalityTolerance = 1e-6;
+% config.StepTolerance = 1e-6;
 
 
 joint_velocity = zeros(number_of_joints, numel(trajTimes));

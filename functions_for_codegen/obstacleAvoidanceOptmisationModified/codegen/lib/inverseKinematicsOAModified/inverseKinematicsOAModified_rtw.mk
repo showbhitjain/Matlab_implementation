@@ -2,7 +2,7 @@
 ## Makefile generated for component 'inverseKinematicsOAModified'. 
 ## 
 ## Makefile     : inverseKinematicsOAModified_rtw.mk
-## Generated on : Wed Mar 05 16:53:52 2025
+## Generated on : Fri Mar 07 19:44:19 2025
 ## Final product: ./inverseKinematicsOAModified.a
 ## Product type : static-library
 ## 
@@ -167,7 +167,7 @@ DEFINES = $(DEFINES_CUSTOM) $(DEFINES_STANDARD)
 ## SOURCE FILES
 ###########################################################################
 
-SRCS = $(START_DIR)/codegen/lib/inverseKinematicsOAModified/rt_nonfinite.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/rtGetNaN.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/rtGetInf.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/ixfun.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/factoryConstruct.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/factoryConstruct1.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/factoryConstruct2.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/xnrm2.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/OptimizationBasedIKWithOAModified.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/configurableObjective.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/mtimes.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/Jacobi_final_link.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/Hessian_final_link.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/computeComplError.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/computeMeritFcn.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/computePrimalFeasError.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/fmincon.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/compressBounds.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/removeDependentLinearEq.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/ComputeNumDependentEq_.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/xgeqp3.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/xzgeqp3.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/xzlarfg.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/xzlarf.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/xgerc.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/computeQ_.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/countsort.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/xgetrf.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/computeFiniteDifferences.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/xgemv.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/setProblemType.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/modifyOverheadPhaseOne_.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/driver.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/test_exit.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/computeGradLag.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/sortLambdaQP.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/step.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/driver1.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/PresolveWorkingSet.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/removeConstr.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/feasibleX0ForWorkingSet.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/factorQR.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/maxConstraintViolation.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/computeFval.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/linearForm_.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/iterate.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/computeGrad_StoreHx.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/computeFval_ReuseHx.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/xrotg.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/deleteColMoveEnd.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/compute_deltax.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/xpotrf.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/factor.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/solve.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/xgemm.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/addBoundToActiveSetMatrix_.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/addAeqConstr.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/relaxed.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/soc.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/BFGSUpdate.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/updateWorkingSetForNewQP.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/initActiveSet.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/feasibleratiotest.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/partialColLDL3_.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/fullColLDL2_.cpp
+SRCS = $(START_DIR)/codegen/lib/inverseKinematicsOAModified/inverseKinematicsOAModified_data.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/rt_nonfinite.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/rtGetNaN.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/rtGetInf.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/ixfun.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/factoryConstruct.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/factoryConstruct1.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/factoryConstruct2.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/xnrm2.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/OptimizationBasedIKWithOAModified.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/configurableObjective.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/mtimes.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/Jacobi_final_link.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/Hessian_final_link.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/computeComplError.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/computeMeritFcn.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/computePrimalFeasError.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/fmincon.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/compressBounds.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/removeDependentLinearEq.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/ComputeNumDependentEq_.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/xgeqp3.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/xzgeqp3.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/xzlarfg.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/xzlarf.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/xgerc.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/computeQ_.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/countsort.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/xgetrf.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/computeFiniteDifferences.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/xgemv.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/setProblemType.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/modifyOverheadPhaseOne_.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/driver.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/test_exit.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/computeGradLag.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/sortLambdaQP.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/step.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/driver1.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/PresolveWorkingSet.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/removeConstr.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/feasibleX0ForWorkingSet.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/factorQR.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/maxConstraintViolation.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/computeFval.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/linearForm_.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/iterate.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/computeGrad_StoreHx.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/computeFval_ReuseHx.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/xrotg.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/deleteColMoveEnd.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/compute_deltax.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/xpotrf.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/factor.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/solve.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/xgemm.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/addBoundToActiveSetMatrix_.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/addAeqConstr.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/relaxed.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/soc.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/BFGSUpdate.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/updateWorkingSetForNewQP.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/initActiveSet.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/feasibleratiotest.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/partialColLDL3_.cpp $(START_DIR)/codegen/lib/inverseKinematicsOAModified/fullColLDL2_.cpp
 
 ALL_SRCS = $(SRCS)
 
@@ -175,7 +175,7 @@ ALL_SRCS = $(SRCS)
 ## OBJECTS
 ###########################################################################
 
-OBJS = rt_nonfinite.o rtGetNaN.o rtGetInf.o ixfun.o factoryConstruct.o factoryConstruct1.o factoryConstruct2.o xnrm2.o OptimizationBasedIKWithOAModified.o configurableObjective.o mtimes.o Jacobi_final_link.o Hessian_final_link.o computeComplError.o computeMeritFcn.o computePrimalFeasError.o fmincon.o compressBounds.o removeDependentLinearEq.o ComputeNumDependentEq_.o xgeqp3.o xzgeqp3.o xzlarfg.o xzlarf.o xgerc.o computeQ_.o countsort.o xgetrf.o computeFiniteDifferences.o xgemv.o setProblemType.o modifyOverheadPhaseOne_.o driver.o test_exit.o computeGradLag.o sortLambdaQP.o step.o driver1.o PresolveWorkingSet.o removeConstr.o feasibleX0ForWorkingSet.o factorQR.o maxConstraintViolation.o computeFval.o linearForm_.o iterate.o computeGrad_StoreHx.o computeFval_ReuseHx.o xrotg.o deleteColMoveEnd.o compute_deltax.o xpotrf.o factor.o solve.o xgemm.o addBoundToActiveSetMatrix_.o addAeqConstr.o relaxed.o soc.o BFGSUpdate.o updateWorkingSetForNewQP.o initActiveSet.o feasibleratiotest.o partialColLDL3_.o fullColLDL2_.o
+OBJS = inverseKinematicsOAModified_data.o rt_nonfinite.o rtGetNaN.o rtGetInf.o ixfun.o factoryConstruct.o factoryConstruct1.o factoryConstruct2.o xnrm2.o OptimizationBasedIKWithOAModified.o configurableObjective.o mtimes.o Jacobi_final_link.o Hessian_final_link.o computeComplError.o computeMeritFcn.o computePrimalFeasError.o fmincon.o compressBounds.o removeDependentLinearEq.o ComputeNumDependentEq_.o xgeqp3.o xzgeqp3.o xzlarfg.o xzlarf.o xgerc.o computeQ_.o countsort.o xgetrf.o computeFiniteDifferences.o xgemv.o setProblemType.o modifyOverheadPhaseOne_.o driver.o test_exit.o computeGradLag.o sortLambdaQP.o step.o driver1.o PresolveWorkingSet.o removeConstr.o feasibleX0ForWorkingSet.o factorQR.o maxConstraintViolation.o computeFval.o linearForm_.o iterate.o computeGrad_StoreHx.o computeFval_ReuseHx.o xrotg.o deleteColMoveEnd.o compute_deltax.o xpotrf.o factor.o solve.o xgemm.o addBoundToActiveSetMatrix_.o addAeqConstr.o relaxed.o soc.o BFGSUpdate.o updateWorkingSetForNewQP.o initActiveSet.o feasibleratiotest.o partialColLDL3_.o fullColLDL2_.o
 
 ALL_OBJS = $(OBJS)
 
@@ -195,7 +195,7 @@ LIBS =
 ## SYSTEM LIBRARIES
 ###########################################################################
 
-SYSTEM_LIBS =  -lm -lstdc++
+SYSTEM_LIBS =  -L"$(MATLAB_ROOT)/sys/os/glnxa64" -lm -lstdc++ -liomp5
 
 ###########################################################################
 ## ADDITIONAL TOOLCHAIN FLAGS
@@ -205,17 +205,19 @@ SYSTEM_LIBS =  -lm -lstdc++
 # C Compiler
 #---------------
 
+CFLAGS_OPTS = -fopenmp
 CFLAGS_BASIC = $(DEFINES) $(INCLUDES)
 
-CFLAGS += $(CFLAGS_BASIC)
+CFLAGS += $(CFLAGS_OPTS) $(CFLAGS_BASIC)
 
 #-----------------
 # C++ Compiler
 #-----------------
 
+CPPFLAGS_OPTS = -fopenmp
 CPPFLAGS_BASIC = $(DEFINES) $(INCLUDES)
 
-CPPFLAGS += $(CPPFLAGS_BASIC)
+CPPFLAGS += $(CPPFLAGS_OPTS) $(CPPFLAGS_BASIC)
 
 ###########################################################################
 ## INLINED COMMANDS
@@ -375,6 +377,10 @@ $(PRODUCT) : $(OBJS) $(PREBUILT_OBJS)
 
 
 %.o : $(START_DIR)/%.c++
+	$(CPP) $(CPPFLAGS) -o "$@" "$<"
+
+
+inverseKinematicsOAModified_data.o : $(START_DIR)/codegen/lib/inverseKinematicsOAModified/inverseKinematicsOAModified_data.cpp
 	$(CPP) $(CPPFLAGS) -o "$@" "$<"
 
 

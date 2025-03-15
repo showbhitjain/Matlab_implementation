@@ -5,7 +5,7 @@
 // File: _coder_inverseKinematicsOAModified_info.cpp
 //
 // MATLAB Coder version            : 23.2
-// C/C++ source code generated on  : 05-Mar-2025 16:53:20
+// C/C++ source code generated on  : 07-Mar-2025 21:34:16
 //
 
 // Include Files
@@ -94,7 +94,7 @@ mxArray *emlrtMexFcnProperties()
                           "obstacleAvoidanceOptmisationModif"
                           "ied/inverseKinematicsOAModified.m"));
   emlrtSetField(xEntryPoints, 0, "TimeStamp",
-                emlrtMxCreateDoubleScalar(739679.78365740739));
+                emlrtMxCreateDoubleScalar(739683.8905092593));
   emlrtSetField(xEntryPoints, 0, "Constructor",
                 emlrtMxCreateLogicalScalar(false));
   emlrtSetField(xEntryPoints, 0, "Visible", emlrtMxCreateLogicalScalar(true));

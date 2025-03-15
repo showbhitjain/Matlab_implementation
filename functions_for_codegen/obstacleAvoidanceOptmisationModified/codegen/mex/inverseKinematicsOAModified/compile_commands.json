@@ -457,6 +457,12 @@
   },
   {
     "directory": "/home/shobhit/ShobhitRobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/obstacleAvoidanceOptmisationModified/codegen/mex/inverseKinematicsOAModified",
+    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/ShobhitRobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/obstacleAvoidanceOptmisationModified\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematicsOAModified_mex -DMW_NEEDS_VERSION_H -msse2 -c  xgemm.cpp -o build/glnxa64/xgemm.o",
+    "file": "xgemm.cpp",
+    "output": "build/glnxa64/xgemm.o"
+  },
+  {
+    "directory": "/home/shobhit/ShobhitRobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/obstacleAvoidanceOptmisationModified/codegen/mex/inverseKinematicsOAModified",
     "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/ShobhitRobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/obstacleAvoidanceOptmisationModified\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematicsOAModified_mex -DMW_NEEDS_VERSION_H -msse2 -c  xger.cpp -o build/glnxa64/xger.o",
     "file": "xger.cpp",
     "output": "build/glnxa64/xger.o"
@@ -472,12 +478,6 @@
     "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/ShobhitRobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/obstacleAvoidanceOptmisationModified\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematicsOAModified_mex -DMW_NEEDS_VERSION_H -msse2 -c  solve1.cpp -o build/glnxa64/solve1.o",
     "file": "solve1.cpp",
     "output": "build/glnxa64/solve1.o"
-  },
-  {
-    "directory": "/home/shobhit/ShobhitRobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/obstacleAvoidanceOptmisationModified/codegen/mex/inverseKinematicsOAModified",
-    "command": "/usr/bin/g++ -fexceptions -fPIC -fno-omit-frame-pointer -pthread -fwrapv -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -DNDEBUG -fvisibility=hidden -fno-gnu-unique -std=c++11 -I \".\" -I \"/home/shobhit/ShobhitRobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/obstacleAvoidanceOptmisationModified\" -I \"./interface\" -I \"/usr/local/MATLAB/R2023b/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=inverseKinematicsOAModified_mex -DMW_NEEDS_VERSION_H -msse2 -c  xgemm.cpp -o build/glnxa64/xgemm.o",
-    "file": "xgemm.cpp",
-    "output": "build/glnxa64/xgemm.o"
   },
   {
     "directory": "/home/shobhit/ShobhitRobotModelling/robotmodelling/Matlab_implementation/functions_for_codegen/obstacleAvoidanceOptmisationModified/codegen/mex/inverseKinematicsOAModified",
